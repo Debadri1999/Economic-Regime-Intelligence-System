@@ -27,8 +27,9 @@ def fit_bertopic(documents: List[str], **kwargs) -> object:
         # On Streamlit/small runs, default 15/5 often puts everything in outlier; use smaller clusters
         default_min_size = bt_cfg.get("hdbscan_min_cluster_size", 15)
         default_min_samples = bt_cfg.get("hdbscan_min_samples", 5)
-        min_cluster_size = max(3, min(default_min_size, max(5, n_docs // 30)))
-        min_samples = max(2, min(default_min_samples, max(3, n_docs // 100)))
+        # Small corpus: use smaller clusters so we get real topics, not one big "Other"
+        min_cluster_size = max(3, min(default_min_size, max(4, n_docs // 40)))
+        min_samples = max(2, min(default_min_samples, max(2, n_docs // 150)))
         model = BERTopic(
             embedding_model=SentenceTransformer(emb_model),
             umap_model=umap.UMAP(
@@ -65,7 +66,9 @@ def run_topic_pipeline(limit: int = 2000) -> int:
     with get_connection() as conn:
         cur = conn.cursor()
         cur.execute(
-            "SELECT id, content_clean, published_date, source_type FROM documents_processed WHERE content_clean IS NOT NULL AND length(content_clean) > 100 LIMIT ?",
+            """SELECT id, content_clean, published_date, source_type FROM documents_processed
+               WHERE content_clean IS NOT NULL AND length(content_clean) > 100 AND published_date IS NOT NULL
+               ORDER BY published_date ASC LIMIT ?""",
             (limit,),
         )
         rows = cur.fetchall()
@@ -80,6 +83,8 @@ def run_topic_pipeline(limit: int = 2000) -> int:
     labels_map = _topic_labels_from_model(model)
     if not labels_map:
         labels_map = {-1: "Outlier"}
+    # Force topic -1 to always display as Outlier (not "Other") for UI consistency
+    labels_map[-1] = "Outlier"
     updated = 0
     with get_connection() as conn:
         for i, raw_id in enumerate(topics):

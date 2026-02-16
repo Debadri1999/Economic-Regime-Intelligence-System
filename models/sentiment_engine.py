@@ -73,7 +73,13 @@ def run_sentiment_on_processed(limit: int = 1000) -> int:
         return 0
     with get_connection() as conn:
         cur = conn.cursor()
-        cur.execute("SELECT id, content_clean, content_sentences, published_date, source_type FROM documents_processed LIMIT ?", (limit,))
+        # Order by published_date so we get a time spread (historical + recent) for regime continuity
+        cur.execute(
+            """SELECT id, content_clean, content_sentences, published_date, source_type
+               FROM documents_processed WHERE published_date IS NOT NULL
+               ORDER BY published_date ASC LIMIT ?""",
+            (limit,),
+        )
         rows = cur.fetchall()
     inserted = 0
     for row in rows:

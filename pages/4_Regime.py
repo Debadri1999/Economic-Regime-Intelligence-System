@@ -2,7 +2,7 @@
 import streamlit as st
 import pandas as pd
 from components.data_loader import load_regime_states, get_latest_regime
-from components.ui_theme import inject_theme, render_insight, render_script_help
+from components.ui_theme import inject_theme, render_insight
 from components.insights import get_regime_inference, get_regime_trend_summary
 from components.regime_definitions import (
     REGIME_DEFINITIONS,
@@ -49,11 +49,7 @@ df = load_regime_states(days=days)
 latest = get_latest_regime()
 
 if df.empty:
-    render_script_help(
-        "No regime states yet",
-        "python run_phase2_and_3.py",
-        "Run Phase 2 (sentiment) and Phase 3 (HMM) to populate regime_states. Or run_all_data.py.",
-    )
+    st.info("No regime states yet. Run the data pipeline (Fetch data → Run pipeline now) to populate regime and sentiment.")
 else:
     # Current forecast with plain-language interpretation
     prob = latest.get("regime_probability") or latest.get("regime_prob_risk_off")

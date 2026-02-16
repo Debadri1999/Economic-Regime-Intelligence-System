@@ -66,7 +66,7 @@ def _step_preprocess(limit_per_source: int = 10000) -> str:
     return f"Preprocess: {total} docs processed."
 
 
-def _step_sentiment(limit: int = 3000) -> str:
+def _step_sentiment(limit: int = 5000) -> str:
     from models.sentiment_engine import run_sentiment_on_processed
     n = run_sentiment_on_processed(limit=limit)
     return f"Sentiment: {n} signals written."
@@ -90,7 +90,7 @@ def get_pipeline_steps(
     include_kaggle: bool = True,
     include_topics: bool = False,
     market_days: int = 90,
-    sentiment_limit: int = 3000,
+    sentiment_limit: int = 5000,
     topic_limit: int = 800,
     kaggle_max_rows: int = 50000,
 ) -> List[Step]:

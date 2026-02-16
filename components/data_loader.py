@@ -133,6 +133,36 @@ def get_document_counts() -> dict:
     return get_document_count()
 
 
+@st.cache_data(ttl=300)
+def get_data_date_range() -> dict:
+    """Return min/max dates for documents_processed and regime_states (for KPI page)."""
+    out = {"docs_min": None, "docs_max": None, "regime_min": None, "regime_max": None, "regime_days": 0}
+    with get_connection() as conn:
+        cur = conn.cursor()
+        cur.execute("SELECT MIN(published_date), MAX(published_date) FROM documents_processed WHERE published_date IS NOT NULL")
+        row = cur.fetchone()
+        if row and row[0]:
+            out["docs_min"], out["docs_max"] = str(row[0]), str(row[1])
+        cur.execute("SELECT MIN(date), MAX(date), COUNT(DISTINCT date) FROM regime_states WHERE date IS NOT NULL")
+        row = cur.fetchone()
+        if row and row[0]:
+            out["regime_min"], out["regime_max"] = str(row[0]), str(row[1])
+            out["regime_days"] = row[2] or 0
+    return out
+
+
+@st.cache_data(ttl=300)
+def get_topic_diversity_count() -> int:
+    """Count of distinct topic_hint values (excluding null/empty). For KPI."""
+    with get_connection() as conn:
+        cur = conn.cursor()
+        cur.execute(
+            "SELECT COUNT(DISTINCT topic_hint) FROM documents_processed WHERE topic_hint IS NOT NULL AND topic_hint != ''"
+        )
+        row = cur.fetchone()
+    return row[0] if row and row[0] is not None else 0
+
+
 def get_latest_regime() -> Optional[dict]:
     """Return most recent regime_states row as dict."""
     with get_connection() as conn:
