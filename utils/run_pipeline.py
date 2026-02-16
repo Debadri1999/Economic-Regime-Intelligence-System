@@ -24,7 +24,7 @@ def _step_market(days: int = 90) -> str:
     return f"Market: {n} rows stored."
 
 
-def _step_news(max_per_query: int = 15, from_days_ago: int = 7) -> str:
+def _step_news(max_per_query: int = 50, from_days_ago: int = 14) -> str:
     if not os.getenv("NEWS_API_KEY", "").strip() and not os.getenv("NEWSAPI_KEY", "").strip():
         return "Skipped (no NEWS_API_KEY)."
     from data.collectors.news_collector import collect_and_store
@@ -32,20 +32,30 @@ def _step_news(max_per_query: int = 15, from_days_ago: int = 7) -> str:
     return f"News: {n} articles stored."
 
 
-def _step_fed(fomc_limit: int = 10, speeches_limit: int = 5) -> str:
+def _step_fed(fomc_limit: int = 25, speeches_limit: int = 15) -> str:
     from data.collectors.fed_scraper import scrape_and_store_fed
     n = scrape_and_store_fed(fomc_limit=fomc_limit, speeches_limit=speeches_limit)
     return f"Fed: {n} documents stored."
 
 
-def _step_preprocess(limit_per_source: int = 2000) -> str:
+def _step_kaggle(max_rows_per_dataset: int = 10000) -> str:
+    """Download configured Kaggle datasets and ingest into raw_articles / earnings_transcripts."""
+    if not os.getenv("KAGGLE_USERNAME", "").strip() or not os.getenv("KAGGLE_KEY", "").strip():
+        return "Skipped (no KAGGLE_USERNAME/KAGGLE_KEY)."
+    from data.collectors.kaggle_collector import collect_all_kaggle
+    out = collect_all_kaggle(max_rows_per_dataset=max_rows_per_dataset)
+    total = out.get("total_rows", 0)
+    return f"Kaggle: {total} rows stored (raw_articles + earnings_transcripts)."
+
+
+def _step_preprocess(limit_per_source: int = 10000) -> str:
     from data.preprocessing.preprocess import run_full_preprocess
     counts = run_full_preprocess(limit_per_source=limit_per_source)
     total = sum(counts.values())
     return f"Preprocess: {total} docs processed."
 
 
-def _step_sentiment(limit: int = 800) -> str:
+def _step_sentiment(limit: int = 3000) -> str:
     from models.sentiment_engine import run_sentiment_on_processed
     n = run_sentiment_on_processed(limit=limit)
     return f"Sentiment: {n} signals written."
@@ -66,14 +76,17 @@ def _step_topics(limit: int = 400) -> str:
 def get_pipeline_steps(
     include_news: bool = True,
     include_fed: bool = True,
+    include_kaggle: bool = True,
     include_topics: bool = False,
     market_days: int = 90,
-    sentiment_limit: int = 800,
+    sentiment_limit: int = 3000,
     topic_limit: int = 400,
+    kaggle_max_rows: int = 10000,
 ) -> List[Step]:
     """
     Return list of (step_name, callable) for the pipeline.
     include_topics=False by default (BERTopic is slow; enable for full Topics page).
+    Kaggle downloads financial news + earnings datasets into raw_articles / earnings_transcripts.
     """
     steps: List[Step] = [
         ("Schema", _step_schema),
@@ -90,6 +103,10 @@ def get_pipeline_steps(
         steps.insert(3, ("Fed documents", lambda: _step_fed()))
     else:
         steps.insert(3, ("Fed (skipped)", lambda: "Skipped."))
+    if include_kaggle:
+        steps.insert(4, ("Kaggle datasets", lambda: _step_kaggle(max_rows_per_dataset=kaggle_max_rows)))
+    else:
+        steps.insert(4, ("Kaggle (skipped)", lambda: "Skipped (no KAGGLE_USERNAME/KAGGLE_KEY)."))
     if include_topics:
         steps.append(("Topics (BERTopic)", lambda: _step_topics(limit=topic_limit)))
     return steps

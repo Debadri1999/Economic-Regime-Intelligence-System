@@ -74,7 +74,7 @@ with st.sidebar:
             include_fed=True,
             include_topics=include_topic_labels,
             market_days=90,
-            sentiment_limit=800,
+            sentiment_limit=3000,
         )
         with st.status("Running pipeline…", expanded=True) as status:
             log_placeholder = st.empty()

@@ -58,9 +58,13 @@ def compute_stress_score(regime: Optional[dict], regime_df: pd.DataFrame, daily_
         if prob_off is not None:
             # Risk-Off probability maps directly to stress
             score = float(prob_off) * 100
-        if regime.get("regime_label") == "Risk-Off":
+        # Transitional with 0 prob can show 0 stress; use a sensible floor so it's not misleading
+        label = regime.get("regime_label") or ""
+        if label == "Transitional" and (prob_off is None or float(prob_off or 0) < 0.1):
+            score = max(score, 25.0)
+        if label == "Risk-Off":
             score = max(score, 60)
-        elif regime.get("regime_label") == "Risk-On":
+        elif label == "Risk-On":
             score = min(score, 35)
     if not daily_sent.empty and "daily_mean_sentiment" in daily_sent.columns:
         latest_sent = daily_sent["daily_mean_sentiment"].iloc[-1]
