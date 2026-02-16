@@ -1,7 +1,7 @@
 """
 Run ERIS data pipeline from the Streamlit app (backend).
-Steps: schema -> market -> news -> fed -> preprocess -> sentiment -> regime -> (optional) topics.
-Uses conservative limits so the run can complete on Streamlit Cloud.
+Matches local checklist: news, fed, market, kaggle, earnings, preprocess, Phase 2+3 (sentiment + regime), topic engine.
+To get 40k+ docs on Streamlit: set KAGGLE_USERNAME/KAGGLE_KEY (Kaggle adds bulk); News adds up to ~1200 per run.
 """
 
 import os
@@ -24,7 +24,7 @@ def _step_market(days: int = 90) -> str:
     return f"Market: {n} rows stored."
 
 
-def _step_news(max_per_query: int = 50, from_days_ago: int = 14) -> str:
+def _step_news(max_per_query: int = 100, from_days_ago: int = 30) -> str:
     if not os.getenv("NEWS_API_KEY", "").strip() and not os.getenv("NEWSAPI_KEY", "").strip():
         return "Skipped (no NEWS_API_KEY)."
     from data.collectors.news_collector import collect_and_store
@@ -32,13 +32,13 @@ def _step_news(max_per_query: int = 50, from_days_ago: int = 14) -> str:
     return f"News: {n} articles stored."
 
 
-def _step_fed(fomc_limit: int = 25, speeches_limit: int = 15) -> str:
+def _step_fed(fomc_limit: int = 30, speeches_limit: int = 20) -> str:
     from data.collectors.fed_scraper import scrape_and_store_fed
     n = scrape_and_store_fed(fomc_limit=fomc_limit, speeches_limit=speeches_limit)
     return f"Fed: {n} documents stored."
 
 
-def _step_kaggle(max_rows_per_dataset: int = 10000) -> str:
+def _step_kaggle(max_rows_per_dataset: int = 50000) -> str:
     """Download configured Kaggle datasets and ingest into raw_articles / earnings_transcripts."""
     if not os.getenv("KAGGLE_USERNAME", "").strip() or not os.getenv("KAGGLE_KEY", "").strip():
         return "Skipped (no KAGGLE_USERNAME/KAGGLE_KEY)."
@@ -46,6 +46,17 @@ def _step_kaggle(max_rows_per_dataset: int = 10000) -> str:
     out = collect_all_kaggle(max_rows_per_dataset=max_rows_per_dataset)
     total = out.get("total_rows", 0)
     return f"Kaggle: {total} rows stored (raw_articles + earnings_transcripts)."
+
+
+def _step_earnings() -> str:
+    """Load earnings from data/raw/earnings.csv if present; else skip."""
+    from pathlib import Path
+    from data.collectors.earnings_collector import collect_and_store_earnings
+    csv_path = Path(__file__).resolve().parent.parent / "data" / "raw" / "earnings.csv"
+    if not csv_path.exists():
+        return "Skipped (no data/raw/earnings.csv). Use Kaggle step for earnings_transcripts."
+    n = collect_and_store_earnings(csv_path)
+    return f"Earnings: {n} segments stored."
 
 
 def _step_preprocess(limit_per_source: int = 10000) -> str:
@@ -81,13 +92,14 @@ def get_pipeline_steps(
     market_days: int = 90,
     sentiment_limit: int = 3000,
     topic_limit: int = 800,
-    kaggle_max_rows: int = 10000,
+    kaggle_max_rows: int = 50000,
 ) -> List[Step]:
     """
     Return list of (step_name, callable) for the pipeline.
     include_topics=False by default (BERTopic is slow; enable for full Topics page).
     Kaggle downloads financial news + earnings datasets into raw_articles / earnings_transcripts.
     """
+    # Order matches local checklist: collectors -> preprocess -> Phase 2+3 -> topic engine
     steps: List[Step] = [
         ("Schema", _step_schema),
         ("Market (SPY, etc.)", lambda: _step_market(days=market_days)),
@@ -107,6 +119,7 @@ def get_pipeline_steps(
         steps.insert(4, ("Kaggle datasets", lambda: _step_kaggle(max_rows_per_dataset=kaggle_max_rows)))
     else:
         steps.insert(4, ("Kaggle (skipped)", lambda: "Skipped (no KAGGLE_USERNAME/KAGGLE_KEY)."))
+    steps.insert(5, ("Earnings (CSV)", _step_earnings))
     if include_topics:
         steps.append(("Topics (BERTopic)", lambda: _step_topics(limit=topic_limit)))
     return steps
