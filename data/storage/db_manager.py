@@ -43,13 +43,25 @@ def _is_sqlite(url: str) -> bool:
     return url.startswith("sqlite")
 
 
+# One-time schema init per process (e.g. Streamlit Cloud has empty DB)
+_schema_ensured = False
+
+
 @contextmanager
 def get_connection():
     """Context manager for database connection. Use for SQLite or psycopg2."""
+    global _schema_ensured
     url = get_database_url()
     if _is_sqlite(url):
         path = url.replace("sqlite:///", "")
         conn = sqlite3.connect(path)
+        if not _schema_ensured:
+            try:
+                init_schema(conn)
+                conn.commit()
+            except Exception:
+                pass
+            _schema_ensured = True
         conn.row_factory = sqlite3.Row
         try:
             yield conn
