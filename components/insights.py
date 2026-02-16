@@ -14,6 +14,8 @@ def humanize_topic_label(raw: str) -> str:
     s = str(raw).strip()
     if s.startswith("-1_") or s == "-1":
         return "Outlier / noise"
+    if s.lower() in ("other", "outlier"):
+        return "Outlier / noise"
     # "15_bitcoin_crypto_chars_analysts" -> "Bitcoin & crypto"
     if "_" in s:
         parts = s.split("_")
@@ -25,6 +27,9 @@ def humanize_topic_label(raw: str) -> str:
         words = [p for p in parts if p.lower() not in stop and len(p) > 1][:4]
         if not words:
             return "Other"
+        # BERTopic often names outlier topic "0_other_..." -> treat as outlier for UI
+        if words and words[0].lower() in ("other", "outlier"):
+            return "Outlier / noise"
         return " ".join(w.capitalize() for w in words[:3])
     return s.replace("_", " ").capitalize()
 

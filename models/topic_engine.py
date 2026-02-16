@@ -12,7 +12,9 @@ logger = logging.getLogger(__name__)
 
 
 def fit_bertopic(documents: List[str], **kwargs) -> object:
-    """Fit BERTopic on document list. Returns fitted model."""
+    """Fit BERTopic on document list. Returns fitted model.
+    Uses smaller cluster sizes for small corpora so more docs get real topics (not all 'Other'/outlier).
+    """
     try:
         from bertopic import BERTopic
         from sentence_transformers import SentenceTransformer
@@ -21,16 +23,22 @@ def fit_bertopic(documents: List[str], **kwargs) -> object:
         cfg = get_config()
         emb_model = cfg.get("nlp", {}).get("sentence_transformer", "all-MiniLM-L6-v2")
         bt_cfg = cfg.get("nlp", {}).get("bertopic", {})
+        n_docs = len(documents)
+        # On Streamlit/small runs, default 15/5 often puts everything in outlier; use smaller clusters
+        default_min_size = bt_cfg.get("hdbscan_min_cluster_size", 15)
+        default_min_samples = bt_cfg.get("hdbscan_min_samples", 5)
+        min_cluster_size = max(3, min(default_min_size, max(5, n_docs // 30)))
+        min_samples = max(2, min(default_min_samples, max(3, n_docs // 100)))
         model = BERTopic(
             embedding_model=SentenceTransformer(emb_model),
             umap_model=umap.UMAP(
-                n_neighbors=bt_cfg.get("umap_n_neighbors", 15),
-                n_components=bt_cfg.get("umap_n_components", 5),
+                n_neighbors=min(bt_cfg.get("umap_n_neighbors", 15), max(5, n_docs // 10)),
+                n_components=min(bt_cfg.get("umap_n_components", 5), max(2, n_docs // 50)),
                 min_dist=0.0,
             ),
             hdbscan_model=hdbscan.HDBSCAN(
-                min_cluster_size=bt_cfg.get("hdbscan_min_cluster_size", 15),
-                min_samples=bt_cfg.get("hdbscan_min_samples", 5),
+                min_cluster_size=min_cluster_size,
+                min_samples=min_samples,
             ),
             **kwargs,
         )

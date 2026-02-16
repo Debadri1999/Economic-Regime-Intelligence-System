@@ -65,7 +65,7 @@ with st.sidebar:
     st.divider()
     # Run pipeline from app (collectors -> preprocess -> sentiment -> regime)
     st.markdown("**Fetch data**")
-    include_topic_labels = st.checkbox("Include topic labels (slower)", value=False, help="Run BERTopic to label themes for the Topics page. Can add 2–5 min.")
+    include_topic_labels = st.checkbox("Include topic labels (slower)", value=True, help="Run BERTopic to label themes for the Topics page. Uncheck if the run times out.")
     run_pipeline_clicked = st.button("Run pipeline now", help="Run collectors, preprocess, sentiment & regime on the backend. May take 2–5 min.")
     if run_pipeline_clicked:
         from utils.run_pipeline import get_pipeline_steps, run_pipeline

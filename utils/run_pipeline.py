@@ -80,7 +80,7 @@ def get_pipeline_steps(
     include_topics: bool = False,
     market_days: int = 90,
     sentiment_limit: int = 3000,
-    topic_limit: int = 400,
+    topic_limit: int = 800,
     kaggle_max_rows: int = 10000,
 ) -> List[Step]:
     """
