@@ -1,0 +1,87 @@
+# ERIS - Economic Regime Intelligence System
+# Configuration (secrets in .env)
+
+project:
+  name: ERIS
+  version: "0.1.0"
+
+# Data sources - API keys in .env: NEWSAPI_KEY, FRED_API_KEY
+data:
+  newsapi:
+    base_url: "https://newsapi.org/v2/everything"
+    queries:
+      - "inflation"
+      - "recession"
+      - "fed policy"
+      - "credit markets"
+      - "banking stress"
+      - "liquidity crisis"
+      - "yield curve"
+      - "rate hike"
+      - "quantitative tightening"
+      - "unemployment"
+      - "earnings miss"
+      - "default risk"
+    max_results_per_query: 20
+    max_requests_per_day: 100
+
+  fed:
+    base_url: "https://www.federalreserve.gov"
+    fomc_calendar: "/monetarypolicy/fomccalendars.htm"
+    speeches: "/newsevents/speeches.htm"
+    backfill_from_year: 2006
+
+  market:
+    yfinance_tickers:
+      - SPY
+      - "^VIX"
+      - GLD
+      - TLT
+      - HYG
+    fred_series:
+      - DGS10      # 10Y Treasury
+      - DGS2       # 2Y Treasury
+      - T10Y2Y     # 10Y-2Y spread
+      - BAMLH0A0HYM2  # HY spread
+      - UNRATE     # Unemployment
+      - CPIAUCSL   # CPI
+    rolling_windows: [5, 21, 63]
+
+  preprocessing:
+    dedup_jaccard_threshold: 0.85
+    min_word_count: 50
+    market_close_hour_et: 16
+
+# NLP
+nlp:
+  finbert_model: "ProsusAI/finbert"
+  sentence_transformer: "all-MiniLM-L6-v2"
+  bertopic:
+    umap_n_neighbors: 15
+    umap_n_components: 5
+    hdbscan_min_cluster_size: 15
+    hdbscan_min_samples: 5
+  embedding_rolling_days: 63
+  sentiment_rolling_days: 21
+  sentiment_shock_std_threshold: 2.0
+
+# Regime detection
+regime:
+  hmm_n_components: 3
+  hmm_n_iter: 100
+  changepoint_window_days: 5
+  changepoint_composite_threshold: 3
+  xgb_max_depth_range: [3, 7]
+  transition_alert_threshold: 0.15
+  transition_window_days: 5
+
+# LLM (API key in .env: OPENAI_API_KEY)
+llm:
+  model: "gpt-4"
+  max_tokens: 1024
+  cache_ttl_hours: 24
+
+# App
+app:
+  default_days: 365
+  page_title: "ERIS - Economic Regime Intelligence System"
