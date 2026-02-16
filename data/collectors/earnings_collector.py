@@ -1,12 +1,12 @@
 """
 Earnings call transcript collector for ERIS.
-Placeholder: use Kaggle datasets or external APIs; ingest into earnings_transcripts.
+Option A: Place a CSV at data/raw/earnings.csv (columns: company, ticker, date, section, text).
+Option B: Run Kaggle earnings download: python -m data.collectors.kaggle_collector (includes earnings_nasdaq).
 """
 
 import logging
-from datetime import datetime
 from pathlib import Path
-from typing import List, Optional
+from typing import Optional
 
 import pandas as pd
 
@@ -14,7 +14,6 @@ from data.storage.db_manager import get_connection
 
 logger = logging.getLogger(__name__)
 
-# Optional: path to a CSV/Parquet from Kaggle (e.g. Financial Phrasebank or S&P earnings)
 KAGGLE_EARNINGS_PATH = Path(__file__).resolve().parent.parent.parent / "data" / "raw" / "earnings.csv"
 
 
@@ -25,7 +24,8 @@ def load_earnings_from_csv(path: Optional[Path] = None) -> pd.DataFrame:
     """
     path = path or KAGGLE_EARNINGS_PATH
     if not path.exists():
-        logger.warning("Earnings file not found: %s. Add a CSV with company, ticker, date, section, text.", path)
+        logger.warning("Earnings file not found: %s", path)
+        print("  No earnings data. Either:\n    1. Add a CSV at data/raw/earnings.csv (company, ticker, date, section, text)\n    2. Run: python -m data.collectors.kaggle_collector  (downloads earnings_nasdaq into earnings_transcripts)")
         return pd.DataFrame()
     df = pd.read_csv(path, nrows=10000)
     for c in ["company", "ticker", "date", "section", "text"]:
@@ -69,4 +69,7 @@ if __name__ == "__main__":
 
     ensure_schema()
     n = collect_and_store_earnings()
-    print(f"Stored {n} earnings transcript segments")
+    if n == 0:
+        print("Stored 0 segments. See message above for how to add earnings data.")
+    else:
+        print(f"Stored {n} earnings transcript segments")

@@ -6,8 +6,12 @@ Cycles through regime-relevant queries, deduplicates by URL hash, stores raw JSO
 import hashlib
 import logging
 import os
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 from typing import Any, List, Optional
+
+
+def _now_utc() -> datetime:
+    return datetime.now(timezone.utc)
 
 import requests
 from dotenv import load_dotenv
@@ -44,9 +48,9 @@ def fetch_newsapi(
 
     base = _load_newsapi_config().get("base_url", "https://newsapi.org/v2/everything")
     if not from_date:
-        from_date = datetime.utcnow() - timedelta(days=7)
+        from_date = _now_utc() - timedelta(days=7)
     if not to_date:
-        to_date = datetime.utcnow()
+        to_date = _now_utc()
 
     params = {
         "q": query,
@@ -110,8 +114,8 @@ def collect_and_store(
     cfg = _load_newsapi_config()
     queries = queries or cfg.get("queries", [])
     max_per_query = min(max_per_query, cfg.get("max_results_per_query", 20))
-    from_date = datetime.utcnow() - timedelta(days=from_days_ago)
-    to_date = datetime.utcnow()
+    from_date = _now_utc() - timedelta(days=from_days_ago)
+    to_date = _now_utc()
 
     seen_hashes = set()
     to_insert: List[dict] = []
@@ -137,10 +141,14 @@ def collect_and_store(
     if not to_insert:
         return 0
 
+    # Store published_at as ISO string to avoid SQLite datetime adapter deprecation
+    inserted = 0
     with get_connection() as conn:
         cur = conn.cursor()
         for row in to_insert:
             try:
+                pub = row["published_at"]
+                pub_str = pub.isoformat() if hasattr(pub, "isoformat") else str(pub) if pub else None
                 cur.execute(
                     """INSERT OR IGNORE INTO raw_articles
                        (source, title, content, description, published_at, url, url_hash, query_term, source_type)
@@ -150,17 +158,18 @@ def collect_and_store(
                         row["title"],
                         row["content"],
                         row["description"],
-                        row["published_at"],
+                        pub_str,
                         row["url"],
                         row["url_hash"],
                         row["query_term"],
                         row["source_type"],
                     ),
                 )
+                if hasattr(cur, "rowcount") and cur.rowcount and cur.rowcount > 0:
+                    inserted += 1
             except Exception as e:
                 logger.debug("Skip duplicate or error: %s", e)
-        inserted = cur.rowcount if hasattr(cur, "rowcount") else len(to_insert)
-    return inserted
+    return inserted if inserted > 0 else len(to_insert)
 
 
 if __name__ == "__main__":
@@ -168,5 +177,6 @@ if __name__ == "__main__":
     from data.storage.db_manager import ensure_schema
 
     ensure_schema()
-    n = collect_and_store(queries=["inflation", "recession"], max_per_query=10, from_days_ago=3)
+    # Use config queries and longer window to get more articles (free tier: ~100 req/day)
+    n = collect_and_store(queries=None, max_per_query=20, from_days_ago=14)
     print(f"Inserted {n} new articles")

@@ -4,7 +4,7 @@ Uses yfinance for OHLCV and fredapi for FRED series; computes derived features.
 """
 
 import logging
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 from typing import List, Optional
 
 import pandas as pd
@@ -14,6 +14,10 @@ from data.storage.db_manager import get_config, get_connection
 
 load_dotenv()
 logger = logging.getLogger(__name__)
+
+
+def _now_utc() -> datetime:
+    return datetime.now(timezone.utc)
 
 
 def _load_market_config() -> dict:
@@ -35,7 +39,7 @@ def fetch_yfinance(
     cfg = _load_market_config()
     tickers = tickers or cfg.get("yfinance_tickers", ["SPY", "^VIX", "GLD", "TLT", "HYG"])
     if not end:
-        end = datetime.utcnow()
+        end = _now_utc()
     if not start:
         start = end - timedelta(days=365 * 2)
 
@@ -54,13 +58,24 @@ def fetch_yfinance(
     # Handle single vs multiple tickers
     if len(tickers) == 1:
         data.columns = [c if isinstance(c, str) else c[0] for c in data.columns]
+        data = data.reset_index()
         data["ticker"] = tickers[0]
+        date_col = "Date" if "Date" in data.columns else data.columns[0]
+        data["date"] = pd.to_datetime(data[date_col]).dt.date
     else:
         if isinstance(data.columns, pd.MultiIndex):
-            data = data.stack(level=1).reset_index().rename(columns={"level_0": "date"})
+            try:
+                data = data.stack(level=1, future_stack=True).reset_index()
+            except TypeError:
+                data = data.stack(level=1).reset_index()
+            # First col = date (from index), second = ticker
+            data = data.rename(columns={data.columns[0]: "date", data.columns[1]: "ticker"})
+            data["date"] = pd.to_datetime(data["date"]).dt.date
         else:
             data = data.reset_index()
             data["ticker"] = tickers[0]
+            date_col = "Date" if "Date" in data.columns else data.columns[0]
+            data["date"] = pd.to_datetime(data[date_col]).dt.date
 
     data = data.rename(columns={
         "Open": "open", "High": "high", "Low": "low", "Close": "close", "Volume": "volume",
@@ -69,10 +84,9 @@ def fetch_yfinance(
     for c in ["open", "high", "low", "close", "volume"]:
         if c not in data.columns:
             data[c] = None
-    data["date"] = pd.to_datetime(data.index if "date" not in data.columns else data["date"]).dt.date
-    if "date" not in data.columns and hasattr(data.index, "date"):
-        data["date"] = data.index
-    return data[["date", "ticker", "open", "high", "low", "close", "volume"]].dropna(subset=["date"])
+    out_cols = ["date", "ticker", "open", "high", "low", "close", "volume"]
+    available = [c for c in out_cols if c in data.columns]
+    return data[available].dropna(subset=["date"])
 
 
 def compute_returns_and_vol(df: pd.DataFrame, windows: Optional[List[int]] = None) -> pd.DataFrame:
@@ -112,7 +126,7 @@ def fetch_fred(
 
     fred = Fred(api_key=api_key)
     if not end:
-        end = datetime.utcnow()
+        end = _now_utc()
     if not start:
         start = end - timedelta(days=365 * 2)
 
@@ -186,7 +200,7 @@ def collect_and_store_market(
     Fetch yfinance + FRED, compute derived series, store to DB.
     Returns dict with market_daily and macro_indicators counts.
     """
-    end = datetime.utcnow()
+    end = _now_utc()
     start = end - timedelta(days=days)
     counts = {"market_daily": 0, "macro_indicators": 0}
 

@@ -49,7 +49,7 @@ data:
 
   preprocessing:
     dedup_jaccard_threshold: 0.85
-    min_word_count: 50
+    min_word_count: 20
     market_close_hour_et: 16
 
 # NLP

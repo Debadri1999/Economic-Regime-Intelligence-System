@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 40" width="120" height="40">
+  <defs>
+    <linearGradient id="g" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#58a6ff"/>
+      <stop offset="100%" style="stop-color:#79c0ff"/>
+    </linearGradient>
+  </defs>
+  <!-- Minimal chart curve -->
+  <path d="M8 28 Q20 18 32 22 T56 14 T80 20" fill="none" stroke="url(#g)" stroke-width="2.5" stroke-linecap="round"/>
+  <!-- E -->
+  <text x="4" y="38" font-family="Arial, sans-serif" font-size="22" font-weight="700" fill="#58a6ff">E</text>
+  <!-- R -->
+  <text x="28" y="38" font-family="Arial, sans-serif" font-size="22" font-weight="700" fill="#79c0ff">R</text>
+  <!-- I -->
+  <text x="50" y="38" font-family="Arial, sans-serif" font-size="22" font-weight="700" fill="#58a6ff">I</text>
+  <!-- S -->
+  <text x="62" y="38" font-family="Arial, sans-serif" font-size="22" font-weight="700" fill="#79c0ff">S</text>
+</svg>

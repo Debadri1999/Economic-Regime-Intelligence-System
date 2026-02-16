@@ -8,6 +8,12 @@ import logging
 from datetime import datetime
 from typing import List, Optional, Tuple
 
+# Load torch first to avoid torchvision circular import when transformers loads
+try:
+    import torch  # noqa: F401
+except ImportError:
+    pass
+
 import pandas as pd
 from data.storage.db_manager import get_connection, get_config
 
@@ -17,8 +23,12 @@ logger = logging.getLogger(__name__)
 def load_finbert():
     """Load FinBERT model and tokenizer. Requires transformers and torch."""
     try:
-        from transformers import AutoModelForSequenceClassification, AutoTokenizer
         import torch
+        from transformers import AutoModelForSequenceClassification, AutoTokenizer
+        try:
+            from transformers import BertForSequenceClassification
+        except ImportError:
+            from transformers.models.bert.modeling_bert import BertForSequenceClassification
         cfg = get_config()
         model_name = cfg.get("nlp", {}).get("finbert_model", "ProsusAI/finbert")
         tokenizer = AutoTokenizer.from_pretrained(model_name)
@@ -97,5 +107,5 @@ if __name__ == "__main__":
     logging.basicConfig(level=logging.INFO)
     from data.storage.db_manager import ensure_schema
     ensure_schema()
-    n = run_sentiment_on_processed(limit=50)
+    n = run_sentiment_on_processed(limit=2000)
     print("Inserted", n, "sentiment signals")

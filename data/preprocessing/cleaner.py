@@ -10,20 +10,38 @@ from typing import List, Optional, Tuple
 logger = logging.getLogger(__name__)
 
 
+def _looks_like_html(text: str) -> bool:
+    """True only if content looks like a full HTML document (has tag names). Avoids treating 'x < 5%' as HTML."""
+    if not text or len(text) < 50:
+        return False
+    if "<" not in text or ">" not in text:
+        return False
+    # Require at least one tag-like pattern (e.g. <div, <p>, <html, <body)
+    tag_pattern = re.compile(r"<\s*(?:html|body|div|p|span|section|article|h[1-6])\b", re.IGNORECASE)
+    return bool(tag_pattern.search(text))
+
+
 def strip_html_and_boilerplate(text: str, use_trafilatura: bool = True) -> str:
-    """Remove HTML tags and common boilerplate. Use trafilatura if available for article-style content."""
+    """Remove HTML tags and common boilerplate. Use trafilatura only when content is clearly HTML."""
     if not text or not isinstance(text, str):
         return ""
     text = text.strip()
-    if use_trafilatura and len(text) > 200:
+    if use_trafilatura and len(text) > 200 and _looks_like_html(text):
         try:
             import trafilatura
-            extracted = trafilatura.extract(text)
-            if extracted and len(extracted) > 50:
-                return extracted.strip()
+            # Suppress trafilatura log noise when extraction fails
+            tlog = logging.getLogger("trafilatura")
+            old_level = tlog.level
+            tlog.setLevel(logging.CRITICAL)
+            try:
+                extracted = trafilatura.extract(text)
+                if extracted and len(extracted) > 50:
+                    return extracted.strip()
+            finally:
+                tlog.setLevel(old_level)
         except Exception:
             pass
-    # Fallback: strip tags with regex
+    # Strip tags with regex (no-op for plain text)
     text = re.sub(r"<[^>]+>", " ", text)
     text = re.sub(r"\s+", " ", text)
     # Remove common boilerplate

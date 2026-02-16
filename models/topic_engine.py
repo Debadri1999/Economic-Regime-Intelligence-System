@@ -41,18 +41,58 @@ def fit_bertopic(documents: List[str], **kwargs) -> object:
         return None
 
 
+def _topic_labels_from_model(model) -> dict:
+    """Build topic_id -> label from BERTopic model. -1 -> Outlier."""
+    try:
+        info = model.get_topic_info()
+        if info is not None and not info.empty and "Topic" in info.columns and "Name" in info.columns:
+            return {int(k): str(v) for k, v in zip(info["Topic"], info["Name"])}
+    except Exception:
+        pass
+    return {}
+
+
 def run_topic_pipeline(limit: int = 2000) -> int:
-    """Load documents_processed, fit BERTopic, assign topic_id per doc, update nlp_signals or store topic prevalence by date."""
+    """Load documents_processed, fit BERTopic, assign topic label per doc, write to documents_processed.topic_hint."""
     with get_connection() as conn:
         cur = conn.cursor()
-        cur.execute("SELECT id, content_clean, published_date FROM documents_processed WHERE content_clean IS NOT NULL AND length(content_clean) > 100 LIMIT ?", (limit,))
+        cur.execute(
+            "SELECT id, content_clean, published_date, source_type FROM documents_processed WHERE content_clean IS NOT NULL AND length(content_clean) > 100 LIMIT ?",
+            (limit,),
+        )
         rows = cur.fetchall()
     if not rows:
+        logger.warning("No documents_processed rows for BERTopic.")
         return 0
     docs = [r[1] for r in rows]
     model = fit_bertopic(docs)
     if model is None:
         return 0
     topics = model.topics_
-    # Map doc index to topic_id; could write back to DB or aggregate by date
-    return len(topics)
+    labels_map = _topic_labels_from_model(model)
+    if not labels_map:
+        labels_map = {-1: "Outlier"}
+    updated = 0
+    with get_connection() as conn:
+        for i, raw_id in enumerate(topics):
+            if i >= len(rows):
+                break
+            topic_id = int(raw_id) if raw_id is not None else -1
+            doc_id = rows[i][0]
+            label = labels_map.get(topic_id, "Outlier" if topic_id == -1 else f"Topic_{topic_id}")
+            try:
+                conn.execute("UPDATE documents_processed SET topic_hint = ? WHERE id = ?", (label, doc_id))
+                updated += 1
+            except Exception as e:
+                logger.debug("Update topic_hint: %s", e)
+    return updated
+
+
+if __name__ == "__main__":
+    import sys
+    logging.basicConfig(level=logging.INFO, format="%(levelname)s: %(message)s")
+    from data.storage.db_manager import ensure_schema
+    ensure_schema()
+    limit = int(sys.argv[1]) if len(sys.argv) > 1 else 2000
+    n = run_topic_pipeline(limit=limit)
+    print(f"Updated {n} documents with BERTopic labels. Refresh the Topics page to see distribution.")

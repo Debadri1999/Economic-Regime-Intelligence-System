@@ -58,6 +58,7 @@ def _parse_date_from_text(text: str) -> Optional[datetime]:
 def scrape_fomc_calendar_links() -> List[Tuple[str, str, Optional[datetime]]]:
     """
     Scrape FOMC calendar page for links to statements and minutes.
+    Uses URL patterns (Fed links to /newsevents/pressreleases/monetary*.htm and /monetarypolicy/fomcminutes*.htm).
     Returns list of (doc_type, url, date).
     """
     cfg = _load_fed_config()
@@ -66,21 +67,39 @@ def scrape_fomc_calendar_links() -> List[Tuple[str, str, Optional[datetime]]]:
     url = urljoin(base, path)
     soup = _fetch_soup(url)
     results = []
+    seen_urls = set()
 
     for a in soup.find_all("a", href=True):
-        href = a.get("href", "")
-        text = (a.get_text() or "").strip().lower()
-        if "statement" in text and "fomc" in href:
-            doc_type = "fomc_statement"
-        elif "minutes" in text and "fomc" in href:
-            doc_type = "fomc_minutes"
-        else:
-            continue
+        href = (a.get("href") or "").strip()
         full_url = urljoin(url, href)
-        date = _parse_date_from_text(a.get_text() or "")
+        if full_url in seen_urls:
+            continue
+        text = (a.get_text() or "").strip().lower()
+        doc_type = None
+        if "/newsevents/pressreleases/monetary" in href and href.endswith(".htm") and ".pdf" not in href:
+            doc_type = "fomc_statement"
+        elif "/monetarypolicy/fomcminutes" in href and href.endswith(".htm") and ".pdf" not in href:
+            doc_type = "fomc_minutes"
+        elif "/monetarypolicy/fomcpressconf" in href or "/monetarypolicy/fomcpresconf" in href:
+            doc_type = "fomc_press_conf"
+        if not doc_type:
+            continue
+        seen_urls.add(full_url)
+        date = _parse_date_from_text(a.get_text() or "") or _parse_date_from_url(href)
         results.append((doc_type, full_url, date))
 
     return results
+
+
+def _parse_date_from_url(href: str) -> Optional[datetime]:
+    """Extract date from Fed URL like monetary20250129a.htm or fomcminutes20250129.htm."""
+    m = re.search(r"20\d{2}(0[1-9]|1[0-2])(0[1-9]|[12]\d|3[01])", href)
+    if m:
+        try:
+            return datetime.strptime(m.group(0), "%Y%m%d")
+        except ValueError:
+            pass
+    return None
 
 
 def extract_text_from_html(soup: BeautifulSoup) -> str:
@@ -151,9 +170,12 @@ def scrape_and_store_fed(
             continue
         try:
             if doc_url.lower().endswith(".pdf"):
-                # Skip PDF in basic impl; could add PyPDF2/pdfplumber here
-                logger.debug("Skipping PDF: %s", doc_url)
                 continue
+            with get_connection() as conn:
+                cur = conn.cursor()
+                cur.execute("SELECT 1 FROM fed_documents WHERE url = ? LIMIT 1", (doc_url,))
+                if cur.fetchone():
+                    continue
             title, full_text = fetch_and_extract_document(doc_url)
             if len(full_text) < 100:
                 continue
@@ -172,6 +194,11 @@ def scrape_and_store_fed(
         speech_links = scrape_speech_links(limit=speeches_limit)
         for doc_type, doc_url, doc_date in speech_links:
             try:
+                with get_connection() as conn:
+                    cur = conn.cursor()
+                    cur.execute("SELECT 1 FROM fed_documents WHERE url = ? LIMIT 1", (doc_url,))
+                    if cur.fetchone():
+                        continue
                 title, full_text = fetch_and_extract_document(doc_url)
                 if len(full_text) < 100:
                     continue

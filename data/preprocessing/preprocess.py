@@ -26,9 +26,10 @@ def _language_is_english(text: str) -> bool:
         return True
 
 
-def _min_word_count(text: str) -> bool:
+def _min_word_count(text: str, min_w: Optional[int] = None) -> bool:
     cfg = get_config()
-    min_w = cfg.get("data", {}).get("preprocessing", {}).get("min_word_count", 50)
+    if min_w is None:
+        min_w = cfg.get("data", {}).get("preprocessing", {}).get("min_word_count", 20)
     return len((text or "").split()) >= min_w
 
 
@@ -43,6 +44,7 @@ def run_preprocess_batch(
 ) -> int:
     """
     Process rows from a source table into documents_processed.
+    Skips rows already in documents_processed (same source_id + source_table).
     Returns number of rows inserted.
     """
     threshold = get_config().get("data", {}).get("preprocessing", {}).get("dedup_jaccard_threshold", 0.85)
@@ -55,17 +57,28 @@ def run_preprocess_batch(
 
     with get_connection() as conn:
         cur = conn.cursor()
+        cur.execute(f"SELECT COUNT(*) FROM {source_table}")
+        source_count = cur.fetchone()[0]
         cur.execute(
             f"SELECT {cols_sql} FROM {source_table} ORDER BY id LIMIT ?",
             (limit,),
         )
         rows = cur.fetchall()
-        existing_fps = []
-        cur2 = conn.execute("SELECT minhash_fingerprint FROM documents_processed WHERE minhash_fingerprint IS NOT NULL")
-        for row in cur2.fetchall():
-            existing_fps.append(row[0])
+        # Already-processed source IDs (so we skip re-cleaning and report accurately)
+        cur.execute(
+            "SELECT source_id FROM documents_processed WHERE source_table = ?",
+            (source_table,),
+        )
+        already_processed_ids = {row[0] for row in cur.fetchall()}
+        cur.execute("SELECT minhash_fingerprint FROM documents_processed WHERE minhash_fingerprint IS NOT NULL")
+        existing_fps = [row[0] for row in cur.fetchall()]
 
+    skipped_already = 0
     for row in rows:
+        doc_id = row[0]
+        if doc_id in already_processed_ids:
+            skipped_already += 1
+            continue
         doc_id, title, content = row[0], row[1], row[2]
         pub = row[3] if date_col and len(row) > 3 else None
         if not content or not _min_word_count(content):
@@ -105,6 +118,11 @@ def run_preprocess_batch(
         except Exception as e:
             logger.debug("Skip insert: %s", e)
 
+    if source_count > 0 or inserted > 0 or skipped_already > 0:
+        logger.info(
+            "%s: %d in source, %d already in docs_processed, %d new inserted",
+            source_table, min(source_count, limit), skipped_already, inserted,
+        )
     return inserted
 
 
@@ -142,9 +160,13 @@ def run_full_preprocess(limit_per_source: int = 5000) -> dict:
 
 
 if __name__ == "__main__":
-    logging.basicConfig(level=logging.INFO)
-    from data.storage.db_manager import ensure_schema
+    logging.basicConfig(level=logging.INFO, format="%(message)s")
+    from data.storage.db_manager import ensure_schema, get_document_count
 
     ensure_schema()
-    counts = run_full_preprocess(limit_per_source=1000)
-    print("Processed:", counts)
+    # Show source table counts so user knows why counts might be 0
+    doc_counts = get_document_count()
+    print("Source rows in DB: raw_articles=%s, fed_documents=%s, earnings_transcripts=%s"
+          % (doc_counts.get("raw_articles", 0), doc_counts.get("fed_documents", 0), doc_counts.get("earnings_transcripts", 0)))
+    counts = run_full_preprocess(limit_per_source=5000)
+    print("Newly processed (inserted this run):", counts)
