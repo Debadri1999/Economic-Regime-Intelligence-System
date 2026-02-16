@@ -63,7 +63,34 @@ with st.sidebar:
     st.divider()
     render_glossary_expander()
     st.divider()
-    st.caption("Fill data: python run_all_data.py")
+    # Run pipeline from app (collectors -> preprocess -> sentiment -> regime)
+    st.markdown("**Fetch data**")
+    include_topic_labels = st.checkbox("Include topic labels (slower)", value=False, help="Run BERTopic to label themes for the Topics page. Can add 2–5 min.")
+    run_pipeline_clicked = st.button("Run pipeline now", help="Run collectors, preprocess, sentiment & regime on the backend. May take 2–5 min.")
+    if run_pipeline_clicked:
+        from utils.run_pipeline import get_pipeline_steps, run_pipeline
+        steps = get_pipeline_steps(
+            include_news=bool(os.getenv("NEWS_API_KEY") or os.getenv("NEWSAPI_KEY")),
+            include_fed=True,
+            include_topics=include_topic_labels,
+            market_days=90,
+            sentiment_limit=800,
+        )
+        with st.status("Running pipeline…", expanded=True) as status:
+            log_placeholder = st.empty()
+            log_lines = []
+            def on_progress(name: str, msg: str):
+                log_lines.append(f"**{name}:** {msg}")
+                log_placeholder.markdown("\n".join(log_lines))
+            results = run_pipeline(steps, on_progress=on_progress)
+            failed = [r for r in results if not r[2]]
+            if failed:
+                status.update(label="Pipeline finished with errors", state="error")
+            else:
+                status.update(label="Pipeline finished", state="complete")
+        st.cache_data.clear()
+        st.rerun()
+    st.caption("Or run locally: python run_all_data.py")
 
 days = st.session_state.get("days", 365)
 source_filter = None if st.session_state.get("data_source", "all") == "all" else st.session_state.get("data_source")
