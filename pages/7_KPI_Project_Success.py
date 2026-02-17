@@ -7,17 +7,6 @@ from components.insights import humanize_topic_label
 from components.data_loader import get_document_counts, load_regime_states, load_topic_distribution
 from data.storage.db_manager import get_connection
 
-# Minimal dark layout (avoid DARK_LAYOUT to prevent TypeError with update_layout on Cloud)
-_LAYOUT = dict(
-    paper_bgcolor="rgba(10,14,20,0.9)",
-    plot_bgcolor="rgba(22,27,34,0.95)",
-    font=dict(color="#e6edf3", size=12),
-    margin=dict(t=50, b=50, l=60, r=40),
-    xaxis=dict(gridcolor="#30363d", zerolinecolor="#30363d"),
-    yaxis=dict(gridcolor="#30363d", zerolinecolor="#30363d"),
-    height=280,
-)
-
 inject_theme()
 st.title("KPI & Project Success")
 st.caption("Data coverage, model quality indicators, and benchmark comparison for stakeholder reporting.")
@@ -185,20 +174,39 @@ else:
 st.markdown("---")
 st.markdown("## Quality at a glance")
 
+def _bar_layout(title, yaxis_title=None, xaxis_title=None, yaxis_tickformat=None):
+    """Minimal layout for bar charts; only explicit kwargs to avoid TypeError on Cloud."""
+    opts = dict(
+        title=title,
+        paper_bgcolor="rgba(10,14,20,0.9)",
+        plot_bgcolor="rgba(22,27,34,0.95)",
+        font=dict(color="#e6edf3", size=12),
+        height=280,
+        margin=dict(t=50, b=50, l=60, r=40),
+    )
+    if yaxis_title:
+        opts["yaxis_title"] = yaxis_title
+    if xaxis_title:
+        opts["xaxis_title"] = xaxis_title
+    if yaxis_tickformat is not None:
+        opts["yaxis"] = dict(tickformat=yaxis_tickformat, gridcolor="#30363d", zerolinecolor="#30363d")
+    else:
+        opts["xaxis"] = dict(gridcolor="#30363d", zerolinecolor="#30363d")
+        opts["yaxis"] = dict(gridcolor="#30363d", zerolinecolor="#30363d")
+    return opts
+
 col_a, col_b = st.columns(2)
 with col_a:
     if not regime_df.empty and "regime_label" in regime_df.columns:
         mix = regime_df["regime_label"].value_counts()
         total = len(regime_df)
         labels = ["Risk-Off", "Transitional", "Risk-On"]
-        pcts = [mix.get(l, 0) / total * 100 for l in labels]
+        pcts = [float(mix.get(l, 0)) / total * 100 for l in labels]
         fig = go.Figure(data=[go.Bar(x=labels, y=pcts, marker_color=["#f85149", "#d29922", "#3fb950"])])
-        fig.update_layout(
-            **_LAYOUT,
-            title="Regime mix (% of days)",
-            yaxis_title="%",
-            yaxis=dict(tickformat=".0f", gridcolor="#30363d", zerolinecolor="#30363d"),
-        )
+        try:
+            fig.update_layout(**_bar_layout("Regime mix (% of days)", yaxis_title="%", yaxis_tickformat=".0f"))
+        except Exception:
+            fig.update_layout(title="Regime mix (% of days)", height=280)
         st.plotly_chart(fig, use_container_width=True)
     else:
         st.caption("Regime mix will appear once regime data is available.")
@@ -210,11 +218,10 @@ with col_b:
         fig = go.Figure(
             data=[go.Bar(y=top["display_label"], x=top["doc_count"], orientation="h", marker_color="#58a6ff")]
         )
-        fig.update_layout(
-            **_LAYOUT,
-            title="Topic distribution (top 10)",
-            xaxis_title="Documents",
-        )
+        try:
+            fig.update_layout(**_bar_layout("Topic distribution (top 10)", xaxis_title="Documents"))
+        except Exception:
+            fig.update_layout(title="Topic distribution (top 10)", height=280)
         st.plotly_chart(fig, use_container_width=True)
     else:
         st.caption("Topic distribution will appear once topic labels are generated.")
