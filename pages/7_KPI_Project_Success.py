@@ -5,8 +5,18 @@ import plotly.graph_objects as go
 from components.ui_theme import inject_theme
 from components.insights import humanize_topic_label
 from components.data_loader import get_document_counts, load_regime_states, load_topic_distribution
-from components.charts import DARK_LAYOUT
 from data.storage.db_manager import get_connection
+
+# Minimal dark layout (avoid DARK_LAYOUT to prevent TypeError with update_layout on Cloud)
+_LAYOUT = dict(
+    paper_bgcolor="rgba(10,14,20,0.9)",
+    plot_bgcolor="rgba(22,27,34,0.95)",
+    font=dict(color="#e6edf3", size=12),
+    margin=dict(t=50, b=50, l=60, r=40),
+    xaxis=dict(gridcolor="#30363d", zerolinecolor="#30363d"),
+    yaxis=dict(gridcolor="#30363d", zerolinecolor="#30363d"),
+    height=280,
+)
 
 inject_theme()
 st.title("KPI & Project Success")
@@ -184,11 +194,10 @@ with col_a:
         pcts = [mix.get(l, 0) / total * 100 for l in labels]
         fig = go.Figure(data=[go.Bar(x=labels, y=pcts, marker_color=["#f85149", "#d29922", "#3fb950"])])
         fig.update_layout(
+            **_LAYOUT,
             title="Regime mix (% of days)",
             yaxis_title="%",
-            yaxis=dict(tickformat=".0f"),
-            **DARK_LAYOUT,
-            height=280,
+            yaxis=dict(tickformat=".0f", gridcolor="#30363d", zerolinecolor="#30363d"),
         )
         st.plotly_chart(fig, use_container_width=True)
     else:
@@ -202,10 +211,9 @@ with col_b:
             data=[go.Bar(y=top["display_label"], x=top["doc_count"], orientation="h", marker_color="#58a6ff")]
         )
         fig.update_layout(
+            **_LAYOUT,
             title="Topic distribution (top 10)",
             xaxis_title="Documents",
-            **DARK_LAYOUT,
-            height=280,
         )
         st.plotly_chart(fig, use_container_width=True)
     else:
