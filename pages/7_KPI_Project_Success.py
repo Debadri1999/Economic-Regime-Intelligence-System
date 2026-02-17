@@ -94,7 +94,11 @@ st.markdown("## Benchmark vs target")
 
 def _gauge(value: float, target: float, title: str, color_ok: str = "#3fb950", color_low: str = "#f85149") -> go.Figure:
     """0–100 score: 100 if value >= target, else proportional."""
-    score = min(100.0, 100.0 * value / target) if target and target > 0 else 0.0
+    value = float(value if value is not None else 0)
+    target = float(target if target is not None else 1)
+    if target <= 0:
+        target = 1.0
+    score = min(100.0, 100.0 * value / target)
     color = color_ok if score >= 100 else (color_low if score < 50 else "#d29922")
     fig = go.Figure(go.Indicator(
         mode="gauge+number",
@@ -108,8 +112,22 @@ def _gauge(value: float, target: float, title: str, color_ok: str = "#3fb950", c
             steps=[dict(range=[0, 50], color="rgba(248,81,73,0.3)"), dict(range=[50, 100], color="rgba(210,153,34,0.3)")],
         ),
     ))
-    fig.update_layout(**DARK_LAYOUT, height=220, margin=dict(t=40, b=20))
+    # Minimal layout for Indicator (DARK_LAYOUT has xaxis/yaxis/legend that can cause TypeError on gauge)
+    fig.update_layout(
+        paper_bgcolor="rgba(10,14,20,0.9)",
+        plot_bgcolor="rgba(22,27,34,0.95)",
+        font=dict(color="#e6edf3", size=12),
+        height=220,
+        margin=dict(t=40, b=20, l=40, r=40),
+    )
     return fig
+
+# Coerce to numbers in case counts/date_range return None or non-numeric
+raw = int(raw) if raw is not None else 0
+proc = int(proc) if proc is not None else 0
+regime_days = int(regime_days) if regime_days is not None else 0
+nlp = int(nlp) if nlp is not None else 0
+topic_diversity = int(topic_diversity) if topic_diversity is not None else 0
 
 g1, g2, g3, g4, g5 = st.columns(5)
 with g1:
