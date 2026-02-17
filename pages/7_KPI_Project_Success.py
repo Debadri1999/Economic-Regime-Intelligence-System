@@ -4,14 +4,9 @@ import pandas as pd
 import plotly.graph_objects as go
 from components.ui_theme import inject_theme
 from components.insights import humanize_topic_label
-from components.data_loader import (
-    get_document_counts,
-    load_regime_states,
-    load_topic_distribution,
-    get_data_date_range,
-    get_topic_diversity_count,
-)
+from components.data_loader import get_document_counts, load_regime_states, load_topic_distribution
 from components.charts import DARK_LAYOUT
+from data.storage.db_manager import get_connection
 
 inject_theme()
 st.title("KPI & Project Success")
@@ -27,10 +22,40 @@ BENCHMARKS = {
 }
 
 counts = get_document_counts()
-date_range = get_data_date_range()
 regime_df = load_regime_states(days=730)
 topic_dist = load_topic_distribution(days=730)
-topic_diversity = get_topic_diversity_count()
+
+# Date range and topic diversity (inline to avoid import issues on Streamlit Cloud)
+def _get_data_date_range():
+    out = {"docs_min": None, "docs_max": None, "regime_min": None, "regime_max": None, "regime_days": 0}
+    try:
+        with get_connection() as conn:
+            cur = conn.cursor()
+            cur.execute("SELECT MIN(published_date), MAX(published_date) FROM documents_processed WHERE published_date IS NOT NULL")
+            row = cur.fetchone()
+            if row and row[0]:
+                out["docs_min"], out["docs_max"] = str(row[0]), str(row[1])
+            cur.execute("SELECT MIN(date), MAX(date), COUNT(DISTINCT date) FROM regime_states WHERE date IS NOT NULL")
+            row = cur.fetchone()
+            if row and row[0]:
+                out["regime_min"], out["regime_max"] = str(row[0]), str(row[1])
+                out["regime_days"] = row[2] if row[2] is not None else 0
+    except Exception:
+        pass
+    return out
+
+def _get_topic_diversity_count():
+    try:
+        with get_connection() as conn:
+            cur = conn.cursor()
+            cur.execute("SELECT COUNT(DISTINCT topic_hint) FROM documents_processed WHERE topic_hint IS NOT NULL AND topic_hint != ''")
+            row = cur.fetchone()
+            return row[0] if row and row[0] is not None else 0
+    except Exception:
+        return 0
+
+date_range = _get_data_date_range()
+topic_diversity = _get_topic_diversity_count()
 
 # ----- 1. Data coverage KPIs -----
 st.markdown("## Data coverage")
