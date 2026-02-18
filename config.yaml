@@ -1,9 +1,34 @@
 # ERIS - Economic Regime Intelligence System
 # Configuration (secrets in .env)
+# Course dataset: Gu, Kelly & Xiu (2020) — monthly panel, 94 characteristics + 8 macro + industry dummies.
 
 project:
   name: ERIS
-  version: "0.1.0"
+  version: "0.2.0"
+
+# Course data (Data1 = parquet files; no text/NLP in this pipeline)
+course:
+  # Path to folder containing YYYYMM.parquet files (e.g. Data1 or data/raw/Data1)
+  parquet_dir: "Data1"
+  # "full" = 1957-2021, "recent" = 2001-2021 (justify as modern algorithmic era)
+  sample: "recent"
+  # First out-of-sample prediction month (expanding window: train up to t-1, predict t)
+  first_prediction_year: 2010
+  # Macro columns for regime HMM and stress index (must exist in parquet)
+  macro_cols:
+    - macro_dp
+    - macro_tbl
+    - macro_tms
+    - macro_dfy
+    - macro_svar
+    - macro_ep
+    - macro_de
+    - macro_bm
+  # Stress index: weights for term spread (tms), default spread (dfy), stock variance (svar)
+  stress_weights:
+    macro_tms: -1.0   # inverted yield curve = stress
+    macro_dfy: 1.0
+    macro_svar: 1.0
 
 # Data sources - API keys in .env: NEWSAPI_KEY, FRED_API_KEY
 data:

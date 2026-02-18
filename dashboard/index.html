@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ERIS — Economic Regime Intelligence System</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+  <script src="https://cdn.jsdelivr.net/npm/apexcharts@3.45.0/dist/apexcharts.min.js"></script>
+</head>
+<body>
+  <div class="theme-toggle" aria-label="Toggle theme">
+    <span class="theme-icon sun">☀</span>
+    <span class="theme-icon moon">☽</span>
+  </div>
+
+  <header class="header">
+    <div class="header-inner">
+      <a href="#" class="logo">
+        <span class="logo-icon">◇</span>
+        <span class="logo-text">ERIS</span>
+      </a>
+      <p class="tagline">Economic Regime Intelligence System</p>
+      <nav class="nav">
+        <a href="#overview">Overview</a>
+        <a href="#models">Models</a>
+        <a href="#regime">Regime</a>
+        <a href="#portfolio">Portfolio</a>
+        <a href="#shap">Interpretability</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section id="hero" class="hero">
+      <div class="container">
+        <h1 class="hero-title">Data-driven regime intelligence for asset pricing</h1>
+        <p class="hero-subtitle">Machine learning on the Gu, Kelly & Xiu dataset: return prediction, regime detection, and long–short portfolio performance.</p>
+        <div class="hero-kpis" id="hero-kpis">
+          <div class="kpi-card">
+            <span class="kpi-value" id="kpi-sharpe">—</span>
+            <span class="kpi-label">Sharpe ratio</span>
+          </div>
+          <div class="kpi-card">
+            <span class="kpi-value" id="kpi-oos-r2">—</span>
+            <span class="kpi-label">Best OOS R²</span>
+          </div>
+          <div class="kpi-card">
+            <span class="kpi-value" id="kpi-alpha">—</span>
+            <span class="kpi-label">Ann. alpha</span>
+          </div>
+          <div class="kpi-card">
+            <span class="kpi-value" id="kpi-maxdd">—</span>
+            <span class="kpi-label">Max drawdown</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="overview" class="section section-alt">
+      <div class="container">
+        <h2 class="section-title">Methodology at a glance</h2>
+        <div class="methodology-grid">
+          <div class="method-card">
+            <span class="method-num">1</span>
+            <h3>Data</h3>
+            <p>Monthly panel 2001–2021: 94 firm characteristics, 8 macro predictors, industry dummies. Expanding-window validation, no look-ahead.</p>
+          </div>
+          <div class="method-card">
+            <span class="method-num">2</span>
+            <h3>Baselines</h3>
+            <p>OLS, Ridge, Random Forest, XGBoost — predict next-month excess return. Out-of-sample R² reported from first prediction year (e.g. 2010).</p>
+          </div>
+          <div class="method-card">
+            <span class="method-num">3</span>
+            <h3>Regime-aware NN</h3>
+            <p>Custom architecture: macro → regime embedding; characteristics + embedding → return. Conditional modeling across market regimes.</p>
+          </div>
+          <div class="method-card">
+            <span class="method-num">4</span>
+            <h3>Regime & stress</h3>
+            <p>HMM on 8 macro variables (Bull / Transition / Bear). Stress index from term spread, default spread, and stock variance.</p>
+          </div>
+          <div class="method-card">
+            <span class="method-num">5</span>
+            <h3>Portfolio</h3>
+            <p>Decile long–short: long top 10% predicted return, short bottom 10%, value-weighted by market cap. Cumulative returns vs market.</p>
+          </div>
+          <div class="method-card">
+            <span class="method-num">6</span>
+            <h3>SHAP by regime</h3>
+            <p>Feature importance per regime — which characteristics drive predictions in bull vs bear markets.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="models" class="section">
+      <div class="container">
+        <h2 class="section-title">Model comparison</h2>
+        <p class="section-desc">Out-of-sample R² (monthly). Expanding window: train on all data up to t−1, predict month t. Target: 1–3% is strong for monthly returns.</p>
+        <div class="chart-card">
+          <div id="chart-models" class="chart-container"></div>
+        </div>
+        <div class="models-table-wrap">
+          <table class="models-table" id="models-table">
+            <thead>
+              <tr><th>Model</th><th>OOS R²</th></tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <section id="regime" class="section section-alt">
+      <div class="container">
+        <h2 class="section-title">Regime detection & stress index</h2>
+        <p class="section-desc">HMM states (Bull / Transition / Bear) and composite stress index from macro variables. Performance varies by regime.</p>
+        <div class="chart-card">
+          <div id="chart-regime" class="chart-container chart-tall"></div>
+        </div>
+        <div class="chart-card">
+          <div id="chart-stress" class="chart-container"></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="portfolio" class="section">
+      <div class="container">
+        <h2 class="section-title">Portfolio performance</h2>
+        <p class="section-desc">Long top decile, short bottom decile (value-weighted). Cumulative return of strategy vs value-weighted market over out-of-sample period.</p>
+        <div class="chart-card chart-hero">
+          <div id="chart-portfolio" class="chart-container chart-tall"></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="shap" class="section section-alt">
+      <div class="container">
+        <h2 class="section-title">Feature importance by regime</h2>
+        <p class="section-desc">SHAP importance (mean |SHAP|) for top features in Bull, Bear, and Transition regimes. Which characteristics matter most in each regime.</p>
+        <div class="shap-grid">
+          <div class="chart-card">
+            <h3 class="chart-card-title">Bull</h3>
+            <div id="chart-shap-bull" class="chart-container chart-shap"></div>
+          </div>
+          <div class="chart-card">
+            <h3 class="chart-card-title">Bear</h3>
+            <div id="chart-shap-bear" class="chart-container chart-shap"></div>
+          </div>
+          <div class="chart-card">
+            <h3 class="chart-card-title">Transition</h3>
+            <div id="chart-shap-transition" class="chart-container chart-shap"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section footer-section">
+      <div class="container">
+        <h2 class="section-title">Project summary</h2>
+        <div class="summary-grid">
+          <div class="summary-card">
+            <h3>Validation</h3>
+            <p>Strict expanding window; no look-ahead bias. First OOS month configurable (e.g. 2010).</p>
+          </div>
+          <div class="summary-card">
+            <h3>Innovation</h3>
+            <p>Regime-aware neural network and regime-conditional SHAP for interpretability.</p>
+          </div>
+          <div class="summary-card">
+            <h3>Deliverables</h3>
+            <p>Pipeline, dashboard, and presentation aligned with course guidelines and stakeholder KPIs.</p>
+          </div>
+        </div>
+        <footer class="site-footer">
+          <p><strong>ERIS</strong> — Economic Regime Intelligence System. Gu, Kelly & Xiu (2020) dataset.</p>
+        </footer>
+      </div>
+    </section>
+  </main>
+
+  <script src="js/app.js"></script>
+</body>
+</html>

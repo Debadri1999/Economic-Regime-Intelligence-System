@@ -16,6 +16,7 @@ kaggle>=1.5.0
 # Data processing
 pandas>=2.0.0
 numpy>=1.24.0
+pyarrow>=14.0.0
 pyyaml>=6.0
 python-dotenv>=1.0.0
 trafilatura>=1.6.0
@@ -62,3 +63,6 @@ pytest-cov>=4.1.0
 # Code quality
 black>=23.0.0
 ruff>=0.1.0
+
+# Presentations
+python-pptx>=0.6.21
