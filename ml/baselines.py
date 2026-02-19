@@ -120,6 +120,7 @@ def run_expanding_window_baselines(
     first_prediction_year: int = 2010,
     model_names: Optional[List[str]] = None,
     progress_callback: Optional[Callable[[int, int, str], None]] = None,
+    retrain_every: int = 1,
 ) -> tuple:
     """
     Run expanding-window prediction for baseline models.
@@ -169,8 +170,12 @@ def run_expanding_window_baselines(
         X_test = test[feature_cols].values
         y_test = test[target_col].values
 
+        # Quarterly retrain (retrain_every=3): matches ERIS_Optimized_Pipeline.ipynb
+        if idx % retrain_every == 0:
+            for name, model in models.items():
+                model.fit(X_train, y_train)
+
         for name, model in models.items():
-            model.fit(X_train, y_train)
             preds = model.predict(X_test)
             all_preds[name].extend(preds)
 

@@ -1,0 +1,1298 @@
+[
+{
+"month_dt": "2010-01",
+"strategy_return": -0.06784418575830156,
+"long_return": -0.03360275870238152,
+"short_return": 0.03424142705592005,
+"market_return": -0.033559234092510166,
+"cum_strategy": -0.06784418575830153,
+"cum_market": -0.03355923409251016
+},
+{
+"month_dt": "2010-02",
+"strategy_return": 0.059692912929545136,
+"long_return": 0.07453797128704713,
+"short_return": 0.014845058357501998,
+"market_return": 0.034053168454260464,
+"cum_strategy": -0.012201089902002527,
+"cum_market": -0.0006488638899979637
+},
+{
+"month_dt": "2010-03",
+"strategy_return": 0.028514563468597362,
+"long_return": 0.09413987881039823,
+"short_return": 0.06562531534180087,
+"market_return": 0.06313303726175627,
+"cum_strategy": 0.015965564814198085,
+"cum_market": 0.0624432086236133
+},
+{
+"month_dt": "2010-04",
+"strategy_return": 0.0649028014007697,
+"long_return": 0.0997826314090399,
+"short_return": 0.034879830008270184,
+"market_return": 0.019967079462641972,
+"cum_strategy": 0.08190457609735491,
+"cum_market": 0.08365709659474518
+},
+{
+"month_dt": "2010-05",
+"strategy_return": -0.005659004146742044,
+"long_return": -0.08813272858251843,
+"short_return": -0.08247372443577639,
+"market_return": -0.07901341937471912,
+"cum_strategy": 0.0757820736148409,
+"cum_market": -0.0019663560368859967
+},
+{
+"month_dt": "2010-06",
+"strategy_return": -0.08062247925849682,
+"long_return": -0.10221066744701593,
+"short_return": -0.02158818818851911,
+"market_return": -0.05566858999980802,
+"cum_strategy": -0.010950144301834386,
+"cum_market": -0.057525481768682996
+},
+{
+"month_dt": "2010-07",
+"strategy_return": 0.03840520924078156,
+"long_return": 0.0937844157051157,
+"short_return": 0.05537920646433414,
+"market_return": 0.06933648654702877,
+"cum_strategy": 0.027034522355818602,
+"cum_market": 0.007822389985580047
+},
+{
+"month_dt": "2010-08",
+"strategy_return": -0.001353785225201909,
+"long_return": -0.08109464519533759,
+"short_return": -0.07974085997013568,
+"market_return": -0.047754960359563114,
+"cum_strategy": 0.025644138193680943,
+"cum_market": -0.04030612829766145
+},
+{
+"month_dt": "2010-09",
+"strategy_return": 0.005732581982954801,
+"long_return": 0.11762698892325668,
+"short_return": 0.11189440694030188,
+"market_return": 0.09550325650377546,
+"cum_strategy": 0.03152372730121322,
+"cum_market": 0.05134776169662825
+},
+{
+"month_dt": "2010-10",
+"strategy_return": -0.013185616049111129,
+"long_return": 0.03385020902258976,
+"short_return": 0.04703582507170089,
+"market_return": 0.03880596398969036,
+"cum_strategy": 0.017922451487471402,
+"cum_market": 0.09214632507766907
+},
+{
+"month_dt": "2010-11",
+"strategy_return": -0.03507406221973642,
+"long_return": -0.019789556581535844,
+"short_return": 0.015284505638200576,
+"market_return": 0.005969910553714328,
+"cum_strategy": -0.017780223910866755,
+"cum_market": 0.09866634094995064
+},
+{
+"month_dt": "2010-12",
+"strategy_return": -0.06189896726704766,
+"long_return": 0.05540916918516228,
+"short_return": 0.11730813645220994,
+"market_return": 0.06825153890807888,
+"cum_strategy": -0.07857861368005492,
+"cum_market": 0.17365200946629278
+},
+{
+"month_dt": "2011-01",
+"strategy_return": 0.01952516666546991,
+"long_return": 0.03108683942881648,
+"short_return": 0.011561672763346572,
+"market_return": 0.019845369677851634,
+"cum_strategy": -0.06058770754302967,
+"cum_market": 0.1969435674673048
+},
+{
+"month_dt": "2011-02",
+"strategy_return": 0.03521771856918409,
+"long_return": 0.059342048287125686,
+"short_return": 0.024124329717941595,
+"market_return": 0.034907613807283265,
+"cum_strategy": -0.02750374980684811,
+"cum_market": 0.23872601126956527
+},
+{
+"month_dt": "2011-03",
+"strategy_return": 0.05526942048225404,
+"long_return": 0.011025707287991293,
+"short_return": -0.04424371319426275,
+"market_return": 0.004549681879941619,
+"cum_strategy": 0.02624555436249265,
+"cum_market": 0.24436182055725064
+},
+{
+"month_dt": "2011-04",
+"strategy_return": -0.016064442747445163,
+"long_return": 0.02970361006580861,
+"short_return": 0.04576805281325377,
+"market_return": 0.02908993692014519,
+"cum_strategy": 0.009759491409616405,
+"cum_market": 0.28056022742309805
+},
+{
+"month_dt": "2011-05",
+"strategy_return": 0.052456843489599884,
+"long_return": 0.006830087146600195,
+"short_return": -0.04562675634299969,
+"market_return": -0.012679731360585724,
+"cum_strategy": 0.06272828701262845,
+"cum_market": 0.2643230677483226
+},
+{
+"month_dt": "2011-06",
+"strategy_return": 0.0013136686174342917,
+"long_return": -0.009360980780650447,
+"short_return": -0.010674649398084738,
+"market_return": -0.01738849093072282,
+"cum_strategy": 0.0641243598121366,
+"cum_market": 0.24233839755127717
+},
+{
+"month_dt": "2011-07",
+"strategy_return": -0.0014321744925451033,
+"long_return": -0.044256162116681326,
+"short_return": -0.04282398762413622,
+"market_return": -0.023610314670476636,
+"cum_strategy": 0.06260034804711778,
+"cum_market": 0.21300639705787594
+},
+{
+"month_dt": "2011-08",
+"strategy_return": -0.03512387197478048,
+"long_return": -0.09603201848134467,
+"short_return": -0.06090814650656419,
+"market_return": -0.05982222757192069,
+"cum_strategy": 0.025277709461953624,
+"cum_market": 0.1404416523268841
+},
+{
+"month_dt": "2011-09",
+"strategy_return": -0.05919104700053708,
+"long_return": -0.16731455629717432,
+"short_return": -0.10812350929663724,
+"market_return": -0.07588493640247068,
+"cum_strategy": -0.035409551627411884,
+"cum_market": 0.05389931006932991
+},
+{
+"month_dt": "2011-10",
+"strategy_return": -0.1368458461022484,
+"long_return": 0.06125836211596277,
+"short_return": 0.19810420821821118,
+"market_return": 0.11358190082705642,
+"cum_strategy": -0.1674097476771058,
+"cum_market": 0.17360319698732773
+},
+{
+"month_dt": "2011-11",
+"strategy_return": -0.05137244191829187,
+"long_return": -0.0392192050207769,
+"short_return": 0.01215323689751497,
+"market_return": -0.0027471833924817435,
+"cum_strategy": -0.2101819420562996,
+"cum_market": 0.17037909377520077
+},
+{
+"month_dt": "2011-12",
+"strategy_return": -0.03880770350234823,
+"long_return": -0.028752558204792805,
+"short_return": 0.010055145297555423,
+"market_return": 0.0074408840255688734,
+"cum_strategy": -0.2408329670697792,
+"cum_market": 0.17908774887793233
+},
+{
+"month_dt": "2012-01",
+"strategy_return": 0.03745408758508553,
+"long_return": 0.12240605774488993,
+"short_return": 0.0849519701598044,
+"market_return": 0.05050475693185906,
+"cum_strategy": -0.21239905852670116,
+"cum_market": 0.2386372890363453
+},
+{
+"month_dt": "2012-02",
+"strategy_return": 0.008131044044526081,
+"long_return": 0.08642276505999356,
+"short_return": 0.07829172101546748,
+"market_return": 0.04426815215157355,
+"cum_strategy": -0.20599504058207152,
+"cum_market": 0.29346947300801873
+},
+{
+"month_dt": "2012-03",
+"strategy_return": 0.08879459979162652,
+"long_return": 0.04162721737109115,
+"short_return": -0.04716738242053537,
+"market_return": 0.03129161723001784,
+"cum_strategy": -0.13549168797798983,
+"cum_market": 0.33394422465609863
+},
+{
+"month_dt": "2012-04",
+"strategy_return": -0.03169783458620519,
+"long_return": -0.03803653885011076,
+"short_return": -0.0063387042639055724,
+"market_return": -0.008557020484852023,
+"cum_strategy": -0.16289472945086303,
+"cum_market": 0.3225296366000663
+},
+{
+"month_dt": "2012-05",
+"strategy_return": -0.07154521794174798,
+"long_return": -0.13199798979492955,
+"short_return": -0.06045277185318156,
+"market_return": -0.06195113102323677,
+"cum_strategy": -0.22278560847248696,
+"cum_market": 0.2405974298009419
+},
+{
+"month_dt": "2012-06",
+"strategy_return": -0.020094104693830828,
+"long_return": 0.021696537187448482,
+"short_return": 0.04179064188127931,
+"market_return": 0.03900922453891502,
+"cum_strategy": -0.2384030358253928,
+"cum_market": 0.2889921735024479
+},
+{
+"month_dt": "2012-07",
+"strategy_return": 0.00947595534118141,
+"long_return": 0.013071609030166478,
+"short_return": 0.0035956536889850677,
+"market_return": 0.00796045510101792,
+"cum_strategy": -0.23118617700489486,
+"cum_market": 0.2992531378251777
+},
+{
+"month_dt": "2012-08",
+"strategy_return": 0.006597188408495262,
+"long_return": 0.03887837606276009,
+"short_return": 0.032281187654264826,
+"market_return": 0.02547454895540025,
+"cum_strategy": -0.22611416736354062,
+"cum_market": 0.3323510254901625
+},
+{
+"month_dt": "2012-09",
+"strategy_return": -0.012267315762563825,
+"long_return": 0.03304156808588749,
+"short_return": 0.04530888384845132,
+"market_return": 0.027307343200323235,
+"cum_strategy": -0.23560766923666665,
+"cum_market": 0.3687339922065249
+},
+{
+"month_dt": "2012-10",
+"strategy_return": 0.05957701102173405,
+"long_return": 0.021861874015897488,
+"short_return": -0.03771513700583656,
+"market_return": -0.017648185056410186,
+"cum_strategy": -0.19006745892185062,
+"cum_market": 0.34457832141906497
+},
+{
+"month_dt": "2012-11",
+"strategy_return": -0.027400428800740742,
+"long_return": -0.004608549525995218,
+"short_return": 0.022791879274745526,
+"market_return": 0.007784061332717676,
+"cum_strategy": -0.21225995784706553,
+"cum_market": 0.35504460153963335
+},
+{
+"month_dt": "2012-12",
+"strategy_return": 0.08675555294751573,
+"long_return": 0.07200460739032488,
+"short_return": -0.01475094555719085,
+"market_return": 0.01172393521885711,
+"cum_strategy": -0.14391913491118835,
+"cum_market": 0.3709310566667461
+},
+{
+"month_dt": "2013-01",
+"strategy_return": -0.01617117498558663,
+"long_return": 0.054867450641384895,
+"short_return": 0.07103862562697152,
+"market_return": 0.05576346495220043,
+"cum_strategy": -0.15776296838235193,
+"cum_market": 0.44737892259706546
+},
+{
+"month_dt": "2013-02",
+"strategy_return": 0.00872455443068496,
+"long_return": 0.009658137241114261,
+"short_return": 0.0009335828104293001,
+"market_return": 0.012912542078644567,
+"cum_strategy": -0.15041482555646535,
+"cum_market": 0.46606826383884337
+},
+{
+"month_dt": "2013-03",
+"strategy_return": -0.018255790607062835,
+"long_return": 0.028433185064983057,
+"short_return": 0.04668897567204589,
+"market_return": 0.040409652888764636,
+"cum_strategy": -0.16592467460397142,
+"cum_market": 0.525311573491805
+},
+{
+"month_dt": "2013-04",
+"strategy_return": 0.0027904115568222164,
+"long_return": 0.026137409416169648,
+"short_return": 0.02334699785934743,
+"market_return": 0.015597968227564084,
+"cum_strategy": -0.16359726117672602,
+"cum_market": 0.5491033349522658
+},
+{
+"month_dt": "2013-05",
+"strategy_return": 0.01649205701845194,
+"long_return": 0.05302070886313155,
+"short_return": 0.03652865184467961,
+"market_return": 0.028048832532667618,
+"cum_strategy": -0.14980325951766327,
+"cum_market": 0.5925538749701387
+},
+{
+"month_dt": "2013-06",
+"strategy_return": 0.006694604633651256,
+"long_return": -0.018097890715945246,
+"short_return": -0.024792495349596502,
+"market_return": -0.011950782092858504,
+"cum_strategy": -0.14411152847931497,
+"cum_market": 0.5735216106392331
+},
+{
+"month_dt": "2013-07",
+"strategy_return": 0.06957110560572333,
+"long_return": 0.1059581323505138,
+"short_return": 0.03638702674479046,
+"market_return": 0.05651151770433639,
+"cum_strategy": -0.08456642124042824,
+"cum_market": 0.6624437049970282
+},
+{
+"month_dt": "2013-08",
+"strategy_return": -0.022536727443369965,
+"long_return": -0.047543544095665226,
+"short_return": -0.02500681665229526,
+"market_return": -0.02708732191856848,
+"cum_strategy": -0.10519729829744151,
+"cum_market": 0.617412557188276
+},
+{
+"month_dt": "2013-09",
+"strategy_return": 0.016410492339850036,
+"long_return": 0.05408548044067628,
+"short_return": 0.03767498810082624,
+"market_return": 0.03770030174594709,
+"cum_strategy": -0.0905131454154745,
+"cum_market": 0.6783894986419581
+},
+{
+"month_dt": "2013-10",
+"strategy_return": -0.0036789655507461216,
+"long_return": 0.031080148795093646,
+"short_return": 0.03475911434583977,
+"market_return": 0.0418072988190418,
+"cum_strategy": -0.09385911622234744,
+"cum_market": 0.7485584299464243
+},
+{
+"month_dt": "2013-11",
+"strategy_return": -0.033133443377531616,
+"long_return": 0.016134315739722002,
+"short_return": 0.04926775911725362,
+"market_return": 0.031316208987730784,
+"cum_strategy": -0.12388268388706081,
+"cum_market": 0.8033166511658849
+},
+{
+"month_dt": "2013-12",
+"strategy_return": -0.0026522154968219025,
+"long_return": 0.013501405507541444,
+"short_return": 0.016153621004363346,
+"market_return": 0.0281634200296484,
+"cum_strategy": -0.1262063358098896,
+"cum_market": 0.8541042154591285
+},
+{
+"month_dt": "2014-01",
+"strategy_return": 0.025956575656917988,
+"long_return": 0.02670667181301775,
+"short_return": 0.0007500961560997635,
+"market_return": -0.03320688160045495,
+"cum_strategy": -0.10352564445680335,
+"cum_market": 0.7925351963014728
+},
+{
+"month_dt": "2014-02",
+"strategy_return": 0.01380013195956159,
+"long_return": 0.06488531443280934,
+"short_return": 0.05108518247324775,
+"market_return": 0.046656047124853044,
+"cum_strategy": -0.09115418005194431,
+"cum_market": 0.876167802893072
+},
+{
+"month_dt": "2014-03",
+"strategy_return": -0.03946777981201709,
+"long_return": 0.007213427647283226,
+"short_return": 0.046681207459300315,
+"market_return": 0.004431891521230372,
+"cum_strategy": -0.12702430675672627,
+"cum_market": 0.8844827750711193
+},
+{
+"month_dt": "2014-04",
+"strategy_return": -0.03441274991335053,
+"long_return": -0.022156985576837818,
+"short_return": 0.012255764336512709,
+"market_return": -0.001860196102203565,
+"cum_strategy": -0.1570658009687409,
+"cum_market": 0.8809772675582623
+},
+{
+"month_dt": "2014-05",
+"strategy_return": 0.03893490639660363,
+"long_return": 0.03716065273158389,
+"short_return": -0.0017742536650197402,
+"market_return": 0.020663426518569613,
+"cum_strategy": -0.12424623683096281,
+"cum_market": 0.9198447031095525
+},
+{
+"month_dt": "2014-06",
+"strategy_return": 0.01578847081031889,
+"long_return": 0.03491247634033043,
+"short_return": 0.019124005530011538,
+"market_return": 0.02612639317518872,
+"cum_strategy": -0.11041942410414152,
+"cum_market": 0.9700033206582961
+},
+{
+"month_dt": "2014-07",
+"strategy_return": -0.007175791864298561,
+"long_return": -0.02978132036627338,
+"short_return": -0.02260552850197482,
+"market_return": -0.020424097991810927,
+"cum_strategy": -0.11680286916329297,
+"cum_market": 0.9297677797929782
+},
+{
+"month_dt": "2014-08",
+"strategy_return": -0.045145337534586584,
+"long_return": 0.035615196380961854,
+"short_return": 0.08076053391554844,
+"market_return": 0.042406538574437484,
+"cum_strategy": -0.1566751017444945,
+"cum_market": 1.0116025515864755
+},
+{
+"month_dt": "2014-09",
+"strategy_return": 0.05310847691046214,
+"long_return": -0.020496121604103995,
+"short_return": -0.07360459851456613,
+"market_return": -0.019718035795436042,
+"cum_strategy": -0.11188740085747417,
+"cum_market": 0.9719377004681029
+},
+{
+"month_dt": "2014-10",
+"strategy_return": 0.01509117362274802,
+"long_return": 0.03131020740628325,
+"short_return": 0.01621903378353523,
+"market_return": 0.025252068856899478,
+"cum_strategy": -0.09848473942726443,
+"cum_market": 1.0217332070618395
+},
+{
+"month_dt": "2014-11",
+"strategy_return": 0.0847124252878573,
+"long_return": 0.03265632891732218,
+"short_return": -0.052056096370535127,
+"market_return": 0.025502166211749697,
+"cum_strategy": -0.022115195270133392,
+"cum_market": 1.073291783344144
+},
+{
+"month_dt": "2014-12",
+"strategy_return": 0.02247550853278925,
+"long_return": 0.015015195956909873,
+"short_return": -0.007460312575879374,
+"market_return": -0.0005446584880433706,
+"cum_strategy": -0.0001367369973422905,
+"cum_market": 1.0721625473761551
+},
+{
+"month_dt": "2015-01",
+"strategy_return": -0.005752974639241501,
+"long_return": -0.04498230429894321,
+"short_return": -0.03922932965970171,
+"market_return": -0.03117022398713366,
+"cum_strategy": -0.005888924992105804,
+"cum_market": 1.007572776636691
+},
+{
+"month_dt": "2015-02",
+"strategy_return": -0.04116158723132232,
+"long_return": 0.05597080643372093,
+"short_return": 0.09713239366504325,
+"market_return": 0.06134725533551082,
+"cum_strategy": -0.04680811472366686,
+"cum_market": 1.1307318563696427
+},
+{
+"month_dt": "2015-03",
+"strategy_return": 0.05332119591298319,
+"long_return": 0.024097258203984617,
+"short_return": -0.029223937708998574,
+"market_return": -0.011260579518328028,
+"cum_strategy": 0.0040172165338181465,
+"cum_market": 1.1067385808687575
+},
+{
+"month_dt": "2015-04",
+"strategy_return": 0.01127973692311822,
+"long_return": 0.008034571566933234,
+"short_return": -0.0032451653561849855,
+"market_return": 0.005933384489348594,
+"cum_strategy": 0.015342266602600851,
+"cum_market": 1.1192386708875963
+},
+{
+"month_dt": "2015-05",
+"strategy_return": 0.0677064071564398,
+"long_return": 0.02506852242620556,
+"short_return": -0.04263788473023425,
+"market_return": 0.013626041601524107,
+"cum_strategy": 0.08408744350833897,
+"cum_market": 1.1481155051806695
+},
+{
+"month_dt": "2015-06",
+"strategy_return": 0.002374295766512678,
+"long_return": -0.026115215236005254,
+"short_return": -0.028489511002517932,
+"market_return": -0.015323270884683177,
+"cum_strategy": 0.0866613877359903,
+"cum_market": 1.115199349403198
+},
+{
+"month_dt": "2015-07",
+"strategy_return": 0.046288535084132915,
+"long_return": -0.005829516294880929,
+"short_return": -0.05211805137901385,
+"market_return": 0.015401314891484151,
+"cum_strategy": 0.13696135150678024,
+"cum_market": 1.1477762006416192
+},
+{
+"month_dt": "2015-08",
+"strategy_return": -0.007775920393484896,
+"long_return": -0.06132766967436473,
+"short_return": -0.053551749280879836,
+"market_return": -0.060417500877080865,
+"cum_strategy": 0.1281204305469945,
+"cum_market": 1.0180129301555807
+},
+{
+"month_dt": "2015-09",
+"strategy_return": 0.0795827971943354,
+"long_return": -0.04715300634100918,
+"short_return": -0.12673580353534458,
+"market_return": -0.03069637544237022,
+"cum_strategy": 0.2178994099820024,
+"cum_market": 0.9560672476039673
+},
+{
+"month_dt": "2015-10",
+"strategy_return": -0.03430415823216999,
+"long_return": 0.06968408789081494,
+"short_return": 0.10398824612298493,
+"market_return": 0.07756194575467877,
+"cum_strategy": 0.17612039591111328,
+"cum_market": 1.1077836293551302
+},
+{
+"month_dt": "2015-11",
+"strategy_return": -0.01140889987844242,
+"long_return": -0.0011535350198186084,
+"short_return": 0.01025536485862381,
+"market_return": 0.005683585816344859,
+"cum_strategy": 0.16270215606916927,
+"cum_market": 1.119763398494857
+},
+{
+"month_dt": "2015-12",
+"strategy_return": 0.0936002553397827,
+"long_return": 0.0015049287705754199,
+"short_return": -0.09209532656920727,
+"market_return": -0.02168158882141152,
+"cum_strategy": 0.27153137476135947,
+"cum_market": 1.0738035600900138
+},
+{
+"month_dt": "2016-01",
+"strategy_return": 0.038367367337235087,
+"long_return": -0.04678307931779961,
+"short_return": -0.0851504466550347,
+"market_return": -0.057633302803403175,
+"cum_strategy": 0.3203166860976481,
+"cum_market": 0.9542834115565706
+},
+{
+"month_dt": "2016-02",
+"strategy_return": 0.07449940789929105,
+"long_return": -0.002790858606851238,
+"short_return": -0.07729026650614229,
+"market_return": -0.000678601404900509,
+"cum_strategy": 0.41867949745147715,
+"cum_market": 0.9529572320879145
+},
+{
+"month_dt": "2016-03",
+"strategy_return": -0.16264170445045034,
+"long_return": 0.05243974652610564,
+"short_return": 0.21508145097655598,
+"market_return": 0.06964514571397429,
+"cum_strategy": 0.18794304591706057,
+"cum_market": 1.0889712230898372
+},
+{
+"month_dt": "2016-04",
+"strategy_return": -0.015747721819469512,
+"long_return": 0.025326540261737085,
+"short_return": 0.0410742620812066,
+"market_return": 0.009095565821019854,
+"cum_strategy": 0.1692356492925855,
+"cum_market": 1.107971598347667
+},
+{
+"month_dt": "2016-05",
+"strategy_return": -0.008221764427766183,
+"long_return": 0.033904564589670484,
+"short_return": 0.04212632901743667,
+"market_return": 0.017870041386879202,
+"cum_strategy": 0.1596224692235555,
+"cum_market": 1.1456411380525058
+},
+{
+"month_dt": "2016-06",
+"strategy_return": -0.06942102010112589,
+"long_return": -0.020155012433495934,
+"short_return": 0.04926600766762995,
+"market_return": -0.00047699910257507997,
+"cum_strategy": 0.07912029447786995,
+"cum_market": 1.1446176691552066
+},
+{
+"month_dt": "2016-07",
+"strategy_return": -0.10499228514759684,
+"long_return": 0.010620761656197682,
+"short_return": 0.11561304680379453,
+"market_return": 0.03953868141292064,
+"cum_strategy": -0.0341790111885093,
+"cum_market": 1.2294130239284549
+},
+{
+"month_dt": "2016-08",
+"strategy_return": -0.023463434164345744,
+"long_return": 0.010546669707685426,
+"short_return": 0.03401010387203117,
+"market_return": 0.004932679181407143,
+"cum_strategy": -0.056840488374030995,
+"cum_market": 1.2404100031383445
+},
+{
+"month_dt": "2016-09",
+"strategy_return": 0.03162830011500899,
+"long_return": 0.03770057384344903,
+"short_return": 0.006072273728440035,
+"market_return": 0.0025494735520409967,
+"cum_strategy": -0.027009956283999492,
+"cum_market": 1.246121869187074
+},
+{
+"month_dt": "2016-10",
+"strategy_return": -0.12563751514394406,
+"long_return": -0.13942865312600305,
+"short_return": -0.01379113798205901,
+"market_return": -0.02030727889917803,
+"cum_strategy": -0.14925400763627528,
+"cum_market": 1.200509245947949
+},
+{
+"month_dt": "2016-11",
+"strategy_return": 0.08731855817365394,
+"long_return": 0.12635208279123455,
+"short_return": 0.03903352461758062,
+"market_return": 0.0487025300505571,
+"cum_strategy": -0.07496809421106043,
+"cum_market": 1.3076796136252575
+},
+{
+"month_dt": "2016-12",
+"strategy_return": -0.07090140060696909,
+"long_return": -0.05796630676915392,
+"short_return": 0.01293509383781517,
+"market_return": 0.01809585369410884,
+"cum_strategy": -0.1405541519376301,
+"cum_market": 1.3494390462862982
+},
+{
+"month_dt": "2017-01",
+"strategy_return": -0.03325134701840909,
+"long_return": 0.02368259302504911,
+"short_return": 0.0569339400434582,
+"market_return": 0.019286452757232234,
+"cum_strategy": -0.16913188407508284,
+"cum_market": 1.3947513914584957
+},
+{
+"month_dt": "2017-02",
+"strategy_return": 0.020797787508777525,
+"long_return": 0.027424063452708564,
+"short_return": 0.00662627594393104,
+"market_return": 0.03567827684952284,
+"cum_strategy": -0.15185166555225815,
+"cum_market": 1.4801919945887319
+},
+{
+"month_dt": "2017-03",
+"strategy_return": 0.015266580147686826,
+"long_return": -0.008601089342116848,
+"short_return": -0.023867669489803674,
+"market_return": 0.0017153385031485836,
+"cum_strategy": -0.13890334102728463,
+"cum_market": 1.4844463634122507
+},
+{
+"month_dt": "2017-04",
+"strategy_return": 0.08148668496100735,
+"long_return": 0.010731070165894283,
+"short_return": -0.07075561479511307,
+"market_return": 0.010912245488832722,
+"cum_strategy": -0.06873542885659889,
+"cum_market": 1.5115572520336427
+},
+{
+"month_dt": "2017-05",
+"strategy_return": 0.10574200283634808,
+"long_return": 0.04331987026639519,
+"short_return": -0.06242213256995288,
+"market_return": 0.0106302108197844,
+"cum_strategy": 0.029738352066636997,
+"cum_market": 1.5382556351087189
+},
+{
+"month_dt": "2017-06",
+"strategy_return": -0.052148414215885584,
+"long_return": -0.0037290453171249707,
+"short_return": 0.04841936889876061,
+"market_return": 0.007901917651398905,
+"cum_strategy": -0.023960870050917404,
+"cum_market": 1.5583127221155468
+},
+{
+"month_dt": "2017-07",
+"strategy_return": 0.01467333848927722,
+"long_return": 0.03373121885456383,
+"short_return": 0.01905788036528661,
+"market_return": 0.01873833723589035,
+"cum_strategy": -0.009639117518394857,
+"cum_market": 1.6062512486574163
+},
+{
+"month_dt": "2017-08",
+"strategy_return": 0.09669363815884564,
+"long_return": 0.014456726638379158,
+"short_return": -0.08223691152046649,
+"market_return": 0.0015686236816522864,
+"cum_strategy": 0.08612247929895656,
+"cum_market": 1.6103394760863963
+},
+{
+"month_dt": "2017-09",
+"strategy_return": -0.08741454325178993,
+"long_return": 0.03241941944375064,
+"short_return": 0.11983396269554057,
+"market_return": 0.025172534355835333,
+"cum_strategy": -0.008820421144463353,
+"cum_market": 1.676048336228574
+},
+{
+"month_dt": "2017-10",
+"strategy_return": 0.04262358240525671,
+"long_return": 0.025955235850270746,
+"short_return": -0.01666834655498596,
+"market_return": 0.022429396505981667,
+"cum_strategy": 0.03342720331329341,
+"cum_market": 1.7360704854310174
+},
+{
+"month_dt": "2017-11",
+"strategy_return": -0.0250802758915364,
+"long_return": 0.013547257876691136,
+"short_return": 0.038627533768227536,
+"market_return": 0.03137339426245111,
+"cum_strategy": 0.007508563940377133,
+"cum_market": 1.8219103035003004
+},
+{
+"month_dt": "2017-12",
+"strategy_return": 0.00143277713649545,
+"long_return": 0.03227860370891928,
+"short_return": 0.03084582657242383,
+"market_return": 0.01053440901628248,
+"cum_strategy": 0.008952099175614237,
+"cum_market": 1.8516374608446342
+},
+{
+"month_dt": "2018-01",
+"strategy_return": -0.07937549482747634,
+"long_return": -0.0028297662929648738,
+"short_return": 0.07654572853451147,
+"market_return": 0.05592604829757438,
+"cum_strategy": -0.07113397295367108,
+"cum_market": 2.0111182752070036
+},
+{
+"month_dt": "2018-02",
+"strategy_return": 0.040208007595945956,
+"long_return": -0.023442710133447626,
+"short_return": -0.06365071772939358,
+"market_return": -0.036490216658362905,
+"cum_strategy": -0.03378612068257625,
+"cum_market": 1.901241916960744
+},
+{
+"month_dt": "2018-03",
+"strategy_return": 0.020472281221442967,
+"long_return": 0.020753489754904427,
+"short_return": 0.0002812085334614606,
+"market_return": -0.023445348026980072,
+"cum_strategy": -0.014005518425128538,
+"cum_market": 1.8332212905071366
+},
+{
+"month_dt": "2018-04",
+"strategy_return": 0.043865180832879366,
+"long_return": 0.039683088328285335,
+"short_return": -0.004182092504594032,
+"market_return": 0.002914432658062375,
+"cum_strategy": 0.0292453078093744,
+"cum_market": 1.8414785231637083
+},
+{
+"month_dt": "2018-05",
+"strategy_return": 0.06135926566912235,
+"long_return": 0.08727147514093862,
+"short_return": 0.025912209471816276,
+"market_return": 0.02633522290409577,
+"cum_strategy": 0.09239904408994759,
+"cum_market": 1.9163094934484257
+},
+{
+"month_dt": "2018-06",
+"strategy_return": 0.003943165082686655,
+"long_return": 0.023361129844476042,
+"short_return": 0.019417964761789388,
+"market_return": 0.004637732769469651,
+"cum_strategy": 0.09670655385696336,
+"cum_market": 1.9298345575521068
+},
+{
+"month_dt": "2018-07",
+"strategy_return": 0.04081632266622611,
+"long_return": 0.031073043475536796,
+"short_return": -0.009743279190689314,
+"market_return": 0.03216009598367575,
+"cum_strategy": 0.141470082429354,
+"cum_market": 2.024058318139273
+},
+{
+"month_dt": "2018-08",
+"strategy_return": 0.05335110727322698,
+"long_return": 0.035184921300627045,
+"short_return": -0.018166185972599933,
+"market_return": 0.03434473733924567,
+"cum_strategy": 0.20236877524622154,
+"cum_market": 2.127918806774327
+},
+{
+"month_dt": "2018-09",
+"strategy_return": -0.0010583183942753935,
+"long_return": 0.003111119484548068,
+"short_return": 0.004169437878823462,
+"market_return": 0.0004884667100664296,
+"cum_strategy": 0.20109628625467613,
+"cum_market": 2.129446690983227
+},
+{
+"month_dt": "2018-10",
+"strategy_return": -0.004366326494988165,
+"long_return": -0.0681203583662843,
+"short_return": -0.06375403187129614,
+"market_return": -0.076487482685129,
+"cum_strategy": 0.19585190771697047,
+"cum_market": 1.890083191392613
+},
+{
+"month_dt": "2018-11",
+"strategy_return": -0.0040206141656543536,
+"long_return": 0.010673294004297198,
+"short_return": 0.014693908169951551,
+"market_return": 0.016887164841712436,
+"cum_strategy": 0.19104384859677892,
+"cum_market": 1.9388885026519223
+},
+{
+"month_dt": "2018-12",
+"strategy_return": 0.023153322546223154,
+"long_return": -0.09830221260371208,
+"short_return": -0.12145553514993523,
+"market_return": -0.09538520925151368,
+"cum_strategy": 0.21862047099003523,
+"cum_market": 1.6585620078596008
+},
+{
+"month_dt": "2019-01",
+"strategy_return": -0.12201520633567156,
+"long_return": 0.14381410491537158,
+"short_return": 0.26582931125104314,
+"market_return": 0.08393974449886159,
+"cum_strategy": 0.06993024277731297,
+"cum_market": 1.8817210235337165
+},
+{
+"month_dt": "2019-02",
+"strategy_return": -0.08700853593742996,
+"long_return": 0.053829402254822724,
+"short_return": 0.14083793819225268,
+"market_return": 0.03376609405089428,
+"cum_strategy": -0.023162821201920036,
+"cum_market": 1.9790254866427954
+},
+{
+"month_dt": "2019-03",
+"strategy_return": 0.038084037379518904,
+"long_return": 0.026973531253686903,
+"short_return": -0.011110506125831997,
+"market_return": 0.011004058580631063,
+"cum_strategy": 0.014039082429129657,
+"cum_market": 2.0118068576110057
+},
+{
+"month_dt": "2019-04",
+"strategy_return": 0.009859603251570474,
+"long_return": 0.02804046908556755,
+"short_return": 0.018180865833997077,
+"market_return": 0.03996957036778529,
+"cum_strategy": 0.0240371054634676,
+"cum_market": 2.1321874837404673
+},
+{
+"month_dt": "2019-05",
+"strategy_return": 0.07522824844901846,
+"long_return": -0.08084611025759358,
+"short_return": -0.15607435870661204,
+"market_return": -0.06934966534788438,
+"cum_strategy": 0.10107362325428704,
+"cum_market": 1.9149713299362339
+},
+{
+"month_dt": "2019-06",
+"strategy_return": 0.03344847927800659,
+"long_return": 0.09146601172742763,
+"short_return": 0.05801753244942104,
+"market_return": 0.06949105387576973,
+"cum_strategy": 0.13790286152526754,
+"cum_market": 2.1175357596711573
+},
+{
+"month_dt": "2019-07",
+"strategy_return": 0.08578419309351881,
+"long_return": 0.011747100251097195,
+"short_return": -0.07403709284242162,
+"market_return": 0.012596379495490214,
+"cum_strategy": 0.2355169403200188,
+"cum_market": 2.1568054231907365
+},
+{
+"month_dt": "2019-08",
+"strategy_return": 0.11889571484174688,
+"long_return": -0.03064624251770038,
+"short_return": -0.14954195735944725,
+"market_return": -0.024400199363835345,
+"cum_strategy": 0.38241461013845535,
+"cum_market": 2.079778741512046
+},
+{
+"month_dt": "2019-09",
+"strategy_return": -0.027618106583363493,
+"long_return": 0.005229189679845647,
+"short_return": 0.03284729626320914,
+"market_return": 0.015650373023769662,
+"cum_strategy": 0.3442349360932526,
+"cum_market": 2.127978427647385
+},
+{
+"month_dt": "2019-10",
+"strategy_return": -0.0004645366014889669,
+"long_return": 0.0030401488171991125,
+"short_return": 0.0035046854186880794,
+"market_return": 0.02099140726921469,
+"cum_strategy": 0.3436104897644372,
+"cum_market": 2.1936390967514496
+},
+{
+"month_dt": "2019-11",
+"strategy_return": -0.03551346961526458,
+"long_return": 0.02112324394363285,
+"short_return": 0.05663671355889743,
+"market_return": 0.038184429378042124,
+"cum_strategy": 0.2958942194614371,
+"cum_market": 2.31558638330031
+},
+{
+"month_dt": "2019-12",
+"strategy_return": -0.10251579611424519,
+"long_return": 0.025729980220105447,
+"short_return": 0.12824577633435064,
+"market_return": 0.027721335104144058,
+"cum_strategy": 0.1630445918734995,
+"cum_market": 2.407498864498515
+},
+{
+"month_dt": "2020-01",
+"strategy_return": 0.07964179653039094,
+"long_return": 0.026031231307329795,
+"short_return": -0.053610565223061145,
+"market_return": -0.0014024791323411652,
+"cum_strategy": 0.2556715526152604,
+"cum_market": 2.4027199184475796
+},
+{
+"month_dt": "2020-02",
+"strategy_return": -0.0464436247354647,
+"long_return": -0.09400169217508594,
+"short_return": -0.047558067439621245,
+"market_return": -0.08230811234166346,
+"cum_strategy": 0.19735361423459885,
+"cum_market": 2.12264846513278
+},
+{
+"month_dt": "2020-03",
+"strategy_return": 0.11561034176832177,
+"long_return": -0.15888203190274683,
+"short_return": -0.2744923736710686,
+"market_return": -0.13266305069373296,
+"cum_strategy": 0.33578007479379623,
+"cum_market": 1.7083883935041628
+},
+{
+"month_dt": "2020-04",
+"strategy_return": -0.21320272143342092,
+"long_return": 0.0967973526873103,
+"short_return": 0.3100000741207312,
+"market_return": 0.13600275579028154,
+"cum_strategy": 0.05098812761122029,
+"cum_market": 2.0767366787711423
+},
+{
+"month_dt": "2020-05",
+"strategy_return": -0.0822790107353768,
+"long_return": 0.02906030691461322,
+"short_return": 0.11133931764999001,
+"market_return": 0.052956462577378786,
+"cum_strategy": -0.03548613582325688,
+"cum_market": 2.239669769560935
+},
+{
+"month_dt": "2020-06",
+"strategy_return": -0.03432254978742495,
+"long_return": 0.019887132463708504,
+"short_return": 0.054209682251133456,
+"market_return": 0.02378966291979159,
+"cum_strategy": -0.06859071094712477,
+"cum_market": 2.3167404213502287
+},
+{
+"month_dt": "2020-07",
+"strategy_return": 0.18289724247439879,
+"long_return": 0.19345807342698593,
+"short_return": 0.010560830952587134,
+"market_return": 0.05854407195094607,
+"cum_strategy": 0.10176147963568649,
+"cum_market": 2.5109159112203674
+},
+{
+"month_dt": "2020-08",
+"strategy_return": 0.4011867711119513,
+"long_return": 0.46173203793192835,
+"short_return": 0.06054526681997709,
+"market_return": 0.07627736265935654,
+"cum_strategy": 0.5437736101862534,
+"cum_market": 2.7787193174470284
+},
+{
+"month_dt": "2020-09",
+"strategy_return": 0.03212840236994358,
+"long_return": -0.057890700068925986,
+"short_return": -0.09001910243886957,
+"market_return": -0.03884594714461104,
+"cum_strategy": 0.5933725899024176,
+"cum_market": 2.6319313865671607
+},
+{
+"month_dt": "2020-10",
+"strategy_return": -0.034844422288637496,
+"long_return": -0.0003067475302899452,
+"short_return": 0.03453767475834755,
+"market_return": -0.020937235084780882,
+"cum_strategy": 0.5378524425167177,
+"cum_market": 2.55588878531481
+},
+{
+"month_dt": "2020-11",
+"strategy_return": 0.09041692215199348,
+"long_return": 0.2705612209324961,
+"short_return": 0.18014429878050264,
+"market_return": 0.12033436275156105,
+"cum_strategy": 0.6769003270930047,
+"cum_market": 2.9837843963110897
+},
+{
+"month_dt": "2020-12",
+"strategy_return": -0.026542361423901817,
+"long_return": 0.033110557855784845,
+"short_return": 0.05965291927968666,
+"market_return": 0.04672540396085918,
+"cum_strategy": 0.6323914325394431,
+"cum_market": 3.1699283315216924
+},
+{
+"month_dt": "2021-01",
+"strategy_return": -0.10312098772336792,
+"long_return": -0.016146096298172395,
+"short_return": 0.08697489142519553,
+"market_return": -0.0034433366582504324,
+"cum_strategy": 0.4640576156648122,
+"cum_market": 3.1555698644354866
+},
+{
+"month_dt": "2021-02",
+"strategy_return": -0.09564391508887325,
+"long_return": 0.025339467585473674,
+"short_return": 0.12098338267434693,
+"market_return": 0.029766612049078916,
+"cum_strategy": 0.3240294133869486,
+"cum_market": 3.279267100432981
+},
+{
+"month_dt": "2021-03",
+"strategy_return": -0.007376714911038605,
+"long_return": 0.024971410661493318,
+"short_return": 0.03234812557253192,
+"market_return": 0.03629731934151272,
+"cum_strategy": 0.3142624258705633,
+"cum_market": 3.434593024925026
+},
+{
+"month_dt": "2021-04",
+"strategy_return": -0.014821312406638115,
+"long_return": 0.03582603995276754,
+"short_return": 0.05064735235940566,
+"market_return": 0.051309101898279655,
+"cum_strategy": 0.29478333187242955,
+"cum_market": 3.6621280103183045
+},
+{
+"month_dt": "2021-05",
+"strategy_return": 0.019797981861907583,
+"long_return": 0.02153464536098321,
+"short_return": 0.0017366634990756277,
+"market_return": 0.004180310073031117,
+"cum_strategy": 0.32041742879194013,
+"cum_market": 3.681617151001599
+},
+{
+"month_dt": "2021-06",
+"strategy_return": -0.18743613644011142,
+"long_return": -0.031637091843712876,
+"short_return": 0.15579904459639854,
+"market_return": 0.024740228411372432,
+"cum_strategy": 0.07292348745099297,
+"cum_market": 3.797441428651977
+},
+{
+"month_dt": "2021-07",
+"strategy_return": -0.029953921767980552,
+"long_return": -0.028299389317231714,
+"short_return": 0.0016545324507488378,
+"market_return": 0.016683133300835946,
+"cum_strategy": 0.04078522124485717,
+"cum_market": 3.877477783509131
+},
+{
+"month_dt": "2021-08",
+"strategy_return": 0.007991569384951464,
+"long_return": 0.02972986417646513,
+"short_return": 0.021738294791513665,
+"market_return": 0.02944665574546671,
+"cum_strategy": 0.04910272855526743,
+"cum_market": 4.021103192706287
+},
+{
+"month_dt": "2021-09",
+"strategy_return": 0.039016398651823325,
+"long_return": -0.01692791983777517,
+"short_return": -0.055944318489598494,
+"market_return": -0.04444500984674218,
+"cum_strategy": 0.09003493883929536,
+"cum_market": 3.7979402118649475
+},
+{
+"month_dt": "2021-10",
+"strategy_return": 0.005317203829695506,
+"long_return": 0.053671233092047126,
+"short_return": 0.04835402926235162,
+"market_return": 0.06791849338551412,
+"cum_strategy": 0.09583087679059377,
+"cum_market": 4.123809082408589
+},
+{
+"month_dt": "2021-11",
+"strategy_return": -0.0018085277413231182,
+"long_return": -0.051305619438478056,
+"short_return": -0.04949709169715494,
+"market_return": -0.011043175855226805,
+"cum_strategy": 0.09384903625011964,
+"cum_market": 4.067225957662942
+},
+{
+"month_dt": "2021-12",
+"strategy_return": 0.13208434289177076,
+"long_return": 0.038963235044142196,
+"short_return": -0.09312110784762856,
+"market_return": 0.03942900342290809,
+"cum_strategy": 0.23832936742601363,
+"cum_market": 4.267021627292284
+}
+]

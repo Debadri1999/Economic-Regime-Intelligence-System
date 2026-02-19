@@ -1,4 +1,6 @@
 """ERIS KPI & Project Success — data coverage, quality metrics, and benchmark comparison."""
+import json
+from pathlib import Path
 import streamlit as st
 import pandas as pd
 import plotly.graph_objects as go
@@ -225,6 +227,32 @@ with col_b:
         st.plotly_chart(fig, use_container_width=True)
     else:
         st.caption("Topic distribution will appear once topic labels are generated.")
+
+# ----- Course ML KPIs (from data/processed/course/) -----
+st.markdown("---")
+st.markdown("## Course ML pipeline KPIs")
+course_metrics_path = Path(__file__).resolve().parent.parent / "data" / "processed" / "course" / "metrics.json"
+if course_metrics_path.exists():
+    try:
+        with open(course_metrics_path, encoding="utf-8") as f:
+            course_metrics = json.load(f)
+        pm = course_metrics.get("portfolio_metrics") or {}
+        bm = course_metrics.get("baseline_metrics") or {}
+        best_r2 = max((m.get("oos_r2") or 0) for m in bm.values()) * 100 if bm else 0
+        cc1, cc2, cc3, cc4 = st.columns(4)
+        with cc1:
+            st.metric("Best OOS R² (%)", f"{best_r2:.3f}", help="Across OLS, Ridge, RF, XGBoost, etc.")
+        with cc2:
+            st.metric("Sharpe ratio", f"{pm.get('sharpe_ratio', 0):.3f}")
+        with cc3:
+            st.metric("Max drawdown", f"{pm.get('max_drawdown', 0):.1%}")
+        with cc4:
+            st.metric("Ann. alpha", f"{pm.get('annualized_alpha', 0):.2%}")
+        st.caption("From `scripts/run_offline_pipeline.py`. See **Course ML** page for full results.")
+    except Exception as e:
+        st.caption(f"Could not load course metrics: {e}")
+else:
+    st.info("Run `python scripts/run_offline_pipeline.py` to generate course metrics. Then **Course ML** and this section will show OOS R², Sharpe, and portfolio KPIs.")
 
 st.caption(
     "KPIs are derived from actual pipeline output. Targets can be adjusted in the app configuration for your organization."

@@ -1,0 +1,44 @@
+{
+  "Bull": [
+    {
+      "feature": "macro_dp",
+      "importance": 0.012
+    },
+    {
+      "feature": "char_mom12m",
+      "importance": 0.009
+    },
+    {
+      "feature": "macro_tms",
+      "importance": 0.007
+    }
+  ],
+  "Bear": [
+    {
+      "feature": "macro_dfy",
+      "importance": 0.015
+    },
+    {
+      "feature": "macro_svar",
+      "importance": 0.011
+    },
+    {
+      "feature": "char_size",
+      "importance": 0.008
+    }
+  ],
+  "Transition": [
+    {
+      "feature": "macro_ep",
+      "importance": 0.01
+    },
+    {
+      "feature": "char_bm",
+      "importance": 0.008
+    },
+    {
+      "feature": "macro_ntis",
+      "importance": 0.006
+    }
+  ]
+}

@@ -176,6 +176,7 @@ def run_expanding_window_regime_nn(
     first_prediction_year: int = 2010,
     epochs: int = 30,
     progress_callback: Optional[Callable[[int, int, str], None]] = None,
+    retrain_every: int = 6,
 ) -> Tuple[pd.DataFrame, dict]:
     """
     Expanding-window train/predict with RegimeAwareNet.
@@ -193,6 +194,7 @@ def run_expanding_window_regime_nn(
     all_pred = []
     trained_models = []
 
+    last_model = None
     for idx, (train, test) in enumerate(splitter.split(panel)):
         if progress_callback and total_months:
             month_label = str(pred_months[idx]) if idx < len(pred_months) else ""
@@ -204,16 +206,18 @@ def run_expanding_window_regime_nn(
         X_char_test = test[char_cols].values
         y_test = test[target_col].values
 
-        model, _ = train_regime_aware_nn(
-            X_macro_train, X_char_train, y_train,
-            epochs=epochs, batch_size=2048,
-        )
+        # Semi-annual retrain (retrain_every=6): matches ERIS_Optimized_Pipeline
+        if idx % retrain_every == 0:
+            last_model, _ = train_regime_aware_nn(
+                X_macro_train, X_char_train, y_train,
+                epochs=epochs, batch_size=2048,
+            )
+        model = last_model
         if model is None:
             all_pred.extend(np.zeros(len(y_test)))
         else:
             preds = predict_regime_aware_nn(model, X_macro_test, X_char_test)
             all_pred.extend(preds)
-            trained_models.append(model)
 
         all_y.extend(y_test)
         all_month.extend(test["month_dt"].tolist())

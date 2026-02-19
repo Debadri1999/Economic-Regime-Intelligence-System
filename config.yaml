@@ -14,7 +14,11 @@ course:
   sample: "recent"
   # First out-of-sample prediction month (expanding window: train up to t-1, predict t)
   first_prediction_year: 2010
+  # Optimization: retrain baselines every N months (3=quarterly), NN every M months (6=semi-annual). Matches ERIS_Optimized_Pipeline.ipynb
+  retrain_baselines_every: 3
+  retrain_nn_every: 6
   # Macro columns for regime HMM and stress index (must exist in parquet)
+  # Must match parquet columns (e.g. macro_dp, macro_ep, macro_bm, macro_ntis, macro_tbl, macro_tms, macro_dfy, macro_svar)
   macro_cols:
     - macro_dp
     - macro_tbl
@@ -22,7 +26,7 @@ course:
     - macro_dfy
     - macro_svar
     - macro_ep
-    - macro_de
+    - macro_ntis
     - macro_bm
   # Stress index: weights for term spread (tms), default spread (dfy), stock variance (svar)
   stress_weights:

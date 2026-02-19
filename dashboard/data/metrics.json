@@ -1,0 +1,26 @@
+{
+  "baseline_metrics": {
+    "OLS": {
+      "oos_r2": -0.026260805651769692
+    },
+    "Ridge": {
+      "oos_r2": -0.02626009711282884
+    },
+    "XGBoost": {
+      "oos_r2": -0.04509983469176615
+    },
+    "LightGBM": {
+      "oos_r2": -0.02928460046645176
+    },
+    "RegimeNN": {
+      "oos_r2": -0.06405536061314754
+    }
+  },
+  "portfolio_metrics": {
+    "sharpe_ratio": 0.1908680389555708,
+    "max_drawdown": -0.41433698208968783,
+    "annualized_alpha": -0.10321447590009854,
+    "long_short_spread_mean": 0.0038640297729375483
+  },
+  "regime_conditional_r2": {}
+}

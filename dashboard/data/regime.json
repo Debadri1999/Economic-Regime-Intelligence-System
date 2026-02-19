@@ -1,0 +1,1508 @@
+[
+{
+"month_dt": "2001-02-01",
+"hmm_state": 2,
+"regime_label": "Bull",
+"stress_index": 37.74644448832945
+},
+{
+"month_dt": "2001-03-01",
+"hmm_state": 2,
+"regime_label": "Bull",
+"stress_index": 34.3640458662609
+},
+{
+"month_dt": "2001-04-01",
+"hmm_state": 2,
+"regime_label": "Bull",
+"stress_index": 34.28726584724184
+},
+{
+"month_dt": "2001-05-01",
+"hmm_state": 2,
+"regime_label": "Bull",
+"stress_index": 26.927599702996492
+},
+{
+"month_dt": "2001-06-01",
+"hmm_state": 2,
+"regime_label": "Bull",
+"stress_index": 19.674533192726127
+},
+{
+"month_dt": "2001-07-01",
+"hmm_state": 2,
+"regime_label": "Bull",
+"stress_index": 18.09435545317658
+},
+{
+"month_dt": "2001-08-01",
+"hmm_state": 2,
+"regime_label": "Bull",
+"stress_index": 22.409230655498853
+},
+{
+"month_dt": "2001-09-01",
+"hmm_state": 2,
+"regime_label": "Bull",
+"stress_index": 21.736580055271997
+},
+{
+"month_dt": "2001-10-01",
+"hmm_state": 2,
+"regime_label": "Bull",
+"stress_index": 20.393229915553302
+},
+{
+"month_dt": "2001-11-01",
+"hmm_state": 2,
+"regime_label": "Bull",
+"stress_index": 16.141837365944944
+},
+{
+"month_dt": "2001-12-01",
+"hmm_state": 2,
+"regime_label": "Bull",
+"stress_index": 8.30922671680959
+},
+{
+"month_dt": "2002-01-01",
+"hmm_state": 2,
+"regime_label": "Bull",
+"stress_index": 8.31666139155252
+},
+{
+"month_dt": "2002-02-01",
+"hmm_state": 2,
+"regime_label": "Bull",
+"stress_index": 9.168977635676942
+},
+{
+"month_dt": "2002-03-01",
+"hmm_state": 2,
+"regime_label": "Bull",
+"stress_index": 11.143434414926539
+},
+{
+"month_dt": "2002-04-01",
+"hmm_state": 1,
+"regime_label": "Transition",
+"stress_index": 7.034508546685572
+},
+{
+"month_dt": "2002-05-01",
+"hmm_state": 1,
+"regime_label": "Transition",
+"stress_index": 8.854216618257023
+},
+{
+"month_dt": "2002-06-01",
+"hmm_state": 1,
+"regime_label": "Transition",
+"stress_index": 10.913279617435869
+},
+{
+"month_dt": "2002-07-01",
+"hmm_state": 1,
+"regime_label": "Transition",
+"stress_index": 11.178103542667865
+},
+{
+"month_dt": "2002-08-01",
+"hmm_state": 1,
+"regime_label": "Transition",
+"stress_index": 23.39749258256962
+},
+{
+"month_dt": "2002-09-01",
+"hmm_state": 1,
+"regime_label": "Transition",
+"stress_index": 19.305443489102636
+},
+{
+"month_dt": "2002-10-01",
+"hmm_state": 1,
+"regime_label": "Transition",
+"stress_index": 20.564847098930144
+},
+{
+"month_dt": "2002-11-01",
+"hmm_state": 1,
+"regime_label": "Transition",
+"stress_index": 22.746399694934976
+},
+{
+"month_dt": "2002-12-01",
+"hmm_state": 1,
+"regime_label": "Transition",
+"stress_index": 11.559453314632046
+},
+{
+"month_dt": "2003-01-01",
+"hmm_state": 1,
+"regime_label": "Transition",
+"stress_index": 12.24279822432535
+},
+{
+"month_dt": "2003-02-01",
+"hmm_state": 1,
+"regime_label": "Transition",
+"stress_index": 12.78572753453347
+},
+{
+"month_dt": "2003-03-01",
+"hmm_state": 1,
+"regime_label": "Transition",
+"stress_index": 11.918253980299841
+},
+{
+"month_dt": "2003-04-01",
+"hmm_state": 1,
+"regime_label": "Transition",
+"stress_index": 13.017879902160375
+},
+{
+"month_dt": "2003-05-01",
+"hmm_state": 1,
+"regime_label": "Transition",
+"stress_index": 11.227260954020604
+},
+{
+"month_dt": "2003-06-01",
+"hmm_state": 1,
+"regime_label": "Transition",
+"stress_index": 14.307868803089432
+},
+{
+"month_dt": "2003-07-01",
+"hmm_state": 1,
+"regime_label": "Transition",
+"stress_index": 11.947284318614782
+},
+{
+"month_dt": "2003-08-01",
+"hmm_state": 2,
+"regime_label": "Bull",
+"stress_index": 3.257733111436002
+},
+{
+"month_dt": "2003-09-01",
+"hmm_state": 2,
+"regime_label": "Bull",
+"stress_index": 3.6208529271079377
+},
+{
+"month_dt": "2003-10-01",
+"hmm_state": 2,
+"regime_label": "Bull",
+"stress_index": 7.427216986384119
+},
+{
+"month_dt": "2003-11-01",
+"hmm_state": 2,
+"regime_label": "Bull",
+"stress_index": 4.089021314159803
+},
+{
+"month_dt": "2003-12-01",
+"hmm_state": 2,
+"regime_label": "Bull",
+"stress_index": 3.4942978207668314
+},
+{
+"month_dt": "2004-01-01",
+"hmm_state": 2,
+"regime_label": "Bull",
+"stress_index": 3.644750460244027
+},
+{
+"month_dt": "2004-02-01",
+"hmm_state": 2,
+"regime_label": "Bull",
+"stress_index": 3.891210001453562
+},
+{
+"month_dt": "2004-03-01",
+"hmm_state": 2,
+"regime_label": "Bull",
+"stress_index": 4.264631649488961
+},
+{
+"month_dt": "2004-04-01",
+"hmm_state": 2,
+"regime_label": "Bull",
+"stress_index": 6.4003455997761165
+},
+{
+"month_dt": "2004-05-01",
+"hmm_state": 2,
+"regime_label": "Bull",
+"stress_index": 0.3918913265758018
+},
+{
+"month_dt": "2004-06-01",
+"hmm_state": 2,
+"regime_label": "Bull",
+"stress_index": 0.0
+},
+{
+"month_dt": "2004-07-01",
+"hmm_state": 2,
+"regime_label": "Bull",
+"stress_index": 3.1062359123034677
+},
+{
+"month_dt": "2004-08-01",
+"hmm_state": 2,
+"regime_label": "Bull",
+"stress_index": 4.667779461434425
+},
+{
+"month_dt": "2004-09-01",
+"hmm_state": 2,
+"regime_label": "Bull",
+"stress_index": 9.219958595930601
+},
+{
+"month_dt": "2004-10-01",
+"hmm_state": 2,
+"regime_label": "Bull",
+"stress_index": 10.484557167553058
+},
+{
+"month_dt": "2004-11-01",
+"hmm_state": 2,
+"regime_label": "Bull",
+"stress_index": 12.148509058283796
+},
+{
+"month_dt": "2004-12-01",
+"hmm_state": 2,
+"regime_label": "Bull",
+"stress_index": 11.912467017799793
+},
+{
+"month_dt": "2005-01-01",
+"hmm_state": 2,
+"regime_label": "Bull",
+"stress_index": 14.393911800430887
+},
+{
+"month_dt": "2005-02-01",
+"hmm_state": 2,
+"regime_label": "Bull",
+"stress_index": 17.154698530258568
+},
+{
+"month_dt": "2005-03-01",
+"hmm_state": 2,
+"regime_label": "Bull",
+"stress_index": 17.425316333886702
+},
+{
+"month_dt": "2005-04-01",
+"hmm_state": 2,
+"regime_label": "Bull",
+"stress_index": 18.74404882278918
+},
+{
+"month_dt": "2005-05-01",
+"hmm_state": 2,
+"regime_label": "Bull",
+"stress_index": 22.77774443787565
+},
+{
+"month_dt": "2005-06-01",
+"hmm_state": 2,
+"regime_label": "Bull",
+"stress_index": 25.486633764769383
+},
+{
+"month_dt": "2005-07-01",
+"hmm_state": 2,
+"regime_label": "Bull",
+"stress_index": 27.63289800098695
+},
+{
+"month_dt": "2005-08-01",
+"hmm_state": 2,
+"regime_label": "Bull",
+"stress_index": 27.46673452036742
+},
+{
+"month_dt": "2005-09-01",
+"hmm_state": 2,
+"regime_label": "Bull",
+"stress_index": 31.310948500893026
+},
+{
+"month_dt": "2005-10-01",
+"hmm_state": 2,
+"regime_label": "Bull",
+"stress_index": 28.59920602106835
+},
+{
+"month_dt": "2005-11-01",
+"hmm_state": 2,
+"regime_label": "Bull",
+"stress_index": 30.81063779518418
+},
+{
+"month_dt": "2005-12-01",
+"hmm_state": 2,
+"regime_label": "Bull",
+"stress_index": 31.607619263121666
+},
+{
+"month_dt": "2006-01-01",
+"hmm_state": 2,
+"regime_label": "Bull",
+"stress_index": 33.15772979863533
+},
+{
+"month_dt": "2006-02-01",
+"hmm_state": 2,
+"regime_label": "Bull",
+"stress_index": 35.528522837324964
+},
+{
+"month_dt": "2006-03-01",
+"hmm_state": 2,
+"regime_label": "Bull",
+"stress_index": 38.09873885185539
+},
+{
+"month_dt": "2006-04-01",
+"hmm_state": 2,
+"regime_label": "Bull",
+"stress_index": 34.03280954183486
+},
+{
+"month_dt": "2006-05-01",
+"hmm_state": 2,
+"regime_label": "Bull",
+"stress_index": 32.350998905534375
+},
+{
+"month_dt": "2006-06-01",
+"hmm_state": 2,
+"regime_label": "Bull",
+"stress_index": 33.436238207455965
+},
+{
+"month_dt": "2006-07-01",
+"hmm_state": 2,
+"regime_label": "Bull",
+"stress_index": 35.811547672085645
+},
+{
+"month_dt": "2006-08-01",
+"hmm_state": 2,
+"regime_label": "Bull",
+"stress_index": 37.92854452764986
+},
+{
+"month_dt": "2006-09-01",
+"hmm_state": 2,
+"regime_label": "Bull",
+"stress_index": 39.06758249878862
+},
+{
+"month_dt": "2006-10-01",
+"hmm_state": 2,
+"regime_label": "Bull",
+"stress_index": 38.93284675186281
+},
+{
+"month_dt": "2006-11-01",
+"hmm_state": 2,
+"regime_label": "Bull",
+"stress_index": 40.00238403040959
+},
+{
+"month_dt": "2006-12-01",
+"hmm_state": 2,
+"regime_label": "Bull",
+"stress_index": 41.16218576926972
+},
+{
+"month_dt": "2007-01-01",
+"hmm_state": 2,
+"regime_label": "Bull",
+"stress_index": 38.36586049711379
+},
+{
+"month_dt": "2007-02-01",
+"hmm_state": 2,
+"regime_label": "Bull",
+"stress_index": 38.96490936481739
+},
+{
+"month_dt": "2007-03-01",
+"hmm_state": 2,
+"regime_label": "Bull",
+"stress_index": 42.013411635927206
+},
+{
+"month_dt": "2007-04-01",
+"hmm_state": 2,
+"regime_label": "Bull",
+"stress_index": 40.63945709994404
+},
+{
+"month_dt": "2007-05-01",
+"hmm_state": 2,
+"regime_label": "Bull",
+"stress_index": 39.07872979944881
+},
+{
+"month_dt": "2007-06-01",
+"hmm_state": 2,
+"regime_label": "Bull",
+"stress_index": 36.151946089199896
+},
+{
+"month_dt": "2007-07-01",
+"hmm_state": 2,
+"regime_label": "Bull",
+"stress_index": 34.74790057578803
+},
+{
+"month_dt": "2007-08-01",
+"hmm_state": 2,
+"regime_label": "Bull",
+"stress_index": 39.203315604378965
+},
+{
+"month_dt": "2007-09-01",
+"hmm_state": 2,
+"regime_label": "Bull",
+"stress_index": 36.875859213099886
+},
+{
+"month_dt": "2007-10-01",
+"hmm_state": 2,
+"regime_label": "Bull",
+"stress_index": 31.113632279897956
+},
+{
+"month_dt": "2007-11-01",
+"hmm_state": 2,
+"regime_label": "Bull",
+"stress_index": 31.558325262821192
+},
+{
+"month_dt": "2007-12-01",
+"hmm_state": 2,
+"regime_label": "Bull",
+"stress_index": 33.766188953248
+},
+{
+"month_dt": "2008-01-01",
+"hmm_state": 2,
+"regime_label": "Bull",
+"stress_index": 29.883340702407924
+},
+{
+"month_dt": "2008-02-01",
+"hmm_state": 2,
+"regime_label": "Bull",
+"stress_index": 31.514156806008675
+},
+{
+"month_dt": "2008-03-01",
+"hmm_state": 2,
+"regime_label": "Bull",
+"stress_index": 25.198090217828153
+},
+{
+"month_dt": "2008-04-01",
+"hmm_state": 2,
+"regime_label": "Bull",
+"stress_index": 21.750542903678166
+},
+{
+"month_dt": "2008-05-01",
+"hmm_state": 2,
+"regime_label": "Bull",
+"stress_index": 17.139418203647704
+},
+{
+"month_dt": "2008-06-01",
+"hmm_state": 2,
+"regime_label": "Bull",
+"stress_index": 17.862927698562274
+},
+{
+"month_dt": "2008-07-01",
+"hmm_state": 2,
+"regime_label": "Bull",
+"stress_index": 22.085590146194594
+},
+{
+"month_dt": "2008-08-01",
+"hmm_state": 2,
+"regime_label": "Bull",
+"stress_index": 21.42910415634211
+},
+{
+"month_dt": "2008-09-01",
+"hmm_state": 2,
+"regime_label": "Bull",
+"stress_index": 22.883171654566382
+},
+{
+"month_dt": "2008-10-01",
+"hmm_state": 1,
+"regime_label": "Transition",
+"stress_index": 37.17039460596275
+},
+{
+"month_dt": "2008-11-01",
+"hmm_state": 0,
+"regime_label": "Bear",
+"stress_index": 67.95811009580791
+},
+{
+"month_dt": "2008-12-01",
+"hmm_state": 0,
+"regime_label": "Bear",
+"stress_index": 58.334948274314435
+},
+{
+"month_dt": "2009-01-01",
+"hmm_state": 0,
+"regime_label": "Bear",
+"stress_index": 51.44775384701279
+},
+{
+"month_dt": "2009-02-01",
+"hmm_state": 0,
+"regime_label": "Bear",
+"stress_index": 34.919639392487326
+},
+{
+"month_dt": "2009-03-01",
+"hmm_state": 0,
+"regime_label": "Bear",
+"stress_index": 31.626041740671262
+},
+{
+"month_dt": "2009-04-01",
+"hmm_state": 0,
+"regime_label": "Bear",
+"stress_index": 44.76898429879702
+},
+{
+"month_dt": "2009-05-01",
+"hmm_state": 0,
+"regime_label": "Bear",
+"stress_index": 29.196687228026274
+},
+{
+"month_dt": "2009-06-01",
+"hmm_state": 0,
+"regime_label": "Bear",
+"stress_index": 22.30681219940107
+},
+{
+"month_dt": "2009-07-01",
+"hmm_state": 0,
+"regime_label": "Bear",
+"stress_index": 14.60543102432377
+},
+{
+"month_dt": "2009-08-01",
+"hmm_state": 0,
+"regime_label": "Bear",
+"stress_index": 12.961633610869086
+},
+{
+"month_dt": "2009-09-01",
+"hmm_state": 0,
+"regime_label": "Bear",
+"stress_index": 9.682348492455114
+},
+{
+"month_dt": "2009-10-01",
+"hmm_state": 0,
+"regime_label": "Bear",
+"stress_index": 8.848035968372187
+},
+{
+"month_dt": "2009-11-01",
+"hmm_state": 0,
+"regime_label": "Bear",
+"stress_index": 8.316668480346005
+},
+{
+"month_dt": "2009-12-01",
+"hmm_state": 0,
+"regime_label": "Bear",
+"stress_index": 7.62797723718215
+},
+{
+"month_dt": "2010-01-01",
+"hmm_state": 0,
+"regime_label": "Bear",
+"stress_index": 2.036575790152438
+},
+{
+"month_dt": "2010-02-01",
+"hmm_state": 0,
+"regime_label": "Bear",
+"stress_index": 3.470126245248263
+},
+{
+"month_dt": "2010-03-01",
+"hmm_state": 0,
+"regime_label": "Bear",
+"stress_index": 4.2322086318995185
+},
+{
+"month_dt": "2010-04-01",
+"hmm_state": 1,
+"regime_label": "Transition",
+"stress_index": 1.690758076863899
+},
+{
+"month_dt": "2010-05-01",
+"hmm_state": 1,
+"regime_label": "Transition",
+"stress_index": 4.250007900762911
+},
+{
+"month_dt": "2010-06-01",
+"hmm_state": 1,
+"regime_label": "Transition",
+"stress_index": 13.425680296750103
+},
+{
+"month_dt": "2010-07-01",
+"hmm_state": 1,
+"regime_label": "Transition",
+"stress_index": 15.83233571460228
+},
+{
+"month_dt": "2010-08-01",
+"hmm_state": 1,
+"regime_label": "Transition",
+"stress_index": 13.633972044836284
+},
+{
+"month_dt": "2010-09-01",
+"hmm_state": 1,
+"regime_label": "Transition",
+"stress_index": 16.36213424515227
+},
+{
+"month_dt": "2010-10-01",
+"hmm_state": 1,
+"regime_label": "Transition",
+"stress_index": 14.401980230601549
+},
+{
+"month_dt": "2010-11-01",
+"hmm_state": 1,
+"regime_label": "Transition",
+"stress_index": 10.116620430256068
+},
+{
+"month_dt": "2010-12-01",
+"hmm_state": 1,
+"regime_label": "Transition",
+"stress_index": 9.734414816151034
+},
+{
+"month_dt": "2011-01-01",
+"hmm_state": 1,
+"regime_label": "Transition",
+"stress_index": 6.271438915867793
+},
+{
+"month_dt": "2011-02-01",
+"hmm_state": 1,
+"regime_label": "Transition",
+"stress_index": 4.569345339521438
+},
+{
+"month_dt": "2011-03-01",
+"hmm_state": 1,
+"regime_label": "Transition",
+"stress_index": 4.052644305879644
+},
+{
+"month_dt": "2011-04-01",
+"hmm_state": 1,
+"regime_label": "Transition",
+"stress_index": 4.382645710610525
+},
+{
+"month_dt": "2011-05-01",
+"hmm_state": 1,
+"regime_label": "Transition",
+"stress_index": 3.3359818938866623
+},
+{
+"month_dt": "2011-06-01",
+"hmm_state": 1,
+"regime_label": "Transition",
+"stress_index": 5.235841916063391
+},
+{
+"month_dt": "2011-07-01",
+"hmm_state": 1,
+"regime_label": "Transition",
+"stress_index": 4.337245532704803
+},
+{
+"month_dt": "2011-08-01",
+"hmm_state": 1,
+"regime_label": "Transition",
+"stress_index": 7.221167804053065
+},
+{
+"month_dt": "2011-09-01",
+"hmm_state": 0,
+"regime_label": "Bear",
+"stress_index": 28.91242306468669
+},
+{
+"month_dt": "2011-10-01",
+"hmm_state": 1,
+"regime_label": "Transition",
+"stress_index": 24.152249133392615
+},
+{
+"month_dt": "2011-11-01",
+"hmm_state": 1,
+"regime_label": "Transition",
+"stress_index": 24.225727071375903
+},
+{
+"month_dt": "2011-12-01",
+"hmm_state": 1,
+"regime_label": "Transition",
+"stress_index": 24.898943824146247
+},
+{
+"month_dt": "2012-01-01",
+"hmm_state": 1,
+"regime_label": "Transition",
+"stress_index": 22.63786931566972
+},
+{
+"month_dt": "2012-02-01",
+"hmm_state": 1,
+"regime_label": "Transition",
+"stress_index": 22.018932578484257
+},
+{
+"month_dt": "2012-03-01",
+"hmm_state": 1,
+"regime_label": "Transition",
+"stress_index": 19.750143474370656
+},
+{
+"month_dt": "2012-04-01",
+"hmm_state": 1,
+"regime_label": "Transition",
+"stress_index": 17.529769014369975
+},
+{
+"month_dt": "2012-05-01",
+"hmm_state": 1,
+"regime_label": "Transition",
+"stress_index": 20.358608421046295
+},
+{
+"month_dt": "2012-06-01",
+"hmm_state": 1,
+"regime_label": "Transition",
+"stress_index": 24.74030017024023
+},
+{
+"month_dt": "2012-07-01",
+"hmm_state": 1,
+"regime_label": "Transition",
+"stress_index": 26.331939537927145
+},
+{
+"month_dt": "2012-08-01",
+"hmm_state": 1,
+"regime_label": "Transition",
+"stress_index": 27.037025431459
+},
+{
+"month_dt": "2012-09-01",
+"hmm_state": 1,
+"regime_label": "Transition",
+"stress_index": 25.372271988371708
+},
+{
+"month_dt": "2012-10-01",
+"hmm_state": 1,
+"regime_label": "Transition",
+"stress_index": 24.004228122979836
+},
+{
+"month_dt": "2012-11-01",
+"hmm_state": 1,
+"regime_label": "Transition",
+"stress_index": 21.48070236032159
+},
+{
+"month_dt": "2012-12-01",
+"hmm_state": 1,
+"regime_label": "Transition",
+"stress_index": 22.238957403629243
+},
+{
+"month_dt": "2013-01-01",
+"hmm_state": 1,
+"regime_label": "Transition",
+"stress_index": 19.50117743952155
+},
+{
+"month_dt": "2013-02-01",
+"hmm_state": 1,
+"regime_label": "Transition",
+"stress_index": 15.067304908551456
+},
+{
+"month_dt": "2013-03-01",
+"hmm_state": 1,
+"regime_label": "Transition",
+"stress_index": 16.30865759734669
+},
+{
+"month_dt": "2013-04-01",
+"hmm_state": 1,
+"regime_label": "Transition",
+"stress_index": 15.134491715209911
+},
+{
+"month_dt": "2013-05-01",
+"hmm_state": 1,
+"regime_label": "Transition",
+"stress_index": 17.380625381124766
+},
+{
+"month_dt": "2013-06-01",
+"hmm_state": 1,
+"regime_label": "Transition",
+"stress_index": 12.567860555416535
+},
+{
+"month_dt": "2013-07-01",
+"hmm_state": 1,
+"regime_label": "Transition",
+"stress_index": 12.595626754375349
+},
+{
+"month_dt": "2013-08-01",
+"hmm_state": 1,
+"regime_label": "Transition",
+"stress_index": 10.308532224253437
+},
+{
+"month_dt": "2013-09-01",
+"hmm_state": 1,
+"regime_label": "Transition",
+"stress_index": 9.226505010269758
+},
+{
+"month_dt": "2013-10-01",
+"hmm_state": 1,
+"regime_label": "Transition",
+"stress_index": 8.510534879475154
+},
+{
+"month_dt": "2013-11-01",
+"hmm_state": 1,
+"regime_label": "Transition",
+"stress_index": 9.64832626034411
+},
+{
+"month_dt": "2013-12-01",
+"hmm_state": 1,
+"regime_label": "Transition",
+"stress_index": 7.232975745687023
+},
+{
+"month_dt": "2014-01-01",
+"hmm_state": 1,
+"regime_label": "Transition",
+"stress_index": 5.937211379935156
+},
+{
+"month_dt": "2014-02-01",
+"hmm_state": 1,
+"regime_label": "Transition",
+"stress_index": 8.753772218248743
+},
+{
+"month_dt": "2014-03-01",
+"hmm_state": 1,
+"regime_label": "Transition",
+"stress_index": 8.624078678263057
+},
+{
+"month_dt": "2014-04-01",
+"hmm_state": 1,
+"regime_label": "Transition",
+"stress_index": 8.723899091546821
+},
+{
+"month_dt": "2014-05-01",
+"hmm_state": 1,
+"regime_label": "Transition",
+"stress_index": 9.755802657045614
+},
+{
+"month_dt": "2014-06-01",
+"hmm_state": 1,
+"regime_label": "Transition",
+"stress_index": 10.00867522224853
+},
+{
+"month_dt": "2014-07-01",
+"hmm_state": 1,
+"regime_label": "Transition",
+"stress_index": 9.080903958346752
+},
+{
+"month_dt": "2014-08-01",
+"hmm_state": 1,
+"regime_label": "Transition",
+"stress_index": 10.003417152901784
+},
+{
+"month_dt": "2014-09-01",
+"hmm_state": 1,
+"regime_label": "Transition",
+"stress_index": 11.989212803133197
+},
+{
+"month_dt": "2014-10-01",
+"hmm_state": 1,
+"regime_label": "Transition",
+"stress_index": 11.621651512545078
+},
+{
+"month_dt": "2014-11-01",
+"hmm_state": 1,
+"regime_label": "Transition",
+"stress_index": 15.79105084066352
+},
+{
+"month_dt": "2014-12-01",
+"hmm_state": 1,
+"regime_label": "Transition",
+"stress_index": 15.796458812057962
+},
+{
+"month_dt": "2015-01-01",
+"hmm_state": 1,
+"regime_label": "Transition",
+"stress_index": 19.72346488652031
+},
+{
+"month_dt": "2015-02-01",
+"hmm_state": 1,
+"regime_label": "Transition",
+"stress_index": 24.248008186698907
+},
+{
+"month_dt": "2015-03-01",
+"hmm_state": 1,
+"regime_label": "Transition",
+"stress_index": 18.876873016036345
+},
+{
+"month_dt": "2015-04-01",
+"hmm_state": 1,
+"regime_label": "Transition",
+"stress_index": 20.438858663824725
+},
+{
+"month_dt": "2015-05-01",
+"hmm_state": 1,
+"regime_label": "Transition",
+"stress_index": 18.237846897446758
+},
+{
+"month_dt": "2015-06-01",
+"hmm_state": 1,
+"regime_label": "Transition",
+"stress_index": 16.95205438936627
+},
+{
+"month_dt": "2015-07-01",
+"hmm_state": 1,
+"regime_label": "Transition",
+"stress_index": 15.36586094405358
+},
+{
+"month_dt": "2015-08-01",
+"hmm_state": 1,
+"regime_label": "Transition",
+"stress_index": 18.398154083707958
+},
+{
+"month_dt": "2015-09-01",
+"hmm_state": 1,
+"regime_label": "Transition",
+"stress_index": 23.573984694649948
+},
+{
+"month_dt": "2015-10-01",
+"hmm_state": 1,
+"regime_label": "Transition",
+"stress_index": 23.57964042802173
+},
+{
+"month_dt": "2015-11-01",
+"hmm_state": 1,
+"regime_label": "Transition",
+"stress_index": 21.993665957268913
+},
+{
+"month_dt": "2015-12-01",
+"hmm_state": 1,
+"regime_label": "Transition",
+"stress_index": 21.993537926742597
+},
+{
+"month_dt": "2016-01-01",
+"hmm_state": 1,
+"regime_label": "Transition",
+"stress_index": 24.949847931504625
+},
+{
+"month_dt": "2016-02-01",
+"hmm_state": 1,
+"regime_label": "Transition",
+"stress_index": 28.894353297837572
+},
+{
+"month_dt": "2016-03-01",
+"hmm_state": 1,
+"regime_label": "Transition",
+"stress_index": 28.89455247564489
+},
+{
+"month_dt": "2016-04-01",
+"hmm_state": 1,
+"regime_label": "Transition",
+"stress_index": 26.882556039534094
+},
+{
+"month_dt": "2016-05-01",
+"hmm_state": 1,
+"regime_label": "Transition",
+"stress_index": 24.32679260530155
+},
+{
+"month_dt": "2016-06-01",
+"hmm_state": 2,
+"regime_label": "Bull",
+"stress_index": 23.961810684608025
+},
+{
+"month_dt": "2016-07-01",
+"hmm_state": 2,
+"regime_label": "Bull",
+"stress_index": 29.03534663399218
+},
+{
+"month_dt": "2016-08-01",
+"hmm_state": 2,
+"regime_label": "Bull",
+"stress_index": 26.799139094385826
+},
+{
+"month_dt": "2016-09-01",
+"hmm_state": 2,
+"regime_label": "Bull",
+"stress_index": 25.503704962672145
+},
+{
+"month_dt": "2016-10-01",
+"hmm_state": 2,
+"regime_label": "Bull",
+"stress_index": 25.58492291221064
+},
+{
+"month_dt": "2016-11-01",
+"hmm_state": 2,
+"regime_label": "Bull",
+"stress_index": 22.464936901754402
+},
+{
+"month_dt": "2016-12-01",
+"hmm_state": 2,
+"regime_label": "Bull",
+"stress_index": 19.769743210331768
+},
+{
+"month_dt": "2017-01-01",
+"hmm_state": 2,
+"regime_label": "Bull",
+"stress_index": 18.799486040686922
+},
+{
+"month_dt": "2017-02-01",
+"hmm_state": 2,
+"regime_label": "Bull",
+"stress_index": 17.858534634918698
+},
+{
+"month_dt": "2017-03-01",
+"hmm_state": 2,
+"regime_label": "Bull",
+"stress_index": 18.107802202837213
+},
+{
+"month_dt": "2017-04-01",
+"hmm_state": 2,
+"regime_label": "Bull",
+"stress_index": 19.794754462084075
+},
+{
+"month_dt": "2017-05-01",
+"hmm_state": 2,
+"regime_label": "Bull",
+"stress_index": 21.19111114157179
+},
+{
+"month_dt": "2017-06-01",
+"hmm_state": 2,
+"regime_label": "Bull",
+"stress_index": 22.84448698465918
+},
+{
+"month_dt": "2017-07-01",
+"hmm_state": 2,
+"regime_label": "Bull",
+"stress_index": 23.315166792926583
+},
+{
+"month_dt": "2017-08-01",
+"hmm_state": 2,
+"regime_label": "Bull",
+"stress_index": 23.584267594747878
+},
+{
+"month_dt": "2017-09-01",
+"hmm_state": 2,
+"regime_label": "Bull",
+"stress_index": 25.135617285943045
+},
+{
+"month_dt": "2017-10-01",
+"hmm_state": 2,
+"regime_label": "Bull",
+"stress_index": 23.32354133794782
+},
+{
+"month_dt": "2017-11-01",
+"hmm_state": 2,
+"regime_label": "Bull",
+"stress_index": 23.894885731065187
+},
+{
+"month_dt": "2017-12-01",
+"hmm_state": 2,
+"regime_label": "Bull",
+"stress_index": 25.310210033611607
+},
+{
+"month_dt": "2018-01-01",
+"hmm_state": 2,
+"regime_label": "Bull",
+"stress_index": 26.597237893630755
+},
+{
+"month_dt": "2018-02-01",
+"hmm_state": 2,
+"regime_label": "Bull",
+"stress_index": 25.24012148985218
+},
+{
+"month_dt": "2018-03-01",
+"hmm_state": 2,
+"regime_label": "Bull",
+"stress_index": 28.946524138013107
+},
+{
+"month_dt": "2018-04-01",
+"hmm_state": 2,
+"regime_label": "Bull",
+"stress_index": 30.316803048123102
+},
+{
+"month_dt": "2018-05-01",
+"hmm_state": 2,
+"regime_label": "Bull",
+"stress_index": 29.206740347476696
+},
+{
+"month_dt": "2018-06-01",
+"hmm_state": 2,
+"regime_label": "Bull",
+"stress_index": 29.863787130053186
+},
+{
+"month_dt": "2018-07-01",
+"hmm_state": 2,
+"regime_label": "Bull",
+"stress_index": 30.123266191442532
+},
+{
+"month_dt": "2018-08-01",
+"hmm_state": 2,
+"regime_label": "Bull",
+"stress_index": 30.15055234076417
+},
+{
+"month_dt": "2018-09-01",
+"hmm_state": 2,
+"regime_label": "Bull",
+"stress_index": 31.1160499907215
+},
+{
+"month_dt": "2018-10-01",
+"hmm_state": 2,
+"regime_label": "Bull",
+"stress_index": 28.314075209500277
+},
+{
+"month_dt": "2018-11-01",
+"hmm_state": 2,
+"regime_label": "Bull",
+"stress_index": 31.813110159741044
+},
+{
+"month_dt": "2018-12-01",
+"hmm_state": 2,
+"regime_label": "Bull",
+"stress_index": 34.6313724813896
+},
+{
+"month_dt": "2019-01-01",
+"hmm_state": 2,
+"regime_label": "Bull",
+"stress_index": 42.20035479082911
+},
+{
+"month_dt": "2019-02-01",
+"hmm_state": 2,
+"regime_label": "Bull",
+"stress_index": 40.74654067374775
+},
+{
+"month_dt": "2019-03-01",
+"hmm_state": 2,
+"regime_label": "Bull",
+"stress_index": 38.77638108653221
+},
+{
+"month_dt": "2019-04-01",
+"hmm_state": 2,
+"regime_label": "Bull",
+"stress_index": 39.532517963765606
+},
+{
+"month_dt": "2019-05-01",
+"hmm_state": 2,
+"regime_label": "Bull",
+"stress_index": 38.55337421344293
+},
+{
+"month_dt": "2019-06-01",
+"hmm_state": 2,
+"regime_label": "Bull",
+"stress_index": 40.245345857172794
+},
+{
+"month_dt": "2019-07-01",
+"hmm_state": 2,
+"regime_label": "Bull",
+"stress_index": 41.570758323657635
+},
+{
+"month_dt": "2019-08-01",
+"hmm_state": 2,
+"regime_label": "Bull",
+"stress_index": 40.21241063102936
+},
+{
+"month_dt": "2019-09-01",
+"hmm_state": 2,
+"regime_label": "Bull",
+"stress_index": 44.988133571497315
+},
+{
+"month_dt": "2019-10-01",
+"hmm_state": 2,
+"regime_label": "Bull",
+"stress_index": 40.568481592511354
+},
+{
+"month_dt": "2019-11-01",
+"hmm_state": 2,
+"regime_label": "Bull",
+"stress_index": 39.448870373482826
+},
+{
+"month_dt": "2019-12-01",
+"hmm_state": 2,
+"regime_label": "Bull",
+"stress_index": 36.33330664633114
+},
+{
+"month_dt": "2020-01-01",
+"hmm_state": 2,
+"regime_label": "Bull",
+"stress_index": 35.98406227942857
+},
+{
+"month_dt": "2020-02-01",
+"hmm_state": 2,
+"regime_label": "Bull",
+"stress_index": 36.86294222107957
+},
+{
+"month_dt": "2020-03-01",
+"hmm_state": 2,
+"regime_label": "Bull",
+"stress_index": 42.27257118291732
+},
+{
+"month_dt": "2020-04-01",
+"hmm_state": 0,
+"regime_label": "Bear",
+"stress_index": 99.9999913551299
+},
+{
+"month_dt": "2020-05-01",
+"hmm_state": 1,
+"regime_label": "Transition",
+"stress_index": 53.364717831150024
+},
+{
+"month_dt": "2020-06-01",
+"hmm_state": 2,
+"regime_label": "Bull",
+"stress_index": 42.18213883922643
+},
+{
+"month_dt": "2020-07-01",
+"hmm_state": 2,
+"regime_label": "Bull",
+"stress_index": 42.47305583525625
+},
+{
+"month_dt": "2020-08-01",
+"hmm_state": 2,
+"regime_label": "Bull",
+"stress_index": 38.06364871893973
+},
+{
+"month_dt": "2020-09-01",
+"hmm_state": 2,
+"regime_label": "Bull",
+"stress_index": 35.50083063845428
+},
+{
+"month_dt": "2020-10-01",
+"hmm_state": 2,
+"regime_label": "Bull",
+"stress_index": 39.18704647752496
+},
+{
+"month_dt": "2020-11-01",
+"hmm_state": 2,
+"regime_label": "Bull",
+"stress_index": 37.4180149803306
+},
+{
+"month_dt": "2020-12-01",
+"hmm_state": 2,
+"regime_label": "Bull",
+"stress_index": 34.851290023696535
+},
+{
+"month_dt": "2021-01-01",
+"hmm_state": 2,
+"regime_label": "Bull",
+"stress_index": 31.900056200214134
+},
+{
+"month_dt": "2021-02-01",
+"hmm_state": 2,
+"regime_label": "Bull",
+"stress_index": 30.77571424891554
+},
+{
+"month_dt": "2021-03-01",
+"hmm_state": 2,
+"regime_label": "Bull",
+"stress_index": 27.770480762985926
+},
+{
+"month_dt": "2021-04-01",
+"hmm_state": 2,
+"regime_label": "Bull",
+"stress_index": 25.325644671153935
+},
+{
+"month_dt": "2021-05-01",
+"hmm_state": 2,
+"regime_label": "Bull",
+"stress_index": 23.757545889916273
+},
+{
+"month_dt": "2021-06-01",
+"hmm_state": 2,
+"regime_label": "Bull",
+"stress_index": 23.962600134146424
+},
+{
+"month_dt": "2021-07-01",
+"hmm_state": 2,
+"regime_label": "Bull",
+"stress_index": 24.14491664101438
+},
+{
+"month_dt": "2021-08-01",
+"hmm_state": 2,
+"regime_label": "Bull",
+"stress_index": 26.57984337758588
+},
+{
+"month_dt": "2021-09-01",
+"hmm_state": 2,
+"regime_label": "Bull",
+"stress_index": 26.64735964024421
+},
+{
+"month_dt": "2021-10-01",
+"hmm_state": 2,
+"regime_label": "Bull",
+"stress_index": 26.553432780708945
+},
+{
+"month_dt": "2021-11-01",
+"hmm_state": 2,
+"regime_label": "Bull",
+"stress_index": 24.35562990366695
+},
+{
+"month_dt": "2021-12-01",
+"hmm_state": 2,
+"regime_label": "Bull",
+"stress_index": 24.59383523644717
+}
+]

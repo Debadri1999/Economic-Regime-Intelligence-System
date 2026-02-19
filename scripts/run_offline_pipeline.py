@@ -67,6 +67,8 @@ def main() -> None:
     course_cfg = cfg.get("course", {})
     first_pred = course_cfg.get("first_prediction_year", 2010)
     macro_cols_cfg = course_cfg.get("macro_cols", [])
+    retrain_baselines = course_cfg.get("retrain_baselines_every", 3)
+    retrain_nn = course_cfg.get("retrain_nn_every", 6)
 
     OUT_DIR.mkdir(parents=True, exist_ok=True)
 
@@ -108,10 +110,12 @@ def main() -> None:
         if current == 1 or current == total or current % 12 == 0:
             logger.info("  -> OOS month %d/%d (%s) — %.1f%%", current, total, month_label, pct)
 
-    model_list = ["OLS", "Ridge", "RF", "XGBoost"]
+    # Matches ERIS_Optimized_Pipeline: OLS, Ridge, XGBoost, LightGBM (no RF)
+    model_list = ["OLS", "Ridge", "XGBoost", "LightGBM"]
     predictions_df, baseline_metrics = run_expanding_window_baselines(
         panel, feature_cols, first_prediction_year=first_pred, model_names=model_list,
         progress_callback=baseline_progress,
+        retrain_every=retrain_baselines,
     )
     logger.info("  -> Baseline OOS R²: %s (done in %s)", {k: round(v["oos_r2"], 4) for k, v in baseline_metrics.items()}, _elapsed(step_start))
 
@@ -130,6 +134,7 @@ def main() -> None:
             nn_pred, nn_metrics = run_expanding_window_regime_nn(
                 panel, macro_cols, char_cols, first_prediction_year=first_pred, epochs=30,
                 progress_callback=nn_progress,
+                retrain_every=retrain_nn,
             )
             predictions_df = predictions_df.merge(
                 nn_pred[["month_dt", "permno", "pred_RegimeNN"]],
@@ -165,6 +170,13 @@ def main() -> None:
     port_df.to_parquet(OUT_DIR / "portfolio_returns.parquet", index=False)
     logger.info("  -> Sharpe=%.3f, MaxDD=%.3f, Alpha=%.4f (done in %s)", port_metrics["sharpe_ratio"], port_metrics["max_drawdown"], port_metrics["annualized_alpha"], _elapsed(step_start))
 
+    # Regime-conditional OOS R² (for understanding rubric)
+    from ml.validation import regime_conditional_r2
+    pred_col_used = pred_col
+    regime_cond_r2 = regime_conditional_r2(predictions_df, regime_df, pred_col=pred_col_used, month_col="month_dt")
+    if regime_cond_r2:
+        logger.info("  -> Regime-conditional R²: %s", regime_cond_r2)
+
     # 7. SHAP / importance by regime
     step_start = time.time()
     logger.info("[Step 6/8] SHAP and feature importance by regime... %s", _remaining(6))
@@ -197,6 +209,7 @@ def main() -> None:
         json.dump({
             "baseline_metrics": baseline_metrics,
             "portfolio_metrics": port_metrics,
+            "regime_conditional_r2": regime_cond_r2 if regime_cond_r2 else {},
         }, f, indent=2)
     with open(OUT_DIR / "feature_columns.json", "w") as f:
         json.dump({"all_features": feature_cols, "macro": macro_cols, "characteristic": char_cols}, f, indent=2)

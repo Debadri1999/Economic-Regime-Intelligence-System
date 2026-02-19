@@ -83,3 +83,39 @@ def oos_r2(y_true: np.ndarray, y_pred: np.ndarray) -> float:
     if ss_tot == 0:
         return 0.0
     return float(1 - ss_res / ss_tot)
+
+
+def regime_conditional_r2(
+    predictions_df: pd.DataFrame,
+    regime_df: pd.DataFrame,
+    pred_col: str = "pred_XGBoost",
+    ret_col: str = "ret_excess",
+    month_col: str = "month_dt",
+    regime_col: str = "regime_label",
+) -> dict:
+    """
+    Compute OOS R² per regime (Bull, Bear, Transition). Returns dict model_name -> { regime -> r2 }.
+    """
+    left = predictions_df[[month_col, ret_col] + [c for c in predictions_df.columns if c.startswith("pred_")]].copy()
+    left[month_col] = left[month_col].astype(str)
+    right = regime_df[[month_col, regime_col]].drop_duplicates()
+    right[month_col] = right[month_col].astype(str)
+    merged = left.merge(right, on=month_col, how="left")
+    if merged[regime_col].isna().all():
+        return {}
+    out = {}
+    for model in [c.replace("pred_", "") for c in merged.columns if c.startswith("pred_")]:
+        pcol = f"pred_{model}"
+        if pcol not in merged.columns:
+            continue
+        by_regime = {}
+        for reg in merged[regime_col].dropna().unique():
+            sub = merged[merged[regime_col] == reg]
+            if len(sub) < 100:
+                continue
+            y_true = sub[ret_col].values
+            y_pred = sub[pcol].values
+            by_regime[str(reg)] = round(oos_r2(y_true, y_pred), 6)
+        if by_regime:
+            out[model] = by_regime
+    return out
