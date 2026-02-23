@@ -56,6 +56,25 @@ V2_FALLBACK = {
 }
 
 
+def _write_fallback_rankings(dash_data, docs_data):
+    """Write demo rankings so the Stock Rankings section renders when no predictions.parquet exists."""
+    import random
+    random.seed(42)
+    models = ["XGBoost", "LightGBM", "RegimeNN", "OLS", "Ridge"]
+    decile_base = [-0.008, -0.005, -0.003, -0.001, 0.001, 0.002, 0.004, 0.006, 0.009, 0.012]
+    rankings = {}
+    for m in models:
+        offset = random.uniform(-0.001, 0.001)
+        decile_avg = {str(i + 1): round(d + offset + random.uniform(-0.0005, 0.0005), 6) for i, d in enumerate(decile_base)}
+        top20 = [{"permno": 10000 + i * 137, "pred_return": round(0.008 + i * 0.0008 + random.uniform(0, 0.001), 6), "sic2": ["36", "35", "73", "28", "48"][i % 5]} for i in range(20)]
+        bottom20 = [{"permno": 50000 + i * 211, "pred_return": round(-0.012 - i * 0.0006 - random.uniform(0, 0.001), 6), "sic2": ["13", "10", "29", "49", "53"][i % 5]} for i in range(20)]
+        rankings[m] = {"top20": top20, "bottom20": bottom20, "decile_avg": decile_avg, "month": "2021-12"}
+    for d in [dash_data, docs_data]:
+        with open(d / "rankings.json", "w", encoding="utf-8") as f:
+            json.dump(rankings, f, indent=2)
+    print("Created fallback rankings.json (demo data — run pipeline for real rankings)")
+
+
 def _find_data_dir():
     """Prefer results/ (notebook) then data/processed/course/ (pipeline)."""
     if (RESULTS_DIR / "metrics.json").exists():
@@ -193,7 +212,96 @@ def main():
         except ImportError:
             pass
 
-    # 4. SHAP importance by regime
+    # 4. Stock rankings (top/bottom 20, decile averages) from predictions
+    pred_path = None
+    for base in [RESULTS_DIR, COURSE_DIR]:
+        if base.exists():
+            p = base / "predictions.parquet"
+            if p.exists():
+                pred_path = p
+                break
+            for f in base.glob("predictions*.parquet"):
+                pred_path = f
+                break
+        if pred_path:
+            break
+    if pred_path and pred_path.exists():
+        try:
+            import pandas as pd
+
+            preds = pd.read_parquet(pred_path)
+            month_col = "month_dt" if "month_dt" in preds.columns else "month"
+            if month_col not in preds.columns:
+                month_col = [c for c in preds.columns if "month" in c.lower()][0] if any("month" in c.lower() for c in preds.columns) else None
+            permno_col = "permno" if "permno" in preds.columns else ("PERMNO" if "PERMNO" in preds.columns else None)
+            sic_col = "sic2" if "sic2" in preds.columns else ("sic" if "sic" in preds.columns else None)
+            sic2_dummy_cols = [c for c in preds.columns if c.startswith("sic2_")]
+
+            def _get_sic2(df_subset):
+                if sic_col and sic_col in df_subset.columns:
+                    def _safe_sic(x):
+                        if pd.isna(x) or x is None:
+                            return None
+                        if isinstance(x, (int, float)):
+                            return str(int(x))
+                        return str(x)
+                    return df_subset[sic_col].apply(_safe_sic)
+                if sic2_dummy_cols:
+                    # Derive from one-hot (sic2_36, sic2_35, etc.): find column that is 1
+                    def row_to_sic(row):
+                        for c in sic2_dummy_cols:
+                            v = row.get(c, 0)
+                            if v is not None and pd.notna(v) and float(v) > 0.5:
+                                return str(c.replace("sic2_", ""))
+                        return None
+                    return df_subset.apply(row_to_sic, axis=1)
+                return None
+
+            model_col_map = {}
+            for m in ["XGBoost", "LightGBM", "RegimeNN", "OLS", "Ridge"]:
+                for cand in [f"pred_{m}", f"pred_{m.lower()}", m, f"pred_return_{m}"]:
+                    if cand in preds.columns:
+                        model_col_map[m] = cand
+                        break
+
+            if month_col and permno_col and model_col_map:
+                latest_month = preds[month_col].max()
+                latest = preds[preds[month_col] == latest_month].copy()
+                rankings = {}
+                for model, col in model_col_map.items():
+                    latest_sorted = latest.dropna(subset=[col]).sort_values(col, ascending=False)
+                    if len(latest_sorted) == 0:
+                        continue
+                    top20_df = latest_sorted.head(20)
+                    bottom20_df = latest_sorted.tail(20)
+                    top20 = top20_df[[permno_col, col]].rename(columns={permno_col: "permno", col: "pred_return"})
+                    sic_top = _get_sic2(top20_df)
+                    top20["sic2"] = sic_top.tolist() if sic_top is not None else [None] * len(top20)
+                    bottom20 = bottom20_df[[permno_col, col]].rename(columns={permno_col: "permno", col: "pred_return"})
+                    sic_bot = _get_sic2(bottom20_df)
+                    bottom20["sic2"] = sic_bot.tolist() if sic_bot is not None else [None] * len(bottom20)
+                    latest_sorted = latest_sorted.copy()
+                    latest_sorted["decile"] = pd.qcut(latest_sorted[col].rank(method="first"), 10, labels=range(1, 11))
+                    decile_avg = latest_sorted.groupby("decile", observed=True)[col].mean()
+                    rankings[model] = {
+                        "top20": top20.to_dict(orient="records"),
+                        "bottom20": bottom20.to_dict(orient="records"),
+                        "decile_avg": {str(int(k)): round(float(v), 6) for k, v in decile_avg.items()},
+                        "month": str(latest_month),
+                    }
+                if rankings:
+                    for dest_dir in [DASHBOARD_DATA, DOCS_DATA]:
+                        with open(dest_dir / "rankings.json", "w", encoding="utf-8") as f:
+                            json.dump(rankings, f, indent=2)
+                    print("Exported rankings.json (stock rankings)")
+        except Exception as e:
+            print(f"Could not export rankings: {e}")
+
+    # Write fallback rankings if none was exported (so dashboard section still renders)
+    if not (DASHBOARD_DATA / "rankings.json").exists():
+        _write_fallback_rankings(DASHBOARD_DATA, DOCS_DATA)
+
+    # 5. SHAP importance by regime
     shap_data = {}
     try:
         import pandas as pd

@@ -1,0 +1,1097 @@
+{
+  "XGBoost": {
+    "top20": [
+      {
+        "permno": 87759,
+        "pred_return": 0.9964155554771423,
+        "sic2": null
+      },
+      {
+        "permno": 10886,
+        "pred_return": 0.9842182397842407,
+        "sic2": null
+      },
+      {
+        "permno": 59483,
+        "pred_return": 0.9527820944786072,
+        "sic2": null
+      },
+      {
+        "permno": 10649,
+        "pred_return": 0.9190690517425537,
+        "sic2": null
+      },
+      {
+        "permno": 13812,
+        "pred_return": 0.7590463757514954,
+        "sic2": null
+      },
+      {
+        "permno": 91727,
+        "pred_return": 0.7279311418533325,
+        "sic2": null
+      },
+      {
+        "permno": 16755,
+        "pred_return": 0.6671032309532166,
+        "sic2": null
+      },
+      {
+        "permno": 85272,
+        "pred_return": 0.5436235070228577,
+        "sic2": null
+      },
+      {
+        "permno": 77259,
+        "pred_return": 0.44331541657447815,
+        "sic2": null
+      },
+      {
+        "permno": 14172,
+        "pred_return": 0.4069894552230835,
+        "sic2": null
+      },
+      {
+        "permno": 61241,
+        "pred_return": 0.37341904640197754,
+        "sic2": null
+      },
+      {
+        "permno": 14440,
+        "pred_return": 0.3137117028236389,
+        "sic2": null
+      },
+      {
+        "permno": 86233,
+        "pred_return": 0.3087966740131378,
+        "sic2": null
+      },
+      {
+        "permno": 76201,
+        "pred_return": 0.27753302454948425,
+        "sic2": null
+      },
+      {
+        "permno": 16309,
+        "pred_return": 0.18622492253780365,
+        "sic2": null
+      },
+      {
+        "permno": 16386,
+        "pred_return": 0.16506898403167725,
+        "sic2": null
+      },
+      {
+        "permno": 15125,
+        "pred_return": 0.16156692802906036,
+        "sic2": null
+      },
+      {
+        "permno": 13918,
+        "pred_return": 0.1287696808576584,
+        "sic2": null
+      },
+      {
+        "permno": 89044,
+        "pred_return": 0.11960861086845398,
+        "sic2": null
+      },
+      {
+        "permno": 91379,
+        "pred_return": 0.0875319167971611,
+        "sic2": null
+      }
+    ],
+    "bottom20": [
+      {
+        "permno": 13369,
+        "pred_return": -0.03251463919878006,
+        "sic2": null
+      },
+      {
+        "permno": 15417,
+        "pred_return": -0.03272714465856552,
+        "sic2": null
+      },
+      {
+        "permno": 14054,
+        "pred_return": -0.03296844661235809,
+        "sic2": null
+      },
+      {
+        "permno": 15976,
+        "pred_return": -0.03296844661235809,
+        "sic2": null
+      },
+      {
+        "permno": 93371,
+        "pred_return": -0.03338801860809326,
+        "sic2": null
+      },
+      {
+        "permno": 83885,
+        "pred_return": -0.03350837528705597,
+        "sic2": null
+      },
+      {
+        "permno": 17139,
+        "pred_return": -0.034083448350429535,
+        "sic2": null
+      },
+      {
+        "permno": 77699,
+        "pred_return": -0.03513273224234581,
+        "sic2": null
+      },
+      {
+        "permno": 76613,
+        "pred_return": -0.03604183718562126,
+        "sic2": null
+      },
+      {
+        "permno": 15902,
+        "pred_return": -0.03665295988321304,
+        "sic2": null
+      },
+      {
+        "permno": 15914,
+        "pred_return": -0.037243928760290146,
+        "sic2": null
+      },
+      {
+        "permno": 16179,
+        "pred_return": -0.038691502064466476,
+        "sic2": null
+      },
+      {
+        "permno": 15960,
+        "pred_return": -0.04015401750802994,
+        "sic2": null
+      },
+      {
+        "permno": 14133,
+        "pred_return": -0.046148881316185,
+        "sic2": null
+      },
+      {
+        "permno": 88462,
+        "pred_return": -0.047631192952394485,
+        "sic2": null
+      },
+      {
+        "permno": 16146,
+        "pred_return": -0.051572464406490326,
+        "sic2": null
+      },
+      {
+        "permno": 14934,
+        "pred_return": -0.053302451968193054,
+        "sic2": null
+      },
+      {
+        "permno": 15642,
+        "pred_return": -0.061759497970342636,
+        "sic2": null
+      },
+      {
+        "permno": 16377,
+        "pred_return": -0.061809174716472626,
+        "sic2": null
+      },
+      {
+        "permno": 12358,
+        "pred_return": -0.06551428884267807,
+        "sic2": null
+      }
+    ],
+    "decile_avg": {
+      "1": -0.021505,
+      "2": -0.005279,
+      "3": 0.000435,
+      "4": 0.002493,
+      "5": 0.003359,
+      "6": 0.004295,
+      "7": 0.004988,
+      "8": 0.006045,
+      "9": 0.00716,
+      "10": 0.052805
+    },
+    "month": "2021-12"
+  },
+  "LightGBM": {
+    "top20": [
+      {
+        "permno": 82848,
+        "pred_return": 0.20297538105584165,
+        "sic2": null
+      },
+      {
+        "permno": 74908,
+        "pred_return": 0.15196932526946705,
+        "sic2": null
+      },
+      {
+        "permno": 11394,
+        "pred_return": 0.13292530561898958,
+        "sic2": null
+      },
+      {
+        "permno": 92345,
+        "pred_return": 0.1263427246987218,
+        "sic2": null
+      },
+      {
+        "permno": 16473,
+        "pred_return": 0.12411393658134923,
+        "sic2": null
+      },
+      {
+        "permno": 79573,
+        "pred_return": 0.11877647105150675,
+        "sic2": null
+      },
+      {
+        "permno": 16532,
+        "pred_return": 0.1177487836605098,
+        "sic2": null
+      },
+      {
+        "permno": 10514,
+        "pred_return": 0.11633104736856129,
+        "sic2": null
+      },
+      {
+        "permno": 16802,
+        "pred_return": 0.09564395950548754,
+        "sic2": null
+      },
+      {
+        "permno": 14468,
+        "pred_return": 0.0953299375370597,
+        "sic2": null
+      },
+      {
+        "permno": 76934,
+        "pred_return": 0.09451797912072354,
+        "sic2": null
+      },
+      {
+        "permno": 79039,
+        "pred_return": 0.09292380619375142,
+        "sic2": null
+      },
+      {
+        "permno": 50243,
+        "pred_return": 0.08560632532858246,
+        "sic2": null
+      },
+      {
+        "permno": 15125,
+        "pred_return": 0.08477759208960434,
+        "sic2": null
+      },
+      {
+        "permno": 89301,
+        "pred_return": 0.08047549834517691,
+        "sic2": null
+      },
+      {
+        "permno": 81481,
+        "pred_return": 0.07687216894717393,
+        "sic2": null
+      },
+      {
+        "permno": 13169,
+        "pred_return": 0.0753985778719118,
+        "sic2": null
+      },
+      {
+        "permno": 17041,
+        "pred_return": 0.07430939133703206,
+        "sic2": null
+      },
+      {
+        "permno": 15585,
+        "pred_return": 0.07354716653520937,
+        "sic2": null
+      },
+      {
+        "permno": 14596,
+        "pred_return": 0.0713664422468995,
+        "sic2": null
+      }
+    ],
+    "bottom20": [
+      {
+        "permno": 14442,
+        "pred_return": -0.017920862792820895,
+        "sic2": null
+      },
+      {
+        "permno": 15961,
+        "pred_return": -0.01824127854024102,
+        "sic2": null
+      },
+      {
+        "permno": 92130,
+        "pred_return": -0.019290727473653995,
+        "sic2": null
+      },
+      {
+        "permno": 78066,
+        "pred_return": -0.019462211356946833,
+        "sic2": null
+      },
+      {
+        "permno": 16928,
+        "pred_return": -0.019654547824694647,
+        "sic2": null
+      },
+      {
+        "permno": 16146,
+        "pred_return": -0.021017849368411636,
+        "sic2": null
+      },
+      {
+        "permno": 15184,
+        "pred_return": -0.021075296787123728,
+        "sic2": null
+      },
+      {
+        "permno": 14823,
+        "pred_return": -0.022612806624617718,
+        "sic2": null
+      },
+      {
+        "permno": 15378,
+        "pred_return": -0.02269277477053183,
+        "sic2": null
+      },
+      {
+        "permno": 93083,
+        "pred_return": -0.023264637805201275,
+        "sic2": null
+      },
+      {
+        "permno": 14172,
+        "pred_return": -0.023825465832550883,
+        "sic2": null
+      },
+      {
+        "permno": 76613,
+        "pred_return": -0.024492046612452054,
+        "sic2": null
+      },
+      {
+        "permno": 14133,
+        "pred_return": -0.026923311336623096,
+        "sic2": null
+      },
+      {
+        "permno": 77259,
+        "pred_return": -0.02752390686792886,
+        "sic2": null
+      },
+      {
+        "permno": 12358,
+        "pred_return": -0.029452322430208917,
+        "sic2": null
+      },
+      {
+        "permno": 88462,
+        "pred_return": -0.03484314968689203,
+        "sic2": null
+      },
+      {
+        "permno": 14934,
+        "pred_return": -0.043764128150142,
+        "sic2": null
+      },
+      {
+        "permno": 16377,
+        "pred_return": -0.04561392167462021,
+        "sic2": null
+      },
+      {
+        "permno": 15642,
+        "pred_return": -0.047197169201586904,
+        "sic2": null
+      },
+      {
+        "permno": 92571,
+        "pred_return": -0.06033363731354046,
+        "sic2": null
+      }
+    ],
+    "decile_avg": {
+      "1": -0.007172,
+      "2": 0.002348,
+      "3": 0.003645,
+      "4": 0.004865,
+      "5": 0.005835,
+      "6": 0.007121,
+      "7": 0.008241,
+      "8": 0.00959,
+      "9": 0.011836,
+      "10": 0.030678
+    },
+    "month": "2021-12"
+  },
+  "RegimeNN": {
+    "top20": [
+      {
+        "permno": 16100,
+        "pred_return": 0.43991029262542725,
+        "sic2": null
+      },
+      {
+        "permno": 82234,
+        "pred_return": 0.23220698535442352,
+        "sic2": null
+      },
+      {
+        "permno": 81869,
+        "pred_return": 0.17512167990207672,
+        "sic2": null
+      },
+      {
+        "permno": 89941,
+        "pred_return": 0.1371566504240036,
+        "sic2": null
+      },
+      {
+        "permno": 15662,
+        "pred_return": 0.12145620584487915,
+        "sic2": null
+      },
+      {
+        "permno": 77973,
+        "pred_return": 0.11515769362449646,
+        "sic2": null
+      },
+      {
+        "permno": 50286,
+        "pred_return": 0.1112382560968399,
+        "sic2": null
+      },
+      {
+        "permno": 87533,
+        "pred_return": 0.109402135014534,
+        "sic2": null
+      },
+      {
+        "permno": 90213,
+        "pred_return": 0.10900329053401947,
+        "sic2": null
+      },
+      {
+        "permno": 13202,
+        "pred_return": 0.10180474817752838,
+        "sic2": null
+      },
+      {
+        "permno": 85419,
+        "pred_return": 0.09618116915225983,
+        "sic2": null
+      },
+      {
+        "permno": 76360,
+        "pred_return": 0.09584398567676544,
+        "sic2": null
+      },
+      {
+        "permno": 16660,
+        "pred_return": 0.09497816860675812,
+        "sic2": null
+      },
+      {
+        "permno": 16776,
+        "pred_return": 0.09081822633743286,
+        "sic2": null
+      },
+      {
+        "permno": 16675,
+        "pred_return": 0.09016107022762299,
+        "sic2": null
+      },
+      {
+        "permno": 14934,
+        "pred_return": 0.0871114581823349,
+        "sic2": null
+      },
+      {
+        "permno": 14072,
+        "pred_return": 0.0844869315624237,
+        "sic2": null
+      },
+      {
+        "permno": 82824,
+        "pred_return": 0.08152370154857635,
+        "sic2": null
+      },
+      {
+        "permno": 16992,
+        "pred_return": 0.08031746745109558,
+        "sic2": null
+      },
+      {
+        "permno": 15590,
+        "pred_return": 0.07485167682170868,
+        "sic2": null
+      }
+    ],
+    "bottom20": [
+      {
+        "permno": 16927,
+        "pred_return": -0.03788549825549126,
+        "sic2": null
+      },
+      {
+        "permno": 81225,
+        "pred_return": -0.038496192544698715,
+        "sic2": null
+      },
+      {
+        "permno": 16820,
+        "pred_return": -0.03897220268845558,
+        "sic2": null
+      },
+      {
+        "permno": 16793,
+        "pred_return": -0.039925526827573776,
+        "sic2": null
+      },
+      {
+        "permno": 15902,
+        "pred_return": -0.04077237471938133,
+        "sic2": null
+      },
+      {
+        "permno": 17042,
+        "pred_return": -0.04097055271267891,
+        "sic2": null
+      },
+      {
+        "permno": 15186,
+        "pred_return": -0.041170112788677216,
+        "sic2": null
+      },
+      {
+        "permno": 15056,
+        "pred_return": -0.04543064534664154,
+        "sic2": null
+      },
+      {
+        "permno": 14449,
+        "pred_return": -0.04556690528988838,
+        "sic2": null
+      },
+      {
+        "permno": 88264,
+        "pred_return": -0.046749625355005264,
+        "sic2": null
+      },
+      {
+        "permno": 14107,
+        "pred_return": -0.04694446548819542,
+        "sic2": null
+      },
+      {
+        "permno": 15293,
+        "pred_return": -0.04758475348353386,
+        "sic2": null
+      },
+      {
+        "permno": 16250,
+        "pred_return": -0.048360224813222885,
+        "sic2": null
+      },
+      {
+        "permno": 15382,
+        "pred_return": -0.04865061119198799,
+        "sic2": null
+      },
+      {
+        "permno": 92345,
+        "pred_return": -0.04876324161887169,
+        "sic2": null
+      },
+      {
+        "permno": 89756,
+        "pred_return": -0.049524422734975815,
+        "sic2": null
+      },
+      {
+        "permno": 13976,
+        "pred_return": -0.05432162433862686,
+        "sic2": null
+      },
+      {
+        "permno": 87832,
+        "pred_return": -0.061159323900938034,
+        "sic2": null
+      },
+      {
+        "permno": 17041,
+        "pred_return": -0.06807229667901993,
+        "sic2": null
+      },
+      {
+        "permno": 13279,
+        "pred_return": -0.12072412669658661,
+        "sic2": null
+      }
+    ],
+    "decile_avg": {
+      "1": -0.014883,
+      "2": 0.006864,
+      "3": 0.013676,
+      "4": 0.017618,
+      "5": 0.020531,
+      "6": 0.023197,
+      "7": 0.025861,
+      "8": 0.029164,
+      "9": 0.034287,
+      "10": 0.053006
+    },
+    "month": "2021-12"
+  },
+  "OLS": {
+    "top20": [
+      {
+        "permno": 18438,
+        "pred_return": 0.05868197276243341,
+        "sic2": null
+      },
+      {
+        "permno": 26607,
+        "pred_return": 0.05663394442954489,
+        "sic2": null
+      },
+      {
+        "permno": 90088,
+        "pred_return": 0.05486044380975892,
+        "sic2": null
+      },
+      {
+        "permno": 80912,
+        "pred_return": 0.05468681503688087,
+        "sic2": null
+      },
+      {
+        "permno": 91086,
+        "pred_return": 0.05458676863588424,
+        "sic2": null
+      },
+      {
+        "permno": 85419,
+        "pred_return": 0.053653355330464766,
+        "sic2": null
+      },
+      {
+        "permno": 15374,
+        "pred_return": 0.05352683577988797,
+        "sic2": null
+      },
+      {
+        "permno": 82824,
+        "pred_return": 0.0516031501894014,
+        "sic2": null
+      },
+      {
+        "permno": 81190,
+        "pred_return": 0.050878036825958275,
+        "sic2": null
+      },
+      {
+        "permno": 86544,
+        "pred_return": 0.05036535746232479,
+        "sic2": null
+      },
+      {
+        "permno": 21135,
+        "pred_return": 0.05028210806201398,
+        "sic2": null
+      },
+      {
+        "permno": 83844,
+        "pred_return": 0.05019539014787354,
+        "sic2": null
+      },
+      {
+        "permno": 84375,
+        "pred_return": 0.049626554670988185,
+        "sic2": null
+      },
+      {
+        "permno": 86578,
+        "pred_return": 0.04920946103609236,
+        "sic2": null
+      },
+      {
+        "permno": 93065,
+        "pred_return": 0.04918170101864819,
+        "sic2": null
+      },
+      {
+        "permno": 15144,
+        "pred_return": 0.048948929536832705,
+        "sic2": null
+      },
+      {
+        "permno": 43334,
+        "pred_return": 0.04878376984026139,
+        "sic2": null
+      },
+      {
+        "permno": 90548,
+        "pred_return": 0.048583788515143125,
+        "sic2": null
+      },
+      {
+        "permno": 16659,
+        "pred_return": 0.048534564943332,
+        "sic2": null
+      },
+      {
+        "permno": 16992,
+        "pred_return": 0.04795072008742943,
+        "sic2": null
+      }
+    ],
+    "bottom20": [
+      {
+        "permno": 16250,
+        "pred_return": -0.004150760694162441,
+        "sic2": null
+      },
+      {
+        "permno": 78875,
+        "pred_return": -0.004172416583454798,
+        "sic2": null
+      },
+      {
+        "permno": 14708,
+        "pred_return": -0.004256842307790578,
+        "sic2": null
+      },
+      {
+        "permno": 91269,
+        "pred_return": -0.004345654131425633,
+        "sic2": null
+      },
+      {
+        "permno": 17104,
+        "pred_return": -0.004465148942363606,
+        "sic2": null
+      },
+      {
+        "permno": 89756,
+        "pred_return": -0.004552670955735397,
+        "sic2": null
+      },
+      {
+        "permno": 13323,
+        "pred_return": -0.004720924589405597,
+        "sic2": null
+      },
+      {
+        "permno": 88462,
+        "pred_return": -0.005686253085456602,
+        "sic2": null
+      },
+      {
+        "permno": 14813,
+        "pred_return": -0.006686925801206799,
+        "sic2": null
+      },
+      {
+        "permno": 15186,
+        "pred_return": -0.007465462824157745,
+        "sic2": null
+      },
+      {
+        "permno": 91612,
+        "pred_return": -0.010290050572388052,
+        "sic2": null
+      },
+      {
+        "permno": 12527,
+        "pred_return": -0.010654231253481306,
+        "sic2": null
+      },
+      {
+        "permno": 68145,
+        "pred_return": -0.01070085814712678,
+        "sic2": null
+      },
+      {
+        "permno": 55862,
+        "pred_return": -0.011775924052678556,
+        "sic2": null
+      },
+      {
+        "permno": 77699,
+        "pred_return": -0.012586555434041136,
+        "sic2": null
+      },
+      {
+        "permno": 83885,
+        "pred_return": -0.012956523130067552,
+        "sic2": null
+      },
+      {
+        "permno": 16263,
+        "pred_return": -0.013555238772100534,
+        "sic2": null
+      },
+      {
+        "permno": 15914,
+        "pred_return": -0.015204996744111684,
+        "sic2": null
+      },
+      {
+        "permno": 87337,
+        "pred_return": -0.015395815315398614,
+        "sic2": null
+      },
+      {
+        "permno": 82779,
+        "pred_return": -0.016169759871309457,
+        "sic2": null
+      }
+    ],
+    "decile_avg": {
+      "1": 0.005566,
+      "2": 0.013245,
+      "3": 0.016526,
+      "4": 0.01917,
+      "5": 0.021514,
+      "6": 0.023922,
+      "7": 0.026373,
+      "8": 0.029213,
+      "9": 0.032971,
+      "10": 0.041061
+    },
+    "month": "2021-12"
+  },
+  "Ridge": {
+    "top20": [
+      {
+        "permno": 18438,
+        "pred_return": 0.05868174900159441,
+        "sic2": null
+      },
+      {
+        "permno": 26607,
+        "pred_return": 0.05663398137122344,
+        "sic2": null
+      },
+      {
+        "permno": 90088,
+        "pred_return": 0.05486029801797419,
+        "sic2": null
+      },
+      {
+        "permno": 80912,
+        "pred_return": 0.054686720919001286,
+        "sic2": null
+      },
+      {
+        "permno": 91086,
+        "pred_return": 0.05458664866184182,
+        "sic2": null
+      },
+      {
+        "permno": 85419,
+        "pred_return": 0.05365357245411567,
+        "sic2": null
+      },
+      {
+        "permno": 15374,
+        "pred_return": 0.05352667334121308,
+        "sic2": null
+      },
+      {
+        "permno": 82824,
+        "pred_return": 0.05160295853477298,
+        "sic2": null
+      },
+      {
+        "permno": 81190,
+        "pred_return": 0.05087790355429231,
+        "sic2": null
+      },
+      {
+        "permno": 86544,
+        "pred_return": 0.05036509994323293,
+        "sic2": null
+      },
+      {
+        "permno": 21135,
+        "pred_return": 0.0502812961547766,
+        "sic2": null
+      },
+      {
+        "permno": 83844,
+        "pred_return": 0.05019545569186061,
+        "sic2": null
+      },
+      {
+        "permno": 84375,
+        "pred_return": 0.04962633500008733,
+        "sic2": null
+      },
+      {
+        "permno": 86578,
+        "pred_return": 0.049209147281014484,
+        "sic2": null
+      },
+      {
+        "permno": 93065,
+        "pred_return": 0.04918146245649738,
+        "sic2": null
+      },
+      {
+        "permno": 15144,
+        "pred_return": 0.04894887920893068,
+        "sic2": null
+      },
+      {
+        "permno": 43334,
+        "pred_return": 0.04878363174843171,
+        "sic2": null
+      },
+      {
+        "permno": 90548,
+        "pred_return": 0.04858356420718127,
+        "sic2": null
+      },
+      {
+        "permno": 16659,
+        "pred_return": 0.048534378714744114,
+        "sic2": null
+      },
+      {
+        "permno": 16992,
+        "pred_return": 0.0479506932356535,
+        "sic2": null
+      }
+    ],
+    "bottom20": [
+      {
+        "permno": 16250,
+        "pred_return": -0.00415077589083322,
+        "sic2": null
+      },
+      {
+        "permno": 78875,
+        "pred_return": -0.004172506611322123,
+        "sic2": null
+      },
+      {
+        "permno": 14708,
+        "pred_return": -0.004256444976831759,
+        "sic2": null
+      },
+      {
+        "permno": 91269,
+        "pred_return": -0.004345701900221358,
+        "sic2": null
+      },
+      {
+        "permno": 17104,
+        "pred_return": -0.004465310549589915,
+        "sic2": null
+      },
+      {
+        "permno": 89756,
+        "pred_return": -0.0045521045825661285,
+        "sic2": null
+      },
+      {
+        "permno": 13323,
+        "pred_return": -0.004720984561333193,
+        "sic2": null
+      },
+      {
+        "permno": 88462,
+        "pred_return": -0.005686491044549127,
+        "sic2": null
+      },
+      {
+        "permno": 14813,
+        "pred_return": -0.006687143946019838,
+        "sic2": null
+      },
+      {
+        "permno": 15186,
+        "pred_return": -0.007465769845423999,
+        "sic2": null
+      },
+      {
+        "permno": 91612,
+        "pred_return": -0.010289939822507012,
+        "sic2": null
+      },
+      {
+        "permno": 12527,
+        "pred_return": -0.010650349105982181,
+        "sic2": null
+      },
+      {
+        "permno": 68145,
+        "pred_return": -0.010700707952691287,
+        "sic2": null
+      },
+      {
+        "permno": 55862,
+        "pred_return": -0.011773857458626035,
+        "sic2": null
+      },
+      {
+        "permno": 77699,
+        "pred_return": -0.012586720873536832,
+        "sic2": null
+      },
+      {
+        "permno": 83885,
+        "pred_return": -0.012956225085687435,
+        "sic2": null
+      },
+      {
+        "permno": 16263,
+        "pred_return": -0.013554824724724253,
+        "sic2": null
+      },
+      {
+        "permno": 15914,
+        "pred_return": -0.01520513728367192,
+        "sic2": null
+      },
+      {
+        "permno": 87337,
+        "pred_return": -0.015395939918740744,
+        "sic2": null
+      },
+      {
+        "permno": 82779,
+        "pred_return": -0.016169783809967312,
+        "sic2": null
+      }
+    ],
+    "decile_avg": {
+      "1": 0.005566,
+      "2": 0.013245,
+      "3": 0.016526,
+      "4": 0.01917,
+      "5": 0.021514,
+      "6": 0.023922,
+      "7": 0.026373,
+      "8": 0.029213,
+      "9": 0.03297,
+      "10": 0.041061
+    },
+    "month": "2021-12"
+  }
+}

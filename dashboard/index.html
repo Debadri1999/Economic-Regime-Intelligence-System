@@ -26,6 +26,7 @@
       <a href="#regimes">Regimes</a>
       <a href="#models">Models</a>
       <a href="#portfolio">Portfolio</a>
+      <a href="#rankings">Stock Rankings</a>
       <a href="#shap">SHAP</a>
       <a href="#ai-briefing">AI Briefing</a>
       <a href="#system">System</a>
@@ -144,6 +145,58 @@
         </div>
       </div>
       <div class="chart-card hud-panel chart-hero"><div id="chart-portfolio" class="chart-container chart-tall"></div></div>
+    </section>
+
+    <section id="rankings">
+      <h2 class="section-title">Stock Ranking Signal</h2>
+      <p class="section-desc">Model-predicted return rankings for the latest OOS month. Use as a screening input — not as a standalone buy/sell list.</p>
+
+      <div class="model-selector hud-panel">
+        <label for="ranking-model-select">Select Model:</label>
+        <select id="ranking-model-select">
+          <option value="XGBoost" selected>XGBoost (Best Sharpe: 0.47)</option>
+          <option value="RegimeNN">RegimeNN (Best IC: 4.80%)</option>
+          <option value="LightGBM">LightGBM (IC: 3.11%)</option>
+          <option value="Ridge">Ridge</option>
+          <option value="OLS">OLS</option>
+        </select>
+      </div>
+
+      <div class="chart-card hud-panel" style="margin-bottom:1.5rem;">
+        <h3>Predicted Return by Decile</h3>
+        <div id="chart-deciles" class="chart-container"></div>
+        <p class="chart-note">Decile 10 = highest predicted return (long candidates). Decile 1 = lowest (short/avoid). Spread = strategy signal.</p>
+      </div>
+
+      <div class="ranking-grid">
+        <div class="chart-card hud-panel bull-accent">
+          <h3>Top 20 — Long Candidates</h3>
+          <div class="table-scroll">
+            <table id="top-stocks-table" class="data-table hud-table">
+              <thead><tr><th>Rank</th><th>PERMNO</th><th>Pred Return</th><th>SIC2</th></tr></thead>
+              <tbody></tbody>
+            </table>
+          </div>
+        </div>
+        <div class="chart-card hud-panel bear-accent">
+          <h3>Bottom 20 — Short/Avoid</h3>
+          <div class="table-scroll">
+            <table id="bottom-stocks-table" class="data-table hud-table">
+              <thead><tr><th>Rank</th><th>PERMNO</th><th>Pred Return</th><th>SIC2</th></tr></thead>
+              <tbody></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <div class="hud-panel" id="regime-screening-panel">
+        <h3>Regime-Conditioned Screening Guidance</h3>
+        <div id="regime-screening-content"></div>
+      </div>
+
+      <div class="disclaimer hud-panel">
+        <strong>Disclaimer:</strong> These rankings reflect model predictions on historical data (latest: Dec 2021). They are NOT investment recommendations. Use as one input within a diversified investment process. Stocks identified by CRSP PERMNO — map to tickers via WRDS.
+      </div>
     </section>
 
     <section id="shap">

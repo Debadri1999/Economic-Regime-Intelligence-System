@@ -204,6 +204,19 @@ def main() -> None:
     out_pred = predictions_df.copy()
     if "month_dt" in out_pred.columns:
         out_pred["month_dt"] = out_pred["month_dt"].astype(str)
+    # Add sic2 (sector) from panel's sic2_* one-hot columns for dashboard
+    sic2_cols = [c for c in panel.columns if c.startswith("sic2_")]
+    if sic2_cols:
+        def _row_to_sic2(row):
+            for c in sic2_cols:
+                if row.get(c, 0) and float(row.get(c, 0)) > 0.5:
+                    return c.replace("sic2_", "")
+            return None
+        panel_sic = panel[["month_dt", "permno"] + sic2_cols].copy()
+        panel_sic["month_dt"] = panel_sic["month_dt"].astype(str)
+        panel_sic["sic2"] = panel_sic.apply(_row_to_sic2, axis=1)
+        panel_sic = panel_sic[["month_dt", "permno", "sic2"]].dropna(subset=["sic2"]).drop_duplicates(subset=["month_dt", "permno"], keep="first")
+        out_pred = out_pred.merge(panel_sic, on=["month_dt", "permno"], how="left")
     out_pred.to_parquet(OUT_DIR / "predictions.parquet", index=False)
     with open(OUT_DIR / "metrics.json", "w") as f:
         json.dump({

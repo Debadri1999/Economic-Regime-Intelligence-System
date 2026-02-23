@@ -686,6 +686,123 @@ function renderShapChart(selector, data) {
   }).render();
 }
 
+// ——— Stock Rankings ———
+function renderRankings(rankingsData, regimeData, metrics, shapByRegime) {
+  if (!rankingsData || typeof rankingsData !== "object" || Object.keys(rankingsData).length === 0) return;
+
+  const select = document.getElementById("ranking-model-select");
+  if (!select) return;
+
+  const bm = metrics?.baseline_metrics || metrics?.model_metrics || {};
+  const pm = metrics?.portfolio_metrics || {};
+  const modelOrder = ["XGBoost", "RegimeNN", "LightGBM", "Ridge", "OLS"];
+  const models = modelOrder.filter((m) => rankingsData[m]).concat(
+    Object.keys(rankingsData).filter((m) => !modelOrder.includes(m))
+  );
+  select.innerHTML = "";
+  const defaultModel = models.includes("XGBoost") ? "XGBoost" : models[0];
+  models.forEach((m) => {
+    const ic = (bm[m]?.avg_ic ?? 0) * 100;
+    const sharpe = pm[m]?.sharpe_ratio ?? null;
+    const label = sharpe != null ? `${m} (Sharpe: ${sharpe.toFixed(2)})` : (ic ? `${m} (IC: ${ic.toFixed(2)}%)` : m);
+    const opt = document.createElement("option");
+    opt.value = m;
+    opt.textContent = label;
+    opt.selected = m === defaultModel;
+    select.appendChild(opt);
+  });
+
+  const shap = shapByRegime || {};
+  select.addEventListener("change", () => updateRankings(rankingsData, select.value, regimeData, shap));
+  updateRankings(rankingsData, defaultModel, regimeData, shap);
+}
+
+function updateRankings(data, model, regimeData, shapByRegime) {
+  const m = data[model];
+  if (!m) return;
+
+  const c = getChartColors();
+  const decileEl = document.querySelector("#chart-deciles");
+  if (decileEl) {
+    decileEl.innerHTML = "";
+    const decileKeys = Object.keys(m.decile_avg || {}).sort((a, b) => Number(a) - Number(b));
+    const decileVals = decileKeys.map((k) => ((m.decile_avg[k] ?? 0) * 100).toFixed(3));
+    const decileColors = decileKeys.map((k) => {
+      const d = Number(k);
+      if (d >= 8) return c.bull;
+      if (d <= 3) return c.bear;
+      return c.series[1];
+    });
+    if (decileKeys.length > 0) {
+      new ApexCharts(decileEl, {
+        chart: { type: "bar", height: 280, toolbar: { show: false } },
+        theme: { mode: "dark" },
+        tooltip: { theme: "dark", y: { formatter: (v) => (v != null ? v + "%" : "—") } },
+        plotOptions: { bar: { borderRadius: 4, distributed: true } },
+        dataLabels: { enabled: true, formatter: (v) => (v != null ? v + "%" : "") },
+        xaxis: { categories: decileKeys.map((d) => "D" + d), labels: { style: { colors: c.text } } },
+        yaxis: { labels: { style: { colors: c.text }, formatter: (v) => v + "%" } },
+        colors: decileColors,
+        grid: { borderColor: c.grid },
+        series: [{ name: "Avg Pred Return", data: decileVals }],
+      }).render();
+    }
+  }
+
+  const topBody = document.querySelector("#top-stocks-table tbody");
+  const botBody = document.querySelector("#bottom-stocks-table tbody");
+  if (topBody && m.top20) {
+    topBody.innerHTML = m.top20.map((s, i) => {
+      const pr = (Number(s.pred_return || 0) * 100).toFixed(3);
+      const sic2 = s.sic2 != null ? (Array.isArray(s.sic2) ? s.sic2[0] : s.sic2) : "—";
+      return `<tr><td>${i + 1}</td><td>${s.permno ?? "—"}</td><td class="positive">${pr}%</td><td>${sic2}</td></tr>`;
+    }).join("");
+  }
+  if (botBody && m.bottom20) {
+    botBody.innerHTML = m.bottom20.map((s, i) => {
+      const pr = (Number(s.pred_return || 0) * 100).toFixed(3);
+      const sic2 = s.sic2 != null ? (Array.isArray(s.sic2) ? s.sic2[0] : s.sic2) : "—";
+      return `<tr><td>${20 - i}</td><td>${s.permno ?? "—"}</td><td class="negative">${pr}%</td><td>${sic2}</td></tr>`;
+    }).join("");
+  }
+
+  const regime = Array.isArray(regimeData) && regimeData.length
+    ? (regimeData[regimeData.length - 1].regime_label || "Transition")
+    : "Transition";
+  const content = document.getElementById("regime-screening-content");
+  if (content) {
+    const guidance = {
+      Bull: {
+        primary: "High momentum (mom12m, mom6m)",
+        secondary: "Growth characteristics",
+        quality: "Reasonable turnover (turn < 75th pctl)",
+      },
+      Transition: {
+        primary: "Low idiosyncratic volatility (idiovol < median)",
+        secondary: "Low systematic risk (beta < 1.0)",
+        quality: "Reasonable turnover (turn < 75th pctl)",
+      },
+      Bear: {
+        primary: "High book-to-market (bm), earnings yield (ep)",
+        secondary: "Low leverage",
+        quality: "Defensive sector tilt",
+      },
+    };
+    const g = guidance[regime] || guidance.Transition;
+    const shap = shapByRegime || {};
+    const shapFeatures = (shap[regime] || []).slice(0, 3).map((x) => x.feature || x.Feature || "").filter(Boolean);
+    content.innerHTML = `
+      <p><strong>Current Regime: ${regime.toUpperCase()}</strong> (Latest: ${m.month || "—"})</p>
+      <ul class="ai-list">
+        <li><strong>Primary filter:</strong> ${g.primary}</li>
+        <li><strong>Secondary filter:</strong> ${g.secondary}</li>
+        <li><strong>Quality check:</strong> ${g.quality}</li>
+      </ul>
+      <p class="chart-note">These filters reflect SHAP-identified features (${shapFeatures.join(", ") || "—"}) as predictive in ${regime} regimes. Combining ML ranking with regime-appropriate screening improves signal quality.</p>
+    `;
+  }
+}
+
 // ——— Dataset info ———
 function renderDatasetInfo(metrics) {
   const info = metrics?.dataset_info || {};
@@ -711,6 +828,7 @@ async function init() {
   const portfolio = await fetchJSON("portfolio");
   const regime = await fetchJSON("regime");
   const shapByRegime = await fetchJSON("shap_by_regime");
+  const rankings = await fetchJSON("rankings");
 
   const hasData = !!metrics || (Array.isArray(portfolio) && portfolio.length) || (Array.isArray(regime) && regime.length);
   showDataLoadHint(hasData);
@@ -737,6 +855,9 @@ async function init() {
     renderShapChart("#chart-shap-bull", shapByRegime.Bull || []);
     renderShapChart("#chart-shap-bear", shapByRegime.Bear || []);
     renderShapChart("#chart-shap-transition", shapByRegime.Transition || []);
+  }
+  if (rankings && typeof rankings === "object" && Object.keys(rankings).length > 0) {
+    renderRankings(rankings, regime, metrics, shapByRegime);
   }
 }
 
