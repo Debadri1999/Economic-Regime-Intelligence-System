@@ -3,10 +3,10 @@
  * Single-page scroll, particle background, radar chart, regime playbook
  */
 
-// Resolve data path for GitHub Pages subpath (e.g. /repo-name/docs/)
+// Data path: relative "data" works for local server and GitHub Pages (docs/ as source).
+// Commit docs/data/*.json (metrics, portfolio, regime, shap_by_regime, rankings) so the live site has data.
 function getDataBase() {
-  const path = (window.location.pathname || "").replace(/\/index\.html$/, "").replace(/\/?$/, "");
-  return path ? `${path}/data` : "data";
+  return "data";
 }
 
 async function fetchJSON(name) {
@@ -859,7 +859,32 @@ async function init() {
   }
   if (rankings && typeof rankings === "object" && Object.keys(rankings).length > 0) {
     renderRankings(rankings, regime, metrics, shapByRegime);
+    hideRankingsNoData();
+  } else {
+    showRankingsNoData();
   }
+}
+
+function showRankingsNoData() {
+  let el = document.getElementById("rankings-no-data");
+  if (!el) {
+    el = document.createElement("div");
+    el.id = "rankings-no-data";
+    el.className = "data-load-hint";
+    el.style.marginTop = "1rem";
+    el.innerHTML = "Ranking data not loaded. If this is the live site, ensure <code>docs/data/rankings.json</code> is committed and pushed. Locally, run <code>python scripts/export_dashboard_data.py</code> and serve via HTTP.";
+    const section = document.getElementById("rankings");
+    if (section) {
+      const insertBefore = section.querySelector(".model-selector") || section.querySelector(".chart-card");
+      section.insertBefore(el, insertBefore || section.firstChild);
+    }
+  }
+  el.style.display = "block";
+}
+
+function hideRankingsNoData() {
+  const el = document.getElementById("rankings-no-data");
+  if (el) el.style.display = "none";
 }
 
 init();
