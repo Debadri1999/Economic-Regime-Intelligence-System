@@ -1,17 +1,21 @@
 /**
- * ERIS Dashboard — Tabbed, stakeholder-oriented, LLM-integrated
- * Run scripts/export_dashboard_data.py then serve via HTTP (serve.bat or python -m http.server 8080)
+ * ERIS v2 — War Room Dashboard
+ * Single-page scroll, particle background, radar chart, regime playbook
  */
 
-const DATA_BASE = "data";
+function getDataBase() {
+  const path = (window.location.pathname || "").replace(/\/index\.html$/, "").replace(/\/?$/, "");
+  return path ? `${path}/data` : "data";
+}
 
 async function fetchJSON(name) {
+  const base = getDataBase();
   try {
-    const r = await fetch(`${DATA_BASE}/${name}.json`);
+    const r = await fetch(`${base}/${name}.json`);
     if (!r.ok) return null;
     return await r.json();
   } catch (e) {
-    console.warn("Fetch failed:", name, e);
+    console.warn("Fetch failed:", base + "/" + name, e);
     return null;
   }
 }
@@ -22,7 +26,7 @@ function showDataLoadHint(loaded) {
     el = document.createElement("div");
     el.id = "data-load-hint";
     el.className = "data-load-hint";
-    el.innerHTML = 'Data not loaded. Serve via HTTP: run <code>serve.bat</code> or <code>python -m http.server 8080</code> in the dashboard folder, then open <a href="http://localhost:8080">http://localhost:8080</a>.';
+    el.innerHTML = 'Data not loaded. Serve via HTTP: run <code>serve.bat</code> or <code>python -m http.server 8080</code> in this folder.';
     document.body.insertBefore(el, document.body.firstChild);
   }
   el.style.display = loaded ? "none" : "block";
@@ -37,109 +41,95 @@ function formatNum(x, decimals = 2) {
   return Number(x).toFixed(decimals);
 }
 
-// ——— Tabs ———
-function initTabs() {
-  const btns = document.querySelectorAll(".tab-btn");
-  const panes = document.querySelectorAll(".tab-pane");
-  btns.forEach((btn) => {
-    btn.addEventListener("click", () => {
-      const tab = btn.dataset.tab;
-      btns.forEach((b) => b.classList.remove("active"));
-      panes.forEach((p) => p.classList.remove("active"));
-      btn.classList.add("active");
-      const pane = document.getElementById(`tab-${tab}`);
-      if (pane) pane.classList.add("active");
-    });
-  });
-}
-
-// ——— Animation: prominent hexagonal/triangular wireframe ———
+// ——— Particle background (financial data stream) ———
 function initNeuralBg() {
   const canvas = document.getElementById("neural-bg");
   if (!canvas) return;
   const ctx = canvas.getContext("2d");
-  let w = canvas.width = window.innerWidth;
-  let h = canvas.height = window.innerHeight;
-  let time = 0;
-  const isDark = () => document.documentElement.getAttribute("data-theme") !== "light";
+  let w = (canvas.width = window.innerWidth);
+  let h = (canvas.height = window.innerHeight);
+  let mouse = { x: -1, y: -1 };
+  const primary = "rgba(12, 255, 208, 0.12)";
+  const secondary = "rgba(0, 229, 255, 0.2)";
+  const connectColor = "rgba(12, 255, 208, 0.04)";
 
-  function resize() {
-    w = canvas.width = window.innerWidth;
-    h = canvas.height = window.innerHeight;
+  const numSmall = 100;
+  const numLarge = 9;
+  const particles = [];
+
+  function makeParticle(isLarge) {
+    return {
+      x: Math.random() * w,
+      y: Math.random() * h,
+      vx: (Math.random() - 0.5) * (isLarge ? 0.5 : 0.2),
+      vy: (Math.random() - 0.5) * (isLarge ? 0.5 : 0.2),
+      r: isLarge ? 3 + Math.random() * 2 : 1 + Math.random() * 2,
+      opacity: isLarge ? 0.2 : 0.05 + Math.random() * 0.1,
+      isLarge,
+    };
   }
 
-  function hexCorner(cx, cy, size, i) {
-    const angleDeg = 60 * i - 30;
-    const angleRad = (Math.PI / 180) * angleDeg;
-    return { x: cx + size * Math.cos(angleRad), y: cy + size * Math.sin(angleRad) };
-  }
+  for (let i = 0; i < numSmall; i++) particles.push(makeParticle(false));
+  for (let i = 0; i < numLarge; i++) particles.push(makeParticle(true));
 
-  function drawHex(ctx, cx, cy, size) {
-    ctx.beginPath();
-    for (let i = 0; i < 6; i++) {
-      const p = hexCorner(cx, cy, size, i);
-      if (i === 0) ctx.moveTo(p.x, p.y);
-      else ctx.lineTo(p.x, p.y);
-    }
-    ctx.closePath();
-  }
-
-  function drawTri(ctx, cx, cy, size) {
-    ctx.beginPath();
-    for (let i = 0; i < 3; i++) {
-      const angle = (Math.PI * 2 / 3) * i - Math.PI / 2;
-      const x = cx + size * Math.cos(angle);
-      const y = cy + size * Math.sin(angle);
-      if (i === 0) ctx.moveTo(x, y);
-      else ctx.lineTo(x, y);
-    }
-    ctx.closePath();
-  }
+  canvas.addEventListener("mousemove", (e) => {
+    mouse.x = e.clientX;
+    mouse.y = e.clientY;
+  });
+  canvas.addEventListener("mouseleave", () => {
+    mouse.x = -1;
+    mouse.y = -1;
+  });
 
   function draw() {
-    time += 0.012;
     ctx.clearRect(0, 0, w, h);
 
-    const dark = isDark();
-    const primary = dark ? "rgba(56, 189, 248, 0.55)" : "rgba(14, 165, 233, 0.35)";
-    const secondary = dark ? "rgba(45, 212, 191, 0.45)" : "rgba(20, 184, 166, 0.25)";
-    const accent = dark ? "rgba(167, 139, 250, 0.4)" : "rgba(99, 102, 241, 0.25)";
-
-    const hexSize = 90;
-    const triSize = 50;
-    const spacing = 150;
-
-    for (let row = -2; row < Math.ceil(h / spacing) + 2; row++) {
-      for (let col = -2; col < Math.ceil(w / spacing) + 2; col++) {
-        const offsetX = (row % 2) * (spacing * 0.5);
-        const cx = col * spacing + offsetX + Math.sin(time + row * 0.3) * 12;
-        const cy = row * spacing + Math.cos(time * 0.7 + col * 0.2) * 12;
-
-        const pulse = 0.75 + 0.25 * Math.sin(time + row * 0.5 + col * 0.3);
-        ctx.globalAlpha = pulse;
-
-        if ((row + col) % 2 === 0) {
-          ctx.strokeStyle = primary;
-          ctx.lineWidth = 1.8;
-          drawHex(ctx, cx, cy, hexSize);
-          ctx.stroke();
-        } else {
-          ctx.strokeStyle = secondary;
-          ctx.lineWidth = 1.2;
-          drawHex(ctx, cx, cy, hexSize * 0.65);
-          ctx.stroke();
-        }
-
-        if ((row + col) % 3 === 0) {
-          ctx.strokeStyle = accent;
-          ctx.lineWidth = 1.2;
-          drawTri(ctx, cx + Math.sin(time * 1.2) * 25, cy, triSize);
+    // Connections
+    ctx.strokeStyle = connectColor;
+    ctx.lineWidth = 1;
+    for (let i = 0; i < particles.length; i++) {
+      for (let j = i + 1; j < particles.length; j++) {
+        const dx = particles[i].x - particles[j].x;
+        const dy = particles[i].y - particles[j].y;
+        if (Math.hypot(dx, dy) < 120) {
+          ctx.beginPath();
+          ctx.moveTo(particles[i].x, particles[i].y);
+          ctx.lineTo(particles[j].x, particles[j].y);
           ctx.stroke();
         }
       }
     }
 
-    ctx.globalAlpha = 1;
+    // Mouse attraction
+    if (mouse.x >= 0) {
+      particles.forEach((p) => {
+        const dx = mouse.x - p.x;
+        const dy = mouse.y - p.y;
+        const d = Math.hypot(dx, dy);
+        if (d < 200 && d > 0) {
+          const f = 0.02;
+          p.vx += (dx / d) * f;
+          p.vy += (dy / d) * f;
+        }
+      });
+    }
+
+    // Update & draw particles
+    particles.forEach((p) => {
+      p.x += p.vx;
+      p.y += p.vy;
+      if (p.x < 0 || p.x > w) p.vx *= -1;
+      if (p.y < 0 || p.y > h) p.vy *= -1;
+      p.x = Math.max(0, Math.min(w, p.x));
+      p.y = Math.max(0, Math.min(h, p.y));
+
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+      ctx.fillStyle = p.isLarge ? secondary : primary;
+      ctx.globalAlpha = p.opacity;
+      ctx.fill();
+      ctx.globalAlpha = 1;
+    });
   }
 
   function loop() {
@@ -147,39 +137,158 @@ function initNeuralBg() {
     requestAnimationFrame(loop);
   }
   loop();
-  window.addEventListener("resize", resize);
+
+  window.addEventListener("resize", () => {
+    w = canvas.width = window.innerWidth;
+    h = canvas.height = window.innerHeight;
+  });
 }
 
-// ——— Theme ———
+// ——— Chart colors (dark) ———
 function getChartColors() {
-  const isDark = document.documentElement.getAttribute("data-theme") !== "light";
   return {
-    text: isDark ? "#b8c5d6" : "#475569",
-    grid: isDark ? "#2d3a52" : "#e2e8f0",
-    series: ["#38bdf8", "#34d399", "#fbbf24", "#a78bfa", "#f472b6"],
+    text: "#7B8DA0",
+    grid: "#0D2137",
+    series: ["#0CFFD0", "#00E5FF", "#FFB020", "#BC8CFF", "#FF3B5C"],
+    bull: "#00FF87",
+    transition: "#FFB020",
+    bear: "#FF3B5C",
   };
 }
 
-document.querySelector(".theme-toggle")?.addEventListener("click", () => {
-  const root = document.documentElement;
-  const next = root.getAttribute("data-theme") === "dark" ? "light" : "dark";
-  root.setAttribute("data-theme", next);
-  if (window.portfolioChart) window.portfolioChart.updateOptions({ theme: { mode: next } });
-  if (window.stressGaugeChart) window.stressGaugeChart.updateOptions({ theme: { mode: next } });
-});
+// ——— Count-up animation ———
+function initCountUp() {
+  const els = document.querySelectorAll(".count-up");
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        const el = entry.target;
+        const target = parseInt(el.dataset.target, 10);
+        let start = 0;
+        const duration = 2000;
+        const startTime = performance.now();
+        function step(now) {
+          const t = Math.min((now - startTime) / duration, 1);
+          const ease = t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2;
+          const val = Math.floor(start + (target - start) * ease);
+          el.textContent = val.toLocaleString();
+          if (t < 1) requestAnimationFrame(step);
+        }
+        requestAnimationFrame(step);
+        observer.unobserve(el);
+      });
+    },
+    { threshold: 0.3 }
+  );
+  els.forEach((el) => observer.observe(el));
+}
+
+// ——— Smooth scroll ———
+function initSmoothScroll() {
+  document.querySelectorAll('a[href^="#"]').forEach((a) => {
+    a.addEventListener("click", (e) => {
+      const href = a.getAttribute("href");
+      if (href === "#") return;
+      const target = document.querySelector(href);
+      if (target) {
+        e.preventDefault();
+        target.scrollIntoView({ behavior: "smooth" });
+      }
+    });
+  });
+}
+
+// ——— Navbar scroll effect ———
+function initNavbarScroll() {
+  const nav = document.getElementById("navbar");
+  if (!nav) return;
+  const handler = () => {
+    nav.classList.toggle("scrolled", window.scrollY > 100);
+  };
+  window.addEventListener("scroll", handler);
+  handler();
+}
+
+// ——— Section fade-in ———
+function initSectionFade() {
+  const sections = document.querySelectorAll("section");
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.style.opacity = "1";
+          entry.target.style.transform = "translateY(0)";
+        }
+      });
+    },
+    { threshold: 0.1 }
+  );
+  sections.forEach((s) => {
+    s.style.opacity = "0";
+    s.style.transform = "translateY(30px)";
+    s.style.transition = "opacity 0.6s, transform 0.6s";
+    observer.observe(s);
+  });
+}
+
+// ——— Dynamic regime content ———
+function updateRegimeContent(regimeData, metrics) {
+  const regime = Array.isArray(regimeData) && regimeData.length
+    ? (regimeData[regimeData.length - 1].regime_label || "Transition")
+    : "Transition";
+
+  const badge = document.getElementById("nav-regime-badge");
+  if (badge) {
+    badge.textContent = regime.toUpperCase();
+    badge.className = "regime-badge " + regime.toLowerCase();
+  }
+
+  const alertBanner = document.getElementById("regime-alert-banner");
+  if (alertBanner) {
+    const msgs = {
+      Bull: "Expansion phase. Models typically more reliable.",
+      Transition: "Regime in transition. Increase monitoring.",
+      Bear: "Contraction risk. Defensive positioning recommended.",
+    };
+    alertBanner.textContent = `Current regime: ${regime.toUpperCase()} — ${msgs[regime] || msgs.Transition}`;
+    alertBanner.className = "regime-alert " + regime.toLowerCase();
+  }
+
+  document.querySelectorAll(".playbook-card").forEach((card) => {
+    card.classList.toggle("active", (card.dataset.regime || "").toLowerCase() === regime.toLowerCase());
+  });
+}
 
 // ——— Main Dashboard ———
 function renderMainDashboard(metrics, regimeData) {
-  const pm = metrics?.portfolio_metrics || {};
   const bm = metrics?.baseline_metrics || metrics?.model_metrics || {};
-  let bestR2 = 0;
+  const pm = metrics?.portfolio_metrics || {};
+
+  // Best Sharpe / best IC (across models if per-model)
+  let bestSharpe = -Infinity;
+  let bestIC = -Infinity;
+  if (typeof pm === "object" && !Array.isArray(pm)) {
+    const firstVal = Object.values(pm).find((v) => v && typeof v.sharpe_ratio === "number");
+    if (typeof pm.sharpe_ratio === "number") {
+      bestSharpe = pm.sharpe_ratio;
+    } else if (firstVal) {
+      Object.values(pm).forEach((v) => {
+        if (v && typeof v.sharpe_ratio === "number" && v.sharpe_ratio > bestSharpe)
+          bestSharpe = v.sharpe_ratio;
+      });
+    }
+  }
   Object.values(bm || {}).forEach((m) => {
-    if (m && typeof m.oos_r2 === "number" && m.oos_r2 > bestR2) bestR2 = m.oos_r2;
+    if (m != null && typeof m.avg_ic === "number" && !isNaN(m.avg_ic) && m.avg_ic > bestIC) bestIC = m.avg_ic;
   });
 
-  const set = (id, val) => { const e = document.getElementById(id); if (e) e.textContent = val; };
-  set("kpi-sharpe", formatNum(pm.sharpe_ratio, 2));
-  set("kpi-oos-r2", formatPct(bestR2));
+  const set = (id, val) => {
+    const e = document.getElementById(id);
+    if (e) e.textContent = val;
+  };
+  set("kpi-sharpe", formatNum(bestSharpe > -Infinity ? bestSharpe : null, 2));
+  set("kpi-oos-r2", bestIC > -Infinity ? (bestIC * 100).toFixed(2) + "%" : "—");
 
   if (Array.isArray(regimeData) && regimeData.length) {
     const latest = regimeData[regimeData.length - 1];
@@ -189,14 +298,15 @@ function renderMainDashboard(metrics, regimeData) {
     set("kpi-regime", regime);
   }
 
-  // Stress gauge hero
   const val = regimeData?.length ? (regimeData[regimeData.length - 1].stress_index ?? 0) : 0;
   const c = getChartColors();
   const el = document.querySelector("#stress-gauge-hero");
   if (el && !el._rendered) {
     el._rendered = true;
     window.stressGaugeChart = new ApexCharts(el, {
-      chart: { type: "radialBar", height: 280, fontFamily: "DM Sans" },
+      chart: { type: "radialBar", height: 280, fontFamily: "Inter" },
+      theme: { mode: "dark" },
+      tooltip: { theme: "dark" },
       plotOptions: {
         radialBar: {
           startAngle: -135,
@@ -214,9 +324,9 @@ function renderMainDashboard(metrics, regimeData) {
         gradient: {
           shade: "dark",
           colorStops: [
-            { offset: 0, color: "#34d399" },
-            { offset: 0.5, color: "#fbbf24" },
-            { offset: 1, color: "#ef4444" },
+            { offset: 0, color: "#00FF87" },
+            { offset: 0.5, color: "#FFB020" },
+            { offset: 1, color: "#FF3B5C" },
           ],
         },
       },
@@ -227,7 +337,6 @@ function renderMainDashboard(metrics, regimeData) {
     window.stressGaugeChart.render();
   }
 
-  // Business interpretation
   const interp = document.getElementById("business-interpretation");
   if (interp && regimeData?.length) {
     const latest = regimeData[regimeData.length - 1];
@@ -239,38 +348,31 @@ function renderMainDashboard(metrics, regimeData) {
       else if (stress >= 50) level = "High";
       else if (stress >= 25) level = "Medium";
     }
-
     const advice = {
-      Low: "Favorable conditions. Consider maintaining or slightly increasing risk exposure. Monitor for regime shifts.",
-      Medium: "Elevated uncertainty. Review portfolio allocation. Increase hedging if approaching key thresholds.",
-      High: "Significant stress. Defensive positioning recommended. Reduce leverage, increase cash or quality assets.",
-      Extreme: "Severe stress. Prioritize capital preservation. Consider active risk reduction and scenario planning.",
+      Low: "Favorable conditions. Maintain or slightly increase risk exposure.",
+      Medium: "Elevated uncertainty. Review allocation.",
+      High: "Defensive positioning recommended.",
+      Extreme: "Prioritize capital preservation.",
     };
-    const regimeAdvice = {
-      Bull: "Expansion phase. Model predictions typically more reliable; factor views may be easier to implement.",
-      Bear: "Contraction phase. Feature importance shifts — different characteristics drive returns.",
-      Transition: "Regime uncertainty. OOS R² often dips. Use regime-aware models for more robust forecasts.",
-    };
-    interp.innerHTML = `
-      <p><strong>Stress level: ${level}</strong> (${stress != null ? stress.toFixed(0) : "—"}/100). ${advice[level] || advice.Medium}</p>
-      <p><strong>Current regime: ${regime}.</strong> ${regimeAdvice[regime] || regimeAdvice.Transition}</p>
-    `;
-  } else if (interp) {
-    interp.innerHTML = "<p>Run the pipeline and export data to see business interpretations.</p>";
+    interp.innerHTML = `<p><strong>Stress: ${level}</strong> (${stress != null ? stress.toFixed(0) : "—"}/100). ${advice[level] || advice.Medium}</p>
+      <p><strong>Regime: ${regime}.</strong> Use regime-aware models for robust forecasts.</p>`;
   }
 }
 
-// ——— AI Briefing (rule-based, GPT-4 via Streamlit) ———
+// ——— AI Briefing: forecast, warnings, mitigations ———
 function renderAIBriefing(regimeData, metrics) {
   const forecastEl = document.getElementById("ai-forecast");
   const warnEl = document.getElementById("ai-warnings");
   const mitEl = document.getElementById("ai-mitigations");
+  if (!forecastEl || !warnEl || !mitEl) return;
 
-  if (!regimeData?.length || !forecastEl) return;
+  const regime = Array.isArray(regimeData) && regimeData.length
+    ? (regimeData[regimeData.length - 1].regime_label || "Transition")
+    : "Transition";
+  const stress = Array.isArray(regimeData) && regimeData.length
+    ? (regimeData[regimeData.length - 1].stress_index ?? null)
+    : null;
 
-  const latest = regimeData[regimeData.length - 1];
-  const regime = latest.regime_label || "Transition";
-  const stress = latest.stress_index != null ? Number(latest.stress_index) : null;
   let level = "Low";
   if (stress != null) {
     if (stress >= 75) level = "Extreme";
@@ -279,11 +381,13 @@ function renderAIBriefing(regimeData, metrics) {
   }
 
   const pm = metrics?.portfolio_metrics || {};
-  const sharpe = pm.sharpe_ratio;
+  const bestSharpe = typeof pm === "object" && !Array.isArray(pm)
+    ? Math.max(-Infinity, ...Object.values(pm || {}).map((v) => (v && v.sharpe_ratio != null ? v.sharpe_ratio : -Infinity)))
+    : (pm?.sharpe_ratio ?? null);
 
   forecastEl.innerHTML = `
     <p>Current regime: <strong>${regime}</strong>. Market stress: <strong>${level}</strong> (${stress != null ? stress.toFixed(0) : "—"}/100).</p>
-    <p>Intelligence Ridge combines regime-aware ML predictions with macro stress. In ${regime} regimes, feature importance shifts; the Regime-Aware NN models this. Strategy Sharpe: ${formatNum(sharpe, 2)}.</p>
+    <p>ERIS combines regime-aware ML predictions with macro stress. In ${regime} regimes, feature importance shifts; the Regime-Aware NN models this. Best strategy Sharpe: ${formatNum(bestSharpe, 2)}.</p>
   `;
 
   const warnings = [];
@@ -292,7 +396,6 @@ function renderAIBriefing(regimeData, metrics) {
   if (regime === "Transition") warnings.push("Regime in transition — model uncertainty elevated.");
   if (regime === "Bear") warnings.push("Bear regime — recession risk elevated; review credit exposure.");
   if (!warnings.length) warnings.push("No critical warnings. Continue routine monitoring.");
-
   warnEl.innerHTML = warnings.map((w) => `<li>${w}</li>`).join("");
 
   const mitigations = [];
@@ -300,42 +403,157 @@ function renderAIBriefing(regimeData, metrics) {
   if (regime === "Bear") mitigations.push("Reduce cyclical exposure; favor defensive sectors.");
   mitigations.push("Monitor term spread and default spread for regime changes.");
   mitigations.push("Use regime-conditional forecasts when making allocation decisions.");
-  mitigations.push("Run the Streamlit app with GPT-4 for dynamic AI-generated mitigation paths.");
-
+  mitigations.push("Review SHAP feature importance by regime for factor tilts.");
   mitEl.innerHTML = mitigations.map((m) => `<li>${m}</li>`).join("");
 }
 
-// ——— Data tables ———
-function renderDataTables(metrics, regimeData) {
+// ——— Full models table (R², RMSE, MAE, IC, Sharpe) ———
+function renderModelsFullTable(metrics) {
   const bm = metrics?.baseline_metrics || metrics?.model_metrics || {};
   const pm = metrics?.portfolio_metrics || {};
+  const tbody = document.querySelector("#models-full-table tbody");
+  if (!tbody) return;
 
-  const mt = document.querySelector("#models-table tbody");
-  if (mt) {
-    const rows = Object.entries(bm || {}).map(([n, m]) => ({ n, r: m?.oos_r2 })).filter((d) => d.n);
-    mt.innerHTML = rows.map((r) => `<tr><td>${r.n}</td><td>${formatPct(r.r)}</td></tr>`).join("");
-  }
+  const models = Object.keys(bm || {});
+  if (models.length === 0) return;
 
-  const pt = document.querySelector("#portfolio-table tbody");
-  if (pt && pm) {
-    pt.innerHTML = [
-      ["Sharpe ratio", formatNum(pm.sharpe_ratio)],
-      ["Max drawdown", formatPct(pm.max_drawdown)],
-      ["Annualized alpha", formatPct(pm.annualized_alpha)],
-      ["Long-short spread (mean)", formatNum(pm.long_short_spread_mean, 4)],
-    ].map(([k, v]) => `<tr><td>${k}</td><td>${v}</td></tr>`).join("");
-  }
+  let bestIC = -Infinity;
+  models.forEach((m) => {
+    const ic = bm[m]?.avg_ic;
+    if (ic != null && !isNaN(ic) && ic > bestIC) bestIC = ic;
+  });
+  let bestSharpe = -Infinity;
+  models.forEach((m) => {
+    const pv = pm && pm[m] ? pm[m] : (pm && pm.Portfolio ? pm.Portfolio : pm);
+    const s = pv && typeof pv.sharpe_ratio === "number" ? pv.sharpe_ratio : null;
+    if (typeof s === "number" && s > bestSharpe) bestSharpe = s;
+  });
+  if (pm && typeof pm.sharpe_ratio === "number") bestSharpe = Math.max(bestSharpe, pm.sharpe_ratio);
+  const singlePortfolio = pm && !pm.OLS && !pm.XGBoost && (pm.Portfolio || Object.values(pm)[0]);
+  if (singlePortfolio && singlePortfolio.sharpe_ratio != null) bestSharpe = Math.max(bestSharpe, singlePortfolio.sharpe_ratio);
 
-  const rt = document.querySelector("#regime-table tbody");
-  if (rt && Array.isArray(regimeData) && regimeData.length) {
-    const last = regimeData.slice(-24); // last 24 months
-    rt.innerHTML = last.map((d) => `
-      <tr><td>${d.month_dt || d.month || "—"}</td><td>${d.regime_label || "—"}</td><td>${d.stress_index != null ? formatNum(d.stress_index, 1) : "—"}</td></tr>
-    `).join("");
-  }
+  tbody.innerHTML = models.map((m) => {
+    const row = bm[m] || {};
+    const icRaw = row.avg_ic;
+    const ic = icRaw != null ? icRaw * 100 : null;
+    const pv = pm && pm[m] ? pm[m] : (pm && pm.Portfolio ? pm.Portfolio : (Object.values(pm || {})[0]));
+    const sharpe = pv && typeof pv.sharpe_ratio === "number" ? pv.sharpe_ratio : null;
+    const icCl = (icRaw != null && icRaw === bestIC && bestIC > -Infinity) ? "best-ic" : "";
+    const sharpeCl = (sharpe != null && sharpe === bestSharpe && bestSharpe > -Infinity) ? "best-sharpe" : "";
+    return `<tr>
+      <td>${m}</td>
+      <td>${formatPct(row.oos_r2)}</td>
+      <td>${formatNum(row.rmse, 4)}</td>
+      <td>${formatNum(row.mae, 4)}</td>
+      <td class="${icCl}">${ic != null ? formatNum(ic, 2) + "%" : "—"}</td>
+      <td class="${sharpeCl}">${formatNum(sharpe, 3)}</td>
+    </tr>`;
+  }).join("");
 }
 
-// ——— Charts ———
+// ——— Full portfolio table (per-model) ———
+function renderPortfolioFullTable(metrics) {
+  const pm = metrics?.portfolio_metrics || {};
+  const tbody = document.querySelector("#portfolio-full-table tbody");
+  if (!tbody) return;
+
+  let rows = [];
+  if (pm && typeof pm === "object") {
+    const hasPerModel = ["OLS", "Ridge", "XGBoost", "LightGBM", "RegimeNN"].some((k) => pm[k]);
+    if (hasPerModel) {
+      ["OLS", "Ridge", "XGBoost", "LightGBM", "RegimeNN"].forEach((name) => {
+        const v = pm[name];
+        if (v && typeof v === "object" && "sharpe_ratio" in v) rows.push({ name, ...v });
+      });
+    } else {
+      const single = pm.Portfolio || Object.values(pm).find((v) => v && typeof v === "object" && "sharpe_ratio" in v);
+      if (single) rows.push({ name: "Portfolio", ...single });
+      else if (typeof pm.sharpe_ratio === "number") rows.push({ name: "Portfolio", ...pm });
+    }
+  }
+  if (rows.length === 0) return;
+
+  tbody.innerHTML = rows.map((r) => `
+    <tr>
+      <td>${r.name}</td>
+      <td>${formatNum(r.sharpe_ratio, 3)}</td>
+      <td>${formatPct(r.max_drawdown)}</td>
+      <td>${formatPct(r.annualized_alpha)}</td>
+      <td>${formatNum(r.long_short_spread_mean, 5)}</td>
+    </tr>
+  `).join("");
+}
+
+// ——— Regime R² table ———
+function renderRegimeR2Table(metrics) {
+  const r2 = metrics?.regime_conditional_r2 || {};
+  const tbody = document.querySelector("#regime-r2-table tbody");
+  if (!tbody || !r2 || Object.keys(r2).length === 0) return;
+
+  tbody.innerHTML = Object.entries(r2).map(([model, vals]) => `
+    <tr>
+      <td>${model}</td>
+      <td>${formatPct(vals.Bull)}</td>
+      <td>${formatPct(vals.Transition)}</td>
+      <td>${formatPct(vals.Bear)}</td>
+    </tr>
+  `).join("");
+}
+
+// ——— Radar chart ———
+function renderRadarChart(metrics) {
+  const bm = metrics?.baseline_metrics || metrics?.model_metrics || {};
+  const pm = metrics?.portfolio_metrics || {};
+  const models = Object.keys(bm || {});
+  if (models.length === 0) return;
+
+  const c = getChartColors();
+  const el = document.querySelector("#chart-radar");
+  if (!el || el._rendered) return;
+  el._rendered = true;
+
+  // Min-max normalize RMSE (lower = better) so model differences are visible
+  const rmseVals = models.map((m) => {
+    const v = bm[m]?.rmse;
+    return v != null && !isNaN(v) ? Number(v) : 0.2;
+  });
+  const rmseMin = Math.min(...rmseVals);
+  const rmseMax = Math.max(...rmseVals);
+  const rmseRange = rmseMax - rmseMin || 0.001;
+
+  const series = models.map((m) => {
+    const row = bm[m] || {};
+    const ic = Math.max(0, Math.min(1, ((row.avg_ic ?? 0) * 100 + 5) / 10));
+    const r2 = Math.max(0, Math.min(1, ((row.oos_r2 ?? 0) * 100 + 10) / 15));
+    const rmseRaw = row.rmse != null && !isNaN(row.rmse) ? Number(row.rmse) : 0.18;
+    const rmse = (rmseMax - rmseRaw) / rmseRange; // best (lowest) rmse -> 1
+    const pv = pm && pm[m];
+    const sharpe = pv && typeof pv.sharpe_ratio === "number"
+      ? Math.max(0, Math.min(1, (pv.sharpe_ratio + 0.5)))
+      : 0.5;
+    return {
+      name: m,
+      data: [ic, r2, rmse, sharpe],
+    };
+  });
+
+  new ApexCharts(el, {
+    chart: { type: "radar", height: 360 },
+    theme: { mode: "dark" },
+    tooltip: {
+      theme: "dark",
+      fillSeriesColor: true,
+      style: { fontSize: "12px" },
+    },
+    xaxis: { categories: ["IC", "R²", "RMSE", "Sharpe"] },
+    series,
+    colors: c.series,
+    stroke: { width: 2 },
+    fill: { opacity: 0.2 },
+  }).render();
+}
+
+// ——— Models bar chart ———
 function renderModelsChart(bm) {
   if (!bm || Object.keys(bm).length === 0) return;
   const entries = Object.entries(bm).map(([n, m]) => ({ n, r: (m?.oos_r2 ?? 0) * 100 })).filter((d) => d.n);
@@ -346,6 +564,8 @@ function renderModelsChart(bm) {
   el._rendered = true;
   new ApexCharts(el, {
     chart: { type: "bar", height: 280, toolbar: { show: false } },
+    theme: { mode: "dark" },
+    tooltip: { theme: "dark" },
     plotOptions: { bar: { borderRadius: 6, dataLabels: { position: "top" } } },
     dataLabels: { enabled: true, formatter: (v) => v.toFixed(3) + "%" },
     xaxis: { categories: entries.map((e) => e.n), labels: { style: { colors: c.text } } },
@@ -356,6 +576,7 @@ function renderModelsChart(bm) {
   }).render();
 }
 
+// ——— Regime chart ———
 function renderRegimeChart(regimeData) {
   if (!regimeData?.length) return;
   const labels = regimeData.map((d) => d.month_dt || d.month || "");
@@ -367,6 +588,8 @@ function renderRegimeChart(regimeData) {
   el._rendered = true;
   new ApexCharts(el, {
     chart: { type: "area", height: 360, toolbar: { show: false } },
+    theme: { mode: "dark" },
+    tooltip: { theme: "dark", y: { formatter: (v) => ["Bear", "Transition", "Bull"][v] ?? v } },
     stroke: { curve: "stepline", width: 2 },
     fill: { type: "gradient", opacity: 0.4 },
     xaxis: { categories: labels, labels: { style: { colors: c.text }, rotate: -45 } },
@@ -374,10 +597,10 @@ function renderRegimeChart(regimeData) {
     colors: [c.series[0]],
     grid: { borderColor: c.grid },
     series: [{ name: "Regime", data: stateNum }],
-    tooltip: { y: { formatter: (v) => ["Bear", "Transition", "Bull"][v] ?? v } },
   }).render();
 }
 
+// ——— Stress chart ———
 function renderStressChart(regimeData) {
   if (!regimeData?.length) return;
   const labels = regimeData.map((d) => d.month_dt || d.month || "");
@@ -388,27 +611,37 @@ function renderStressChart(regimeData) {
   el._rendered = true;
   new ApexCharts(el, {
     chart: { type: "line", height: 280, toolbar: { show: false } },
+    theme: { mode: "dark" },
+    tooltip: { theme: "dark", y: { formatter: (v) => formatNum(v, 1) } },
     stroke: { curve: "smooth", width: 2 },
     xaxis: { categories: labels, labels: { style: { colors: c.text }, rotate: -45 } },
     yaxis: { title: { text: "Stress index" }, labels: { style: { colors: c.text } } },
     colors: [c.series[2]],
     grid: { borderColor: c.grid },
     series: [{ name: "Stress", data: stress }],
-    tooltip: { y: { formatter: (v) => formatNum(v, 1) } },
   }).render();
 }
 
-function renderPortfolioChart(portfolioData) {
+// ——— Portfolio chart (all models if available) ———
+function renderPortfolioChart(portfolioData, metrics) {
   if (!portfolioData?.length) return;
   const labels = portfolioData.map((d) => d.month_dt || d.month || "");
-  const cumS = portfolioData.map((d) => { const v = d.cum_strategy ?? d.cum_ret_strategy; return v != null ? (1 + v) * 100 - 100 : null; });
-  const cumM = portfolioData.map((d) => { const v = d.cum_market ?? d.cum_ret_market; return v != null ? (1 + v) * 100 - 100 : null; });
+  const cumS = portfolioData.map((d) => {
+    const v = d.cum_strategy ?? d.cum_ret_strategy;
+    return v != null ? (1 + v) * 100 - 100 : null;
+  });
+  const cumM = portfolioData.map((d) => {
+    const v = d.cum_market ?? d.cum_ret_market;
+    return v != null ? (1 + v) * 100 - 100 : null;
+  });
   const c = getChartColors();
   const el = document.querySelector("#chart-portfolio");
   if (!el || el._rendered) return;
   el._rendered = true;
   window.portfolioChart = new ApexCharts(el, {
     chart: { type: "line", height: 380, toolbar: { show: true } },
+    theme: { mode: "dark" },
+    tooltip: { theme: "dark", y: { formatter: (v) => (v != null ? v.toFixed(2) + "%" : "—") } },
     stroke: { curve: "smooth", width: 2.5 },
     xaxis: { categories: labels, labels: { style: { colors: c.text }, rotate: -45 } },
     yaxis: { title: { text: "Cumulative return (%)" }, labels: { style: { colors: c.text }, formatter: (v) => v + "%" } },
@@ -419,12 +652,11 @@ function renderPortfolioChart(portfolioData) {
       { name: "Long–short strategy", data: cumS },
       { name: "Market (VW)", data: cumM },
     ],
-    tooltip: { y: { formatter: (v) => (v != null ? v.toFixed(2) + "%" : "—") } },
   });
   window.portfolioChart.render();
 }
 
-// ——— SHAP (feature importance) ———
+// ——— SHAP ———
 function renderShapChart(selector, data) {
   const arr = Array.isArray(data) ? data : [];
   const features = arr.map((d) => d.feature || d.Feature || "").slice(0, 12);
@@ -435,13 +667,15 @@ function renderShapChart(selector, data) {
   el.innerHTML = "";
 
   if (features.length === 0 || values.every((v) => v === 0)) {
-    el.innerHTML = '<p class="no-data-msg">No SHAP data. Run pipeline and export for feature importance by regime.</p>';
+    el.innerHTML = '<p class="no-data-msg">No SHAP data.</p>';
     return;
   }
 
   const c = getChartColors();
   new ApexCharts(el, {
     chart: { type: "bar", height: 260, toolbar: { show: false } },
+    theme: { mode: "dark" },
+    tooltip: { theme: "dark" },
     plotOptions: { bar: { borderRadius: 4, barHeight: "75%", horizontal: true } },
     dataLabels: { enabled: true, formatter: (v) => Number(v).toFixed(4) },
     xaxis: { categories: features, labels: { style: { colors: c.text } } },
@@ -452,10 +686,26 @@ function renderShapChart(selector, data) {
   }).render();
 }
 
+// ——— Dataset info ———
+function renderDatasetInfo(metrics) {
+  const info = metrics?.dataset_info || {};
+  const el = document.getElementById("dataset-info-text");
+  if (!el) return;
+  const rows = info.clean_rows ?? 1027681;
+  const feat = info.features ?? 176;
+  const months = info.oos_months ?? 144;
+  const start = info.oos_start ?? "2010-01";
+  const end = info.oos_end ?? "2021-12";
+  el.textContent = `Gu, Kelly & Xiu (2020) | ${rows.toLocaleString()} rows, ${feat} features, ${months} OOS months (${start}–${end})`;
+}
+
 // ——— Init ———
 async function init() {
-  initTabs();
   initNeuralBg();
+  initCountUp();
+  initSmoothScroll();
+  initNavbarScroll();
+  initSectionFade();
 
   const metrics = await fetchJSON("metrics");
   const portfolio = await fetchJSON("portfolio");
@@ -467,16 +717,21 @@ async function init() {
 
   const bm = metrics?.baseline_metrics || metrics?.model_metrics || {};
 
+  updateRegimeContent(regime, metrics);
   renderMainDashboard(metrics, regime);
   renderAIBriefing(regime, metrics);
-  renderDataTables(metrics, regime);
-
+  renderModelsFullTable(metrics);
+  renderPortfolioFullTable(metrics);
+  renderRegimeR2Table(metrics);
+  renderRadarChart(metrics);
   renderModelsChart(bm);
+  renderDatasetInfo(metrics);
+
   if (Array.isArray(regime) && regime.length) {
     renderRegimeChart(regime);
     renderStressChart(regime);
   }
-  if (Array.isArray(portfolio) && portfolio.length) renderPortfolioChart(portfolio);
+  if (Array.isArray(portfolio) && portfolio.length) renderPortfolioChart(portfolio, metrics);
 
   if (shapByRegime && typeof shapByRegime === "object") {
     renderShapChart("#chart-shap-bull", shapByRegime.Bull || []);

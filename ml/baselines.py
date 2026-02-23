@@ -128,7 +128,7 @@ def run_expanding_window_baselines(
     predictions_df has columns: month_dt, permno, ret_excess, pred_OLS, pred_Ridge, ...
     metrics_dict: { "OLS": {"oos_r2": ...}, "Ridge": {...}, ... }
     """
-    from ml.validation import ExpandingWindowSplit, oos_r2
+    from ml.validation import ExpandingWindowSplit, oos_r2, oos_rmse, oos_mae
 
     splitter = ExpandingWindowSplit(first_prediction_year=first_prediction_year)
     model_names = model_names or ["OLS", "Ridge", "RF", "XGBoost"]
@@ -196,11 +196,15 @@ def run_expanding_window_baselines(
     for name in models:
         out[f"pred_{name}"] = all_preds[name]
 
-    # Metrics per model
+    # Metrics per model: OOS R², RMSE, MAE
     metrics = {}
+    y_true = np.array(all_y)
     for name in models:
-        y_true = np.array(all_y)
         y_pred = np.array(all_preds[name])
-        metrics[name] = {"oos_r2": oos_r2(y_true, y_pred)}
+        metrics[name] = {
+            "oos_r2": oos_r2(y_true, y_pred),
+            "oos_rmse": oos_rmse(y_true, y_pred),
+            "oos_mae": oos_mae(y_true, y_pred),
+        }
 
     return out, metrics

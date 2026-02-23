@@ -85,6 +85,26 @@ def oos_r2(y_true: np.ndarray, y_pred: np.ndarray) -> float:
     return float(1 - ss_res / ss_tot)
 
 
+def oos_rmse(y_true: np.ndarray, y_pred: np.ndarray) -> float:
+    """Out-of-sample RMSE (root mean squared error)."""
+    y_true = np.asarray(y_true).ravel()
+    y_pred = np.asarray(y_pred).ravel()
+    n = len(y_true)
+    if n == 0:
+        return float("nan")
+    return float(np.sqrt(np.mean((y_true - y_pred) ** 2)))
+
+
+def oos_mae(y_true: np.ndarray, y_pred: np.ndarray) -> float:
+    """Out-of-sample MAE (mean absolute error)."""
+    y_true = np.asarray(y_true).ravel()
+    y_pred = np.asarray(y_pred).ravel()
+    n = len(y_true)
+    if n == 0:
+        return float("nan")
+    return float(np.mean(np.abs(y_true - y_pred)))
+
+
 def regime_conditional_r2(
     predictions_df: pd.DataFrame,
     regime_df: pd.DataFrame,

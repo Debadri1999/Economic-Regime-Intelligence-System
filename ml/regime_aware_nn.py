@@ -182,7 +182,7 @@ def run_expanding_window_regime_nn(
     Expanding-window train/predict with RegimeAwareNet.
     Returns (predictions_df with month_dt, permno, ret_excess, pred_RegimeNN), metrics.
     """
-    from ml.validation import ExpandingWindowSplit, oos_r2
+    from ml.validation import ExpandingWindowSplit, oos_r2, oos_rmse, oos_mae
 
     splitter = ExpandingWindowSplit(first_prediction_year=first_prediction_year)
     pred_months = list(splitter.get_prediction_months(panel))
@@ -233,5 +233,13 @@ def run_expanding_window_regime_nn(
     })
     if all_mktcap:
         out["mktcap_lag"] = all_mktcap
-    metrics = {"RegimeNN": {"oos_r2": oos_r2(np.array(all_y), np.array(all_pred))}}
+    y_true = np.array(all_y)
+    y_pred = np.array(all_pred)
+    metrics = {
+        "RegimeNN": {
+            "oos_r2": oos_r2(y_true, y_pred),
+            "oos_rmse": oos_rmse(y_true, y_pred),
+            "oos_mae": oos_mae(y_true, y_pred),
+        }
+    }
     return out, metrics

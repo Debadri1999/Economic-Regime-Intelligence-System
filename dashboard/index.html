@@ -1,275 +1,232 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>ERIS — Economic Regime Intelligence System</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="css/style.css" />
   <script src="https://cdn.jsdelivr.net/npm/apexcharts@3.45.0/dist/apexcharts.min.js"></script>
 </head>
 <body>
   <canvas id="neural-bg" class="neural-bg" aria-hidden="true"></canvas>
-  <div class="theme-toggle" aria-label="Toggle theme">
-    <span class="theme-icon sun">☀</span>
-    <span class="theme-icon moon">☽</span>
+  <div class="candlestick-ghosts">
+    <svg class="candlestick-ghost bull" viewBox="0 0 100 120"><rect x="45" y="20" width="10" height="80" fill="currentColor"/><rect x="40" y="40" width="20" height="20" fill="currentColor"/></svg>
+    <svg class="candlestick-ghost bear" viewBox="0 0 100 120"><rect x="45" y="20" width="10" height="80" fill="currentColor"/><rect x="40" y="60" width="20" height="20" fill="currentColor"/></svg>
+    <svg class="candlestick-ghost bull" viewBox="0 0 100 120"><rect x="45" y="20" width="10" height="80" fill="currentColor"/><rect x="40" y="50" width="20" height="20" fill="currentColor"/></svg>
+    <svg class="candlestick-ghost bear" viewBox="0 0 100 120"><rect x="45" y="20" width="10" height="80" fill="currentColor"/><rect x="40" y="55" width="20" height="20" fill="currentColor"/></svg>
   </div>
 
-  <header class="header">
-    <div class="header-inner">
-      <a href="#" class="logo">
-        <span class="logo-icon">◇</span>
-        <span class="logo-text">ERIS</span>
-      </a>
-      <p class="tagline">LLM-Integrated Economic Regime Intelligence System</p>
-      <nav class="tab-nav" role="tablist">
-        <button class="tab-btn active" data-tab="dashboard" role="tab">Main Dashboard</button>
-        <button class="tab-btn" data-tab="regime" role="tab">Regime System</button>
-        <button class="tab-btn" data-tab="data" role="tab">Data Briefing</button>
-        <button class="tab-btn" data-tab="signals" role="tab">Market Signals</button>
-        <button class="tab-btn" data-tab="ai" role="tab">AI Briefing</button>
-      </nav>
+  <nav class="navbar" id="navbar">
+    <a href="#" class="logo">E R I S</a>
+    <div class="nav-links">
+      <a href="#command-center">Command Center</a>
+      <a href="#regimes">Regimes</a>
+      <a href="#models">Models</a>
+      <a href="#portfolio">Portfolio</a>
+      <a href="#shap">SHAP</a>
+      <a href="#ai-briefing">AI Briefing</a>
+      <a href="#system">System</a>
     </div>
-  </header>
+    <div class="nav-status">
+      <span class="status-dot active"></span> TRAINED
+      <span class="status-dot data"></span> 2001-2021
+      <span class="regime-badge transition" id="nav-regime-badge">TRANSITION</span>
+    </div>
+  </nav>
 
-  <main class="main-tabs">
-    <!-- Tab 1: Main Dashboard -->
-    <section id="tab-dashboard" class="tab-pane active" role="tabpanel">
-      <div class="container">
-        <h1 class="pane-title">Market Stress & Key Indicators</h1>
-        <p class="pane-desc">Real-time view of stress level and regime-based forecasting for stakeholder decision-making.</p>
-        <div class="dashboard-hero">
-          <div class="stress-gauge-hero">
-            <h3>Market Stress Gauge</h3>
-            <div id="stress-gauge-hero" class="stress-gauge-large"></div>
-            <div class="stress-legend">
-              <span class="stress-zone low">0–25 Low</span>
-              <span class="stress-zone med">25–50 Medium</span>
-              <span class="stress-zone high">50–75 High</span>
-              <span class="stress-zone extreme">75–100 Extreme</span>
+  <main>
+    <section id="hero" class="section-hero">
+      <h1 class="hero-title">E R I S</h1>
+      <p class="hero-subtitle">ECONOMIC REGIME INTELLIGENCE SYSTEM</p>
+      <div class="hero-stats">
+        <div class="hero-stat">
+          <span class="hero-stat-value count-up" data-target="1027681">0</span>
+          <span class="hero-stat-label">Clean Rows</span>
+        </div>
+        <div class="hero-stat">
+          <span class="hero-stat-value count-up" data-target="176">0</span>
+          <span class="hero-stat-label">Features</span>
+        </div>
+        <div class="hero-stat">
+          <span class="hero-stat-value count-up" data-target="144">0</span>
+          <span class="hero-stat-label">OOS Months</span>
+        </div>
+        <div class="hero-stat">
+          <span class="hero-stat-value count-up" data-target="5">0</span>
+          <span class="hero-stat-label">Models</span>
+        </div>
+      </div>
+    </section>
+
+    <section id="command-center">
+      <h2 class="section-title">Command Center</h2>
+      <p class="section-desc">War room view: regime alert, stress gauge, and analyst playbook.</p>
+      <div class="regime-alert transition" id="regime-alert-banner">Current regime: TRANSITION — Increase monitoring.</div>
+      <div class="dashboard-hero" style="display:grid;grid-template-columns:1fr 1.2fr;gap:2rem;margin-bottom:2rem;">
+        <div class="stress-gauge-hero stress-gauge-pulse">
+          <h3>Market Stress Gauge</h3>
+          <div id="stress-gauge-hero" class="stress-gauge-large"></div>
+          <div class="stress-legend">
+            <span class="stress-zone low">0–25 Low</span>
+            <span class="stress-zone med">25–50 Medium</span>
+            <span class="stress-zone high">50–75 High</span>
+            <span class="stress-zone extreme">75–100 Extreme</span>
+          </div>
+        </div>
+        <div>
+          <div class="kpi-grid-hero" id="hero-kpis">
+            <div class="kpi-card hud-panel"><span class="kpi-value" id="kpi-stress">—</span><span class="kpi-label">Stress</span></div>
+            <div class="kpi-card hud-panel"><span class="kpi-value" id="kpi-regime">—</span><span class="kpi-label">Regime</span></div>
+            <div class="kpi-card hud-panel"><span class="kpi-value" id="kpi-sharpe">—</span><span class="kpi-label">Best Sharpe</span></div>
+            <div class="kpi-card hud-panel"><span class="kpi-value" id="kpi-oos-r2">—</span><span class="kpi-label">Best IC</span></div>
+          </div>
+          <div class="hud-panel" style="margin-top:1.5rem;">
+            <h3>ANALYST PLAYBOOK — Regime Strategy Cards</h3>
+            <div class="playbook-grid" id="playbook-grid">
+              <div class="playbook-card bull" data-regime="Bull">
+                <strong>Bull</strong> — Expansion. Favor momentum & growth. SHAP: macro_dp, char_mom12m.
+              </div>
+              <div class="playbook-card transition active" data-regime="Transition">
+                <strong>Transition</strong> — Mixed signals. Increase monitoring. SHAP: macro_ep, char_bm.
+              </div>
+              <div class="playbook-card bear" data-regime="Bear">
+                <strong>Bear</strong> — Defensive. Quality tilt, reduce leverage. SHAP: macro_dfy, macro_svar.
+              </div>
             </div>
           </div>
-          <div class="kpi-grid-hero" id="hero-kpis">
-            <div class="kpi-card"><span class="kpi-value" id="kpi-stress">—</span><span class="kpi-label">Stress</span></div>
-            <div class="kpi-card"><span class="kpi-value" id="kpi-regime">—</span><span class="kpi-label">Regime</span></div>
-            <div class="kpi-card"><span class="kpi-value" id="kpi-sharpe">—</span><span class="kpi-label">Sharpe</span></div>
-            <div class="kpi-card"><span class="kpi-value" id="kpi-oos-r2">—</span><span class="kpi-label">OOS R²</span></div>
-          </div>
         </div>
-        <div class="interpretation-card">
-          <h3>What This Means for Your Business</h3>
-          <div id="business-interpretation" class="interpretation-content"></div>
-        </div>
-        <details class="note-tab">
-          <summary>Understanding these indicators</summary>
-          <div class="note-content">
-            <h4>Stress index (0–100)</h4>
-            <ul class="note-bullets">
-              <li><strong>Calculation:</strong> −Term Spread (TMS) + Default Spread (DFY) + Stock Variance (SVAR), normalized to 0–100. Computed monthly from macro data.</li>
-              <li><span class="bullet good">0–25 Low</span> — Favorable macro. Inverted curve absent; credit risk low.</li>
-              <li><span class="bullet medium">25–50 Medium</span> — Moderate uncertainty. Monitor term spread and volatility.</li>
-              <li><span class="bullet bad">50–75 High</span> — Elevated stress. Defensive positioning advised.</li>
-              <li><span class="bullet extreme">75–100 Extreme</span> — Severe stress. Capital preservation focus.</li>
-            </ul>
-            <h4>Regime (Bull / Transition / Bear)</h4>
-            <ul class="note-bullets">
-              <li><strong>Calculation:</strong> Hidden Markov Model (HMM) on 8 macro series — dividend yield, term spread, default spread, earnings yield, book-to-market, net equity issuance, stock variance, Treasury bill. One regime label per month.</li>
-              <li><span class="bullet good">Bull</span> — Expansion; models often more reliable.</li>
-              <li><span class="bullet medium">Transition</span> — Mixed signals; higher uncertainty.</li>
-              <li><span class="bullet bad">Bear</span> — Contraction risk; feature importance shifts.</li>
-            </ul>
-            <h4>Sharpe ratio</h4>
-            <ul class="note-bullets">
-              <li><strong>What it is:</strong> Risk-adjusted return = (Return − risk-free) ÷ volatility.</li>
-              <li><span class="bullet good">Good:</span> &gt;1.0</li>
-              <li><span class="bullet medium">Medium:</span> 0.5–1.0</li>
-              <li><span class="bullet bad">Bad:</span> &lt;0.5</li>
-            </ul>
-            <h4>OOS R² (Out-of-sample R-squared)</h4>
-            <ul class="note-bullets">
-              <li><strong>What it is:</strong> Fraction of return variance explained by the model on unseen data.</li>
-              <li><strong>0.00%</strong> — Model equals a simple mean forecast (no better than guessing the average).</li>
-              <li><span class="bullet bad">Negative</span> — Worse than mean prediction.</li>
-              <li><span class="bullet medium">0–1%</span> — Weak but positive signal. For monthly returns, 1–3% is strong.</li>
-              <li><span class="bullet good">Good:</span> &gt;1% for monthly returns.</li>
-            </ul>
-          </div>
-        </details>
+      </div>
+      <div class="interpretation-card hud-panel" style="margin-top:1.5rem;">
+        <h3>What This Means for Your Business</h3>
+        <div id="business-interpretation" class="interpretation-content"></div>
       </div>
     </section>
 
-    <!-- Tab 2: Intelligent Regime System -->
-    <section id="tab-regime" class="tab-pane" role="tabpanel">
-      <div class="container">
-        <h1 class="pane-title">Regime Detection & Stress Timeline</h1>
-        <p class="pane-desc">HMM-based regime states and stress index. Use these to adjust your risk posture.</p>
-        <div class="regime-explanation-card">
-          <h3>Regime Levels Explained</h3>
-          <div class="regime-levels">
-            <div class="regime-level bull"><strong>Bull</strong> — Expansion, favorable macro. Lower hedging need.</div>
-            <div class="regime-level transition"><strong>Transition</strong> — Mixed signals. Increase monitoring.</div>
-            <div class="regime-level bear"><strong>Bear</strong> — Elevated risk. Defensive positioning recommended.</div>
-          </div>
-          <p class="regime-formula">Stress = −Term Spread + Default Spread + Stock Variance (0–100)</p>
+    <section id="regimes">
+      <h2 class="section-title">Regime Detection & Stress Timeline</h2>
+      <p class="section-desc">HMM-based regime states and stress index over time.</p>
+      <div class="chart-card hud-panel"><div id="chart-regime" class="chart-container chart-tall"></div></div>
+      <div class="chart-card hud-panel"><div id="chart-stress" class="chart-container"></div></div>
+    </section>
+
+    <section id="models">
+      <h2 class="section-title">Model Performance</h2>
+      <p class="section-desc">Radar comparison and full evaluation table.</p>
+      <div class="chart-card hud-panel" style="margin-bottom:1.5rem;">
+        <h3>Model Radar (IC, R², RMSE, Sharpe)</h3>
+        <div id="chart-radar" class="chart-container"></div>
+      </div>
+      <div class="chart-card hud-panel">
+        <h3>Full Model Table (R², RMSE, MAE, IC%, Sharpe)</h3>
+        <div class="table-scroll">
+          <table class="data-table hud-table" id="models-full-table">
+            <thead><tr><th>Model</th><th>OOS R²</th><th>RMSE</th><th>MAE</th><th>IC %</th><th>Sharpe</th></tr></thead>
+            <tbody></tbody>
+          </table>
         </div>
-        <div class="chart-card"><div id="chart-regime" class="chart-container chart-tall"></div></div>
-        <div class="chart-card"><div id="chart-stress" class="chart-container"></div></div>
-        <details class="note-tab">
-          <summary>How stress &amp; regime are calculated</summary>
-          <div class="note-content">
-            <h4>Stress index (monthly)</h4>
-            <ul class="note-bullets">
-              <li><strong>Formula:</strong> Stress = −TMS + DFY + SVAR (then min-max normalized to 0–100).</li>
-              <li><strong>TMS</strong> — Term spread (10Y − 3M Treasury). Negative = inverted curve (stress).</li>
-              <li><strong>DFY</strong> — Default spread (Baa − Aaa corporate). Higher = more credit risk.</li>
-              <li><strong>SVAR</strong> — Stock market variance. Higher = more volatility.</li>
-              <li>Each month gets one stress value. The timeline shows how stress evolves over time.</li>
-            </ul>
-            <h4>Regime (monthly)</h4>
-            <ul class="note-bullets">
-              <li><strong>Method:</strong> 3-state Gaussian HMM on 8 macro variables (Gu, Kelly &amp; Xiu dataset).</li>
-              <li>States are ordered by mean of the first macro (e.g. dividend yield): <span class="bullet good">Bull</span> (low) → <span class="bullet medium">Transition</span> → <span class="bullet bad">Bear</span> (high).</li>
-              <li>Regime labels are assigned each month based on the most likely HMM state.</li>
-            </ul>
-          </div>
-        </details>
+      </div>
+      <div class="chart-card hud-panel" style="margin-top:1.5rem;"><div id="chart-models" class="chart-container"></div></div>
+    </section>
+
+    <section id="portfolio">
+      <h2 class="section-title">Portfolio</h2>
+      <p class="section-desc">Per-model portfolio metrics and cumulative returns.</p>
+      <div class="chart-card hud-panel" style="margin-bottom:1.5rem;">
+        <h3>Portfolio Metrics by Model</h3>
+        <div class="table-scroll">
+          <table class="data-table hud-table" id="portfolio-full-table">
+            <thead><tr><th>Model</th><th>Sharpe</th><th>Max DD</th><th>Alpha</th><th>L/S Spread</th></tr></thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </div>
+      <div class="chart-card hud-panel chart-hero"><div id="chart-portfolio" class="chart-container chart-tall"></div></div>
+    </section>
+
+    <section id="shap">
+      <h2 class="section-title">SHAP Intelligence</h2>
+      <p class="section-desc">Feature importance by regime and regime-conditional R².</p>
+      <div class="chart-card hud-panel" style="margin-bottom:1.5rem;">
+        <h3>Regime-Conditional R² Heatmap</h3>
+        <div class="table-scroll">
+          <table class="data-table hud-table" id="regime-r2-table">
+            <thead><tr><th>Model</th><th>Bull</th><th>Transition</th><th>Bear</th></tr></thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </div>
+      <div class="shap-grid">
+        <div class="chart-card hud-panel"><h3>Bull</h3><div id="chart-shap-bull" class="chart-container chart-shap"></div></div>
+        <div class="chart-card hud-panel"><h3>Bear</h3><div id="chart-shap-bear" class="chart-container chart-shap"></div></div>
+        <div class="chart-card hud-panel"><h3>Transition</h3><div id="chart-shap-transition" class="chart-container chart-shap"></div></div>
       </div>
     </section>
 
-    <!-- Tab 3: Data Briefing -->
-    <section id="tab-data" class="tab-pane" role="tabpanel">
-      <div class="container">
-        <h1 class="pane-title">Data Briefing</h1>
-        <p class="pane-desc">Tabular view of model metrics, regime history, and portfolio performance.</p>
-        <div class="data-tables-grid">
-          <div class="chart-card">
-            <h3>Model Performance (OOS R²)</h3>
-            <div class="table-scroll"><table class="data-table" id="models-table"><thead><tr><th>Model</th><th>OOS R²</th></tr></thead><tbody></tbody></table></div>
-          </div>
-          <div class="chart-card">
-            <h3>Portfolio Metrics</h3>
-            <div class="table-scroll"><table class="data-table" id="portfolio-table"><thead><tr><th>Metric</th><th>Value</th></tr></thead><tbody></tbody></table></div>
-          </div>
+    <section id="ai-briefing">
+      <h2 class="section-title">AI Intelligence Briefing</h2>
+      <p class="section-desc">Regime-based early warnings, precautions, and mitigation steps for portfolio managers.</p>
+      <div class="ai-briefing-grid">
+        <div class="ai-card hud-panel">
+          <h3>Current Forecast</h3>
+          <div id="ai-forecast" class="ai-content"></div>
         </div>
-        <div class="chart-card">
-          <h3>Latest Regime History</h3>
-          <div class="table-scroll"><table class="data-table" id="regime-table"><thead><tr><th>Month</th><th>Regime</th><th>Stress</th></tr></thead><tbody></tbody></table></div>
+        <div class="ai-card hud-panel warning-card">
+          <h3>Early Warnings</h3>
+          <ul id="ai-warnings" class="ai-list"></ul>
         </div>
-        <details class="note-tab">
-          <summary>Understanding Data Briefing metrics</summary>
-          <div class="note-content">
-            <h4>OOS R² (Out-of-sample R-squared)</h4>
-            <ul class="note-bullets">
-              <li><strong>Source:</strong> Expanding-window validation. Train on past data, predict next month; no look-ahead.</li>
-              <li><strong>0.00%</strong> — Model performs no better than predicting the historical mean return. Neutral baseline.</li>
-              <li><span class="bullet bad">Negative</span> — Worse than mean prediction (avoid).</li>
-              <li><span class="bullet medium">0–1%</span> — Weak positive. For monthly equity returns, even small R² can be economically meaningful.</li>
-              <li><span class="bullet good">&gt;1%</span> — Strong for monthly returns. 1–3% is considered very good.</li>
-            </ul>
-            <h4>Sharpe ratio</h4>
-            <ul class="note-bullets">
-              <li><strong>What it indicates:</strong> Return per unit of risk (volatility).</li>
-              <li><span class="bullet good">Good:</span> &gt;1.0</li>
-              <li><span class="bullet medium">Medium:</span> 0.5–1.0</li>
-              <li><span class="bullet bad">Bad:</span> &lt;0.5</li>
-            </ul>
-            <h4>Max drawdown</h4>
-            <ul class="note-bullets">
-              <li>Largest peak-to-trough decline in portfolio value.</li>
-              <li><span class="bullet good">Good:</span> &gt;−10%</li>
-              <li><span class="bullet medium">Medium:</span> −10% to −25%</li>
-              <li><span class="bullet bad">Bad:</span> &lt;−25%</li>
-            </ul>
-            <h4>Annualized alpha</h4>
-            <ul class="note-bullets">
-              <li>Excess return vs. benchmark (value-weighted market).</li>
-              <li><span class="bullet good">Good:</span> Positive</li>
-              <li><span class="bullet bad">Bad:</span> Negative</li>
-            </ul>
-            <h4>Long-short spread (mean)</h4>
-            <ul class="note-bullets">
-              <li>Average monthly return of long (top decile) minus short (bottom decile) portfolio.</li>
-              <li>Positive = strategy adds value; higher is better.</li>
-            </ul>
-            <h4>Regime &amp; stress (in table)</h4>
-            <ul class="note-bullets">
-              <li>Same definitions as Main Dashboard. One row per month.</li>
-            </ul>
-          </div>
-        </details>
-        <div class="chart-card">
-          <h2 class="section-title">Feature Importance by Regime (SHAP)</h2>
-          <p class="section-desc">Top drivers of return prediction in each regime — shifts matter for forecasting.</p>
-          <div class="shap-grid">
-            <div class="chart-card"><h3>Bull</h3><div id="chart-shap-bull" class="chart-container chart-shap"></div></div>
-            <div class="chart-card"><h3>Bear</h3><div id="chart-shap-bear" class="chart-container chart-shap"></div></div>
-            <div class="chart-card"><h3>Transition</h3><div id="chart-shap-transition" class="chart-container chart-shap"></div></div>
-          </div>
+        <div class="ai-card hud-panel mitigation-card">
+          <h3>Mitigation Steps</h3>
+          <ul id="ai-mitigations" class="ai-list"></ul>
         </div>
       </div>
     </section>
 
-    <!-- Tab 4: Market Signals -->
-    <section id="tab-signals" class="tab-pane" role="tabpanel">
-      <div class="container">
-        <h1 class="pane-title">Market Signals & Portfolio</h1>
-        <p class="pane-desc">Model predictions, cumulative returns, and forecasting signals.</p>
-        <div class="chart-card"><div id="chart-models" class="chart-container"></div></div>
-        <div class="chart-card chart-hero"><div id="chart-portfolio" class="chart-container chart-tall"></div></div>
-        <details class="note-tab">
-          <summary>Understanding Market Signals</summary>
-          <div class="note-content">
-            <h4>OOS R² (model comparison chart)</h4>
-            <ul class="note-bullets">
-              <li>See Data Briefing tab for full explanation of OOS R², including 0.00% and good/medium/bad ranges.</li>
-            </ul>
-            <h4>Cumulative return (strategy vs market)</h4>
-            <ul class="note-bullets">
-              <li><strong>Strategy:</strong> Long top decile predicted return, short bottom decile (value-weighted by market cap).</li>
-              <li><strong>Market:</strong> Value-weighted market return.</li>
-              <li>Above 0% = strategy outperformed; below 0% = underperformed.</li>
-            </ul>
-          </div>
-        </details>
+    <section id="system">
+      <h2 class="section-title">System Architecture</h2>
+      <p class="section-desc">NN architecture and pipeline flow.</p>
+      <div class="chart-card hud-panel" style="margin-bottom:1.5rem;">
+        <h3>Regime-Aware NN Architecture</h3>
+        <div class="nn-flow">
+          <span class="nn-node">macro(8)</span>
+          <span class="nn-arrow">→</span>
+          <span class="nn-node">Encoder [8→64→32→16]</span>
+          <span class="nn-arrow">→</span>
+          <span class="nn-node">Embed(16)</span>
+          <span class="nn-arrow">+</span>
+          <span class="nn-node">char(168)</span>
+          <span class="nn-arrow">→</span>
+          <span class="nn-node">Predictor [184→128→64→32→1]</span>
+          <span class="nn-arrow">→</span>
+          <span class="nn-node">ret_excess</span>
+        </div>
+      </div>
+      <div class="chart-card hud-panel">
+        <h3>Pipeline (8 steps)</h3>
+        <div class="pipeline-cards">
+          <div class="pipeline-card"><span class="step-num">1</span> Load panel</div>
+          <div class="pipeline-card"><span class="step-num">2</span> Feature eng.</div>
+          <div class="pipeline-card"><span class="step-num">3</span> Expanding window</div>
+          <div class="pipeline-card"><span class="step-num">4</span> Baselines</div>
+          <div class="pipeline-card"><span class="step-num">5</span> Regime NN</div>
+          <div class="pipeline-card"><span class="step-num">6</span> HMM + stress</div>
+          <div class="pipeline-card"><span class="step-num">7</span> Portfolio</div>
+          <div class="pipeline-card"><span class="step-num">8</span> SHAP</div>
+        </div>
+      </div>
+      <div class="chart-card hud-panel" style="margin-top:1.5rem;">
+        <h3>Dataset & Config</h3>
+        <p class="section-desc" id="dataset-info-text">Gu, Kelly & Xiu (2020) | 1.03M rows, 176 features, 144 OOS months (2010–2021)</p>
       </div>
     </section>
 
-    <!-- Tab 5: AI Briefing -->
-    <section id="tab-ai" class="tab-pane" role="tabpanel">
-      <div class="container">
-        <h1 class="pane-title">AI Briefing (LLM-Integrated)</h1>
-        <p class="pane-desc">Intelligence Ridge forecast, warnings, and mitigation steps for stakeholders. For live GPT-4 briefing, use the Streamlit app with OPENAI_API_KEY.</p>
-        <div class="ai-briefing-grid">
-          <div class="ai-card">
-            <h3>Current Forecast</h3>
-            <div id="ai-forecast" class="ai-content"></div>
-          </div>
-          <div class="ai-card warning-card">
-            <h3>Early Warnings</h3>
-            <ul id="ai-warnings" class="ai-list"></ul>
-          </div>
-          <div class="ai-card mitigation-card">
-            <h3>Mitigation Steps</h3>
-            <ul id="ai-mitigations" class="ai-list"></ul>
-          </div>
-        </div>
-        <div class="ai-note">Deploy the ERIS Streamlit app with GPT-4 for dynamic AI-generated briefings. This view uses rule-based inference from regime and stress data.</div>
-        <details class="note-tab">
-          <summary>Understanding AI Briefing metrics</summary>
-          <div class="note-content">
-            <p>This tab combines <strong>regime</strong>, <strong>stress</strong>, and <strong>model outputs</strong> to produce early warnings and mitigations. Definitions:</p>
-            <ul class="note-bullets">
-              <li><strong>Regime</strong> — Bull/Transition/Bear (see Main Dashboard note).</li>
-              <li><strong>Stress</strong> — 0–100 index (see Main Dashboard note).</li>
-              <li><strong>Warnings</strong> — Triggered when stress ≥50, regime is Transition/Bear.</li>
-              <li><strong>Mitigations</strong> — Actionable steps based on current regime and stress level.</li>
-            </ul>
-          </div>
-        </details>
-      </div>
-    </section>
+    <footer class="site-footer">
+      <p><strong>ERIS v2.0</strong> | Debadri Sanyal | MS BAIM Purdue Daniels | Spring 2026</p>
+      <p>Data: Gu, Kelly & Xiu (2020) | AI Tools: Claude, Cursor, Synthesia</p>
+      <p><a href="https://github.com" target="_blank" rel="noopener">GitHub</a> · <a href="https://linkedin.com" target="_blank" rel="noopener">LinkedIn</a></p>
+    </footer>
   </main>
 
   <script src="js/app.js"></script>

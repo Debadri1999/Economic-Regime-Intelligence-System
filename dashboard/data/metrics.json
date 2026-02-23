@@ -1,26 +1,81 @@
 {
   "baseline_metrics": {
     "OLS": {
-      "oos_r2": -0.026260805651769692
+      "oos_r2": -0.026260805651769692,
+      "rmse": 0.180345247936033,
+      "mae": 0.1013,
+      "avg_ic": 0.0047
     },
     "Ridge": {
-      "oos_r2": -0.02626009711282884
-    },
-    "XGBoost": {
-      "oos_r2": -0.04509983469176615
+      "oos_r2": -0.02626009711282884,
+      "rmse": 0.1803451856800975,
+      "mae": 0.1013,
+      "avg_ic": 0.0047
     },
     "LightGBM": {
-      "oos_r2": -0.02928460046645176
+      "oos_r2": -0.02928460046645176,
+      "rmse": 0.1806107388924773,
+      "mae": 0.1016,
+      "avg_ic": 0.0311
+    },
+    "XGBoost": {
+      "oos_r2": -0.04509983469176615,
+      "rmse": 0.18199301561695447,
+      "mae": 0.1017,
+      "avg_ic": 0.0306
     },
     "RegimeNN": {
-      "oos_r2": -0.06405536061314754
+      "oos_r2": -0.027317169669972108,
+      "rmse": 0.18043804171239433,
+      "mae": 0.1038,
+      "avg_ic": 0.048
     }
   },
   "portfolio_metrics": {
-    "sharpe_ratio": 0.1908680389555708,
-    "max_drawdown": -0.41433698208968783,
-    "annualized_alpha": -0.10321447590009854,
-    "long_short_spread_mean": 0.0038640297729375483
+    "Portfolio": {
+      "sharpe_ratio": 0.1908680389555708,
+      "max_drawdown": -0.41433698208968783,
+      "annualized_alpha": -0.10321447590009854,
+      "long_short_spread_mean": 0.0038640297729375483
+    }
   },
-  "regime_conditional_r2": {}
+  "regime_conditional_r2": {
+    "OLS": {
+      "Bull": -0.0013,
+      "Transition": -0.0133,
+      "Bear": -0.371
+    },
+    "Ridge": {
+      "Bull": -0.0013,
+      "Transition": -0.0133,
+      "Bear": -0.371
+    },
+    "XGBoost": {
+      "Bull": -0.0078,
+      "Transition": -0.0555,
+      "Bear": -0.1392
+    },
+    "LightGBM": {
+      "Bull": -0.0058,
+      "Transition": -0.0439,
+      "Bear": -0.0555
+    },
+    "RegimeNN": {
+      "Bull": -0.0714,
+      "Transition": -0.0492,
+      "Bear": -0.3246
+    }
+  },
+  "dataset_info": {
+    "raw_rows": 1520078,
+    "clean_rows": 1027681,
+    "null_dropped": 492397,
+    "total_stocks": 14436,
+    "unique_stocks": 9778,
+    "avg_per_month": 4094,
+    "features": 176,
+    "oos_months": 144,
+    "oos_start": "2010-01",
+    "oos_end": "2021-12"
+  }
 }
