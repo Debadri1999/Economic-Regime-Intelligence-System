@@ -159,7 +159,7 @@ def main() -> None:
     macro_monthly.to_parquet(OUT_DIR / "macro_monthly.parquet", index=False)
     logger.info("  -> Done in %s", _elapsed(step_start))
 
-    # 6. Portfolio (use best model or XGBoost)
+    # 6. Portfolio (per-model decile long-short for interactive dashboard)
     step_start = time.time()
     logger.info("[Step 5/8] Portfolio (decile long-short)... %s", _remaining(5))
     from ml.portfolio import portfolio_metrics
@@ -168,6 +168,24 @@ def main() -> None:
     port_df = port_df.copy()
     port_df["month_dt"] = port_df["month_dt"].astype(str)
     port_df.to_parquet(OUT_DIR / "portfolio_returns.parquet", index=False)
+    # Build per-model cumulative returns for interactive chart (All / XGBoost / LightGBM / etc.)
+    portfolio_models = [m for m in ["XGBoost", "LightGBM", "RegimeNN", "Ridge", "OLS"] if f"pred_{m}" in predictions_df.columns]
+    by_model = {}
+    for m in portfolio_models:
+        try:
+            pm_df, _ = portfolio_metrics(predictions_df, panel, pred_col=f"pred_{m}")
+            by_model[m] = pm_df.set_index("month_dt")["cum_strategy"]
+        except Exception:
+            pass
+    if by_model:
+        base = port_df.set_index("month_dt")[["cum_market"]].copy()
+        base = base.rename(columns={"cum_market": "market"})
+        for m, ser in by_model.items():
+            base[f"cum_{m}"] = ser.reindex(base.index).ffill().fillna(0)
+        base = base.reset_index()
+        base["month_dt"] = base["month_dt"].astype(str)
+        base.to_parquet(OUT_DIR / "portfolio_by_model.parquet", index=False)
+        logger.info("  -> Per-model series saved for %s", list(by_model.keys()))
     logger.info("  -> Sharpe=%.3f, MaxDD=%.3f, Alpha=%.4f (done in %s)", port_metrics["sharpe_ratio"], port_metrics["max_drawdown"], port_metrics["annualized_alpha"], _elapsed(step_start))
 
     # Regime-conditional OOS R² (for understanding rubric)

@@ -623,8 +623,81 @@ function renderStressChart(regimeData) {
   }).render();
 }
 
-// ——— Portfolio chart (all models if available) ———
-function renderPortfolioChart(portfolioData, metrics) {
+// ——— Portfolio chart (interactive: All models or single model + market) ———
+function buildPortfolioSeries(portfolioByModel, selection) {
+  if (!portfolioByModel || !portfolioByModel.months) return null;
+  const labels = portfolioByModel.months;
+  const c = getChartColors();
+  const modelColors = [c.series[0], c.series[1], c.series[2], c.series[3], c.series[4]];
+  let series = [];
+  if (selection === "all") {
+    series.push({ name: "Market (VW)", data: portfolioByModel.market || [], color: c.text });
+    const models = ["XGBoost", "LightGBM", "RegimeNN", "Ridge", "OLS"].filter((m) => Array.isArray(portfolioByModel[m]));
+    models.forEach((m, i) => {
+      series.push({ name: m, data: portfolioByModel[m], color: modelColors[i % modelColors.length] });
+    });
+  } else if (portfolioByModel[selection] && portfolioByModel.market) {
+    series = [
+      { name: selection, data: portfolioByModel[selection], color: c.series[0] },
+      { name: "Market (VW)", data: portfolioByModel.market, color: c.series[1] },
+    ];
+  }
+  return { labels, series };
+}
+
+function renderPortfolioChartFromSeries(labels, series) {
+  const c = getChartColors();
+  const el = document.querySelector("#chart-portfolio");
+  if (!el || !labels || !series || series.length === 0) return;
+  if (window.portfolioChart) {
+    try { window.portfolioChart.destroy(); } catch (_) {}
+    window.portfolioChart = null;
+  }
+  el._rendered = true;
+  const colors = series.map((s) => s.color || c.series[0]);
+  window.portfolioChart = new ApexCharts(el, {
+    chart: { type: "line", height: 380, toolbar: { show: true } },
+    theme: { mode: "dark" },
+    tooltip: { theme: "dark", y: { formatter: (v) => (v != null ? v.toFixed(2) + "%" : "—") } },
+    stroke: { curve: "smooth", width: 2.5 },
+    xaxis: { categories: labels, labels: { style: { colors: c.text }, rotate: -45 } },
+    yaxis: { title: { text: "Cumulative return (%)" }, labels: { style: { colors: c.text }, formatter: (v) => v + "%" } },
+    colors,
+    grid: { borderColor: c.grid },
+    legend: { position: "top" },
+    series: series.map((s) => ({ name: s.name, data: s.data })),
+  });
+  window.portfolioChart.render();
+}
+
+function renderPortfolioChart(portfolioData, metrics, portfolioByModel, rankingsData, regimeData, shapByRegime) {
+  const el = document.querySelector("#chart-portfolio");
+  const selectorWrap = document.getElementById("portfolio-chart-selector-wrap");
+  const selector = document.getElementById("portfolio-chart-select");
+  const rankingSelect = document.getElementById("ranking-model-select");
+
+  if (portfolioByModel && portfolioByModel.months && Object.keys(portfolioByModel).length > 1) {
+    if (selectorWrap) selectorWrap.style.display = "";
+    const modelOpts = ["XGBoost", "LightGBM", "RegimeNN", "Ridge", "OLS"].filter((m) => Array.isArray(portfolioByModel[m]));
+    if (selector) {
+      selector.innerHTML = '<option value="all">All models + Market</option>' +
+        modelOpts.map((m) => `<option value="${m}">${m} + Market</option>`).join("");
+      selector.addEventListener("change", () => {
+        const val = selector.value;
+        const built = buildPortfolioSeries(portfolioByModel, val);
+        if (built) renderPortfolioChartFromSeries(built.labels, built.series);
+        if (rankingSelect && rankingsData && val !== "all") {
+          rankingSelect.value = val;
+          updateRankings(rankingsData, val, regimeData, shapByRegime || {});
+        }
+      });
+    }
+    const built = buildPortfolioSeries(portfolioByModel, selector ? selector.value : "all");
+    if (built) renderPortfolioChartFromSeries(built.labels, built.series);
+    return;
+  }
+
+  if (selectorWrap) selectorWrap.style.display = "none";
   if (!portfolioData?.length) return;
   const labels = portfolioData.map((d) => d.month_dt || d.month || "");
   const cumS = portfolioData.map((d) => {
@@ -636,25 +709,25 @@ function renderPortfolioChart(portfolioData, metrics) {
     return v != null ? (1 + v) * 100 - 100 : null;
   });
   const c = getChartColors();
-  const el = document.querySelector("#chart-portfolio");
-  if (!el || el._rendered) return;
-  el._rendered = true;
-  window.portfolioChart = new ApexCharts(el, {
-    chart: { type: "line", height: 380, toolbar: { show: true } },
-    theme: { mode: "dark" },
-    tooltip: { theme: "dark", y: { formatter: (v) => (v != null ? v.toFixed(2) + "%" : "—") } },
-    stroke: { curve: "smooth", width: 2.5 },
-    xaxis: { categories: labels, labels: { style: { colors: c.text }, rotate: -45 } },
-    yaxis: { title: { text: "Cumulative return (%)" }, labels: { style: { colors: c.text }, formatter: (v) => v + "%" } },
-    colors: [c.series[0], c.series[1]],
-    grid: { borderColor: c.grid },
-    legend: { position: "top" },
-    series: [
-      { name: "Long–short strategy", data: cumS },
-      { name: "Market (VW)", data: cumM },
-    ],
-  });
-  window.portfolioChart.render();
+  if (el && !el._rendered) {
+    el._rendered = true;
+    window.portfolioChart = new ApexCharts(el, {
+      chart: { type: "line", height: 380, toolbar: { show: true } },
+      theme: { mode: "dark" },
+      tooltip: { theme: "dark", y: { formatter: (v) => (v != null ? v.toFixed(2) + "%" : "—") } },
+      stroke: { curve: "smooth", width: 2.5 },
+      xaxis: { categories: labels, labels: { style: { colors: c.text }, rotate: -45 } },
+      yaxis: { title: { text: "Cumulative return (%)" }, labels: { style: { colors: c.text }, formatter: (v) => v + "%" } },
+      colors: [c.series[0], c.series[1]],
+      grid: { borderColor: c.grid },
+      legend: { position: "top" },
+      series: [
+        { name: "Long–short strategy", data: cumS },
+        { name: "Market (VW)", data: cumM },
+      ],
+    });
+    window.portfolioChart.render();
+  }
 }
 
 // ——— SHAP ———
@@ -714,7 +787,14 @@ function renderRankings(rankingsData, regimeData, metrics, shapByRegime) {
   });
 
   const shap = shapByRegime || {};
-  select.addEventListener("change", () => updateRankings(rankingsData, select.value, regimeData, shap));
+  select.addEventListener("change", () => {
+    updateRankings(rankingsData, select.value, regimeData, shap);
+    const portSelect = document.getElementById("portfolio-chart-select");
+    if (portSelect && portSelect.options.length > 1) {
+      const opt = Array.from(portSelect.options).find((o) => o.value === select.value);
+      if (opt) portSelect.value = select.value;
+    }
+  });
   updateRankings(rankingsData, defaultModel, regimeData, shap);
 }
 
@@ -827,6 +907,7 @@ async function init() {
 
   const metrics = await fetchJSON("metrics");
   const portfolio = await fetchJSON("portfolio");
+  const portfolioByModel = await fetchJSON("portfolio_by_model");
   const regime = await fetchJSON("regime");
   const shapByRegime = await fetchJSON("shap_by_regime");
   const rankings = await fetchJSON("rankings");
@@ -850,7 +931,11 @@ async function init() {
     renderRegimeChart(regime);
     renderStressChart(regime);
   }
-  if (Array.isArray(portfolio) && portfolio.length) renderPortfolioChart(portfolio, metrics);
+  if (Array.isArray(portfolio) && portfolio.length) {
+    renderPortfolioChart(portfolio, metrics, portfolioByModel, rankings, regime, shapByRegime);
+  } else if (portfolioByModel && portfolioByModel.months) {
+    renderPortfolioChart(null, metrics, portfolioByModel, rankings, regime, shapByRegime);
+  }
 
   if (shapByRegime && typeof shapByRegime === "object") {
     renderShapChart("#chart-shap-bull", shapByRegime.Bull || []);

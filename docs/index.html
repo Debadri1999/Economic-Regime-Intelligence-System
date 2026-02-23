@@ -149,6 +149,18 @@
           </table>
         </div>
       </div>
+      <div class="model-selector hud-panel" id="portfolio-chart-selector-wrap" style="display:none;">
+        <label for="portfolio-chart-select">Cumulative returns:</label>
+        <select id="portfolio-chart-select">
+          <option value="all">All models + Market</option>
+          <option value="XGBoost">XGBoost + Market</option>
+          <option value="LightGBM">LightGBM + Market</option>
+          <option value="RegimeNN">RegimeNN + Market</option>
+          <option value="Ridge">Ridge + Market</option>
+          <option value="OLS">OLS + Market</option>
+        </select>
+        <span class="chart-note" style="margin:0;margin-left:1rem;">Same model drives Stock Ranking below.</span>
+      </div>
       <div class="chart-card hud-panel chart-hero"><div id="chart-portfolio" class="chart-container chart-tall"></div></div>
     </section>
 

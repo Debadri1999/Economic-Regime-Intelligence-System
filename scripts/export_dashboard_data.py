@@ -194,6 +194,30 @@ def main():
         except ImportError:
             pass
 
+    # 2b. Portfolio by model (for interactive chart: All / single model + market)
+    port_multi_path = src / "portfolio_by_model.parquet"
+    if port_multi_path.exists():
+        try:
+            import pandas as pd
+
+            pm = pd.read_parquet(port_multi_path)
+            if "month_dt" in pm.columns:
+                pm["month_dt"] = pm["month_dt"].astype(str)
+            months = pm["month_dt"].tolist()
+            out_multi = {"months": months, "market": []}
+            if "market" in pm.columns:
+                out_multi["market"] = [round((1 + float(x)) * 100 - 100, 4) if x is not None and pd.notna(x) else None for x in pm["market"]]
+            for c in pm.columns:
+                if c.startswith("cum_") and c != "cum_market":
+                    name = c.replace("cum_", "")
+                    out_multi[name] = [round((1 + float(x)) * 100 - 100, 4) if x is not None and pd.notna(x) else None for x in pm[c]]
+            for dest_dir in [DASHBOARD_DATA, DOCS_DATA]:
+                with open(dest_dir / "portfolio_by_model.json", "w", encoding="utf-8") as f:
+                    json.dump(out_multi, f, indent=0)
+            print("Exported portfolio_by_model.json")
+        except Exception as e:
+            print(f"Could not export portfolio_by_model: {e}")
+
     # 3. Regime states
     regime_path = src / "regime_states.parquet"
     if regime_path.exists():
